@@ -1,0 +1,86 @@
+[user]
+	name = AnthonyAxenov
+	email = anthonyaxenov@gmail.com
+[push]
+    default = current
+[pull]
+    default = current
+	rebase = false
+[core]
+	editor = nano
+    autocrlf = input
+[alias]
+    # общее -----------------------------------------------------------------
+    st = status #
+    aliases = config --get-regexp '^alias' # показать список доступных алиасов
+    diffc = diff --cached # показать дельту staged-файла
+    co = checkout #
+    cob = checkout -b # создание новое ветки
+    cp = cherry-pick # применить коммит поверх текущего HEAD
+    bheads = branch -vv # показать список веток с последними коммитами
+    heads = log --graph --decorate --simplify-by-decoration --oneline # лог только по последним коммитам веток
+
+    # управление ветками ----------------------------------------------------
+    br = status -sb # показать название текущей ветки
+    branch = branch --list # показать текущую ветку в общем списке локальных веток
+    brd = branch -d # удалить слитую ветку локально
+    brD = branch -D # удалить НЕслитую ветку локально
+    brod = "!f(){ git branch -d "${1}"; git push origin :"${1}"; };f" # удалить слитую ветку локально и на origin
+    broD = "!f(){ git branch -D "${1}"; git push origin :"${1}"; };f" # удалить НЕслитую ветку локально и на origin
+    merged = branch --merged # показать список слитых веток
+    # удалить все слитые ветки
+    #bclean = "!f() { DEFAULT=master; git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; }; f"
+    mn = merge --no-ff # слить ветку с принудительным коммитом слияния
+
+    # переключение между ветками ----------------------------------------------
+    master = "!git checkout master && git pull" # переключиться на ветку master и обновление
+    dev = "!git checkout dev && git pull" # переключиться на ветку dev и обновление
+    develop = "!git checkout develop && git pull" # переключиться на ветку develop и обновление
+
+    # фиксация изменений ------------------------------------------------------
+    c = commit # коммит
+    ca = commit -a # коммит всех файлов
+    cm = commit -m # коммит с заданным сообщением
+    cam = commit -am # коммит всех файлов с заданным сообщением
+    amend = commit --amend --no-edit # по-тихому прикрепляет все индексированные файлы к последнему коммиту, используя уже существующее сообщение
+    amendm = commit --amend -m # прикрепляет все индексированные файлы к последнему коммиту, спрашивает новое сообщение к коммиту
+
+    # управление изменениями, сброс состояний, откат --------------------------
+    rh = reset --hard # откат коммита с удалением всех изменений на указанный коммит
+    rhh = reset --hard HEAD # откат коммита с удалением всех изменений на последний коммит
+    rs = reset --soft # откат коммита с сохранением всех изменений на указанный коммит
+    rsh = reset --soft HEAD # откат коммита с сохранением всех изменений
+    unstage = reset HEAD # удаляет файл из staged перед коммитом
+    clear = checkout -- # удаляет изменения в unstaged-файле
+
+    # штучка чтобы не терять наработки, которые ещё в процессе
+    # на самом деле, надо исопользовать стеш для таких дел
+    # save = !git add -A && git commit -m 'SAVEPOINT'
+    # wip = commit -am "WIP"
+    # undo = reset HEAD~1 --mixed
+
+    # работа с remote-репами --------------------------------------------------
+    p = push # отправить ветку
+    po = push origin # отправить ветку в origin
+    pt = push --tags # отправить теги
+    pl = pull # получить ветку
+    plo = pull origin # получить ветку из origin
+    ploh = pull origin HEAD # получить текущую ветку из origin
+    remotes = remote -v # показать список удалённых репозиториев
+    #sy = remote update origin --prune #
+    rso = remote show origin # показать состояние локальных веток относительно удалённых на origin bare
+    rpo = remote prune origin # удалить все мёртвые ссылки на bare-ветки origin
+
+    # просмотр логов ----------------------------------------------------------
+    head = log -1 HEAD # показать последний коммит в текущей ветке
+    hist = log --pretty=format:\"%h | %an (%ad) %s%d\" --graph --date=relative
+    logfull = log --graph --decorate --all
+    grog = log --graph --decorate --all --pretty=format:'%C(bold red)%h%C(reset) %C(bold blue)%an%C(reset) %C(green)%cr%C(reset) [%aD]%d%n%B'
+
+    # подмодули ---------------------------------------------------------------
+    si = submodule init # инициализация сабмодулей
+    sdi = submodule deinit -f # удаление сабмодуля
+    sa = submodule add # добавление сабмодуля
+    sup = submodule update # обновление сабмодуля
+    sst = submodule status # статус сабмодулей
+    ss = submodule summary # список сабмодулей

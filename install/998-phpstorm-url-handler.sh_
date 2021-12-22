@@ -1,0 +1,35 @@
+#!/bin/bash
+. "../src/01-common.sh" || exit 5
+title "Installing phpstorm-url-handler..."
+
+# https://github.com/rozwell/phpstorm-url-handler/
+# https://askubuntu.com/a/1023143
+# https://askubuntu.com/a/919825
+# https://medium.com/swlh/custom-protocol-handling-how-to-8ac41ff651eb
+# https://www.linuxquestions.org/questions/linux-desktop-74/xdg-open-doesn%27t-recognize-custom-protocol-4175433062/#post4809984
+
+sudo rm -rf /usr/bin/phpstorm-url-handler >/dev/null
+sudo rm -rf ~/.local/share/applications/phpstorm-url-handler.desktop >/dev/null
+sudo rm -rf /usr/share/applications/phpstorm-url-handler.desktop >/dev/null
+if installed "git"; then
+    sudo git clone https://github.com/rozwell/phpstorm-url-handler.git /usr/src/phpstorm-url-handler
+else
+    sudo wget https://github.com/rozwell/phpstorm-url-handler/archive/master.zip -O /usr/src/phpstorm-url-handler.zip
+    sudo unzip /usr/src/phpstorm-url-handler.zip -d /usr/src/phpstorm-url-handler
+    sudo rm -f /usr/src/phpstorm-url-handler.zip
+fi
+
+info "Copy .desktop"
+sudo cp /usr/src/phpstorm-url-handler/phpstorm-url-handler.desktop /usr/share/local/applications/phpstorm-url-handler.desktop
+
+info "Symlink bin"
+sudo cp /usr/src/phpstorm-url-handler/phpstorm-url-handler /usr/bin/phpstorm-url-handler
+
+info "desktop-file-install"
+sudo desktop-file-install phpstorm-url-handler.desktop
+
+info "update-desktop-database"
+sudo update-desktop-database -v 2>&1 | grep -E "^(.+)\/phpstorm-url-handler.desktop(.+)$"
+
+info "xdg-mime"
+xdg-mime default phpstorm-url-handler.desktop x-scheme-handler/phpstorm
