@@ -6,7 +6,7 @@ if installed 'git'; then
     [ ! -d "/usr/src/git" ] && sudo git clone https://github.com/git/git.git --depth=1 /usr/src/git
     sudo chown -R anthony: /usr/src/git
     cd /usr/src/git/
-    sudo git pull
+    # sudo git pull
     sudo make prefix=/usr/local all
     sudo make prefix=/usr/local install
 else
