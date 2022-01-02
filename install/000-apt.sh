@@ -8,6 +8,7 @@ apti apt-transport-https \
     ca-certificates \
     curl \
     make \
+    cmake \
     dialog \
     build-essential \
     software-properties-common \
