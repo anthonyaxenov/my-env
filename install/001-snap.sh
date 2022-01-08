@@ -17,10 +17,6 @@ snapi() {
 if !installed snapd; then
     sudo apt update
     sudo apt install -y --autoremove snapd gnome-software-plugin-snap
-    # snapi core
-    # snapi snapd
-else
-    snap refresh core
 fi
 
 snapi snap-store
