@@ -1,6 +1,9 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing ulauncher from apt..."
+echo
+echo "==============================================="
+echo "Installing ulauncher..."
+echo "==============================================="
+echo
 
 sudo add-apt-repository ppa:agornostal/ulauncher
-apti ulauncher
+sudo apt install -y --autoremove ulauncher
