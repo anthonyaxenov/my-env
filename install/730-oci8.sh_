@@ -1,6 +1,9 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing oci8..."
+echo
+echo "==============================================="
+echo "Installing oci8..."
+echo "==============================================="
+echo
 
 #check for
 # wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basic-linuxx64.zip
@@ -16,14 +19,19 @@ sudo mv ~/Downloads/instant_client/ /opt/oracle/
 sudo sh -c "echo /opt/oracle/instant_client > /etc/ld.so.conf.d/oracle-instantclient.conf"
 sudo ldconfig
 
-apti php-dev php-pear build-essential libaio1 default-jdk
+sudo apt install -y --autoremove \
+    php-dev \
+    php-pear \
+    build-essential \
+    libaio1 \
+    default-jdk
 sudo pecl channel-update pecl.php.net
-#sudo pecl install oci8 # php8
-sudo pecl install oci8-2.2.0 # php7
+sudo pecl install oci8 # php8
+#sudo pecl install oci8-2.2.0 # php7
 
 #sh -c "echo '; priority=10' > /etc/php/7.4/mods-available/oci8.ini"
-sudo sh -c "echo 'extension=oci8.so' >> /etc/php/7.4/mods-available/oci8.ini"
-sudo chmod 0644 /etc/php/7.4/mods-available/oci8.ini
+# sudo sh -c "echo 'extension=oci8.so' >> /etc/php/7.4/mods-available/oci8.ini"
+# sudo chmod 0644 /etc/php/7.4/mods-available/oci8.ini
 sudo phpenmod oci8
 php -i | grep oci8
 
@@ -36,4 +44,4 @@ php -i | grep oci8
 
 
 # https://pecl.php.net/package/oci8
-sudo pecl install oci8-2.2.0
+#sudo pecl install oci8-2.2.0
