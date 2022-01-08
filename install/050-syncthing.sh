@@ -1,6 +1,9 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing syncthing..."
+echo
+echo "==============================================="
+echo "Installing syncthing..."
+echo "==============================================="
+echo
 
 # https://apt.syncthing.net/
 
@@ -14,8 +17,8 @@ echo "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://
 echo "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing candidate" | sudo tee /etc/apt/sources.list.d/syncthing.list
 
 # Update and install syncthing:
-aptu
-apti syncthing
+sudo apt update
+sudo apt install -y --autoremove syncthing
 
 wget "https://raw.githubusercontent.com/syncthing/syncthing/main/etc/linux-desktop/syncthing-start.desktop" -O /home/anthony/.local/share/applications/syncthing-start.desktop
 wget "https://raw.githubusercontent.com/syncthing/syncthing/main/etc/linux-desktop/syncthing-ui.desktop" -O /home/anthony/.local/share/applications/syncthing-ui.desktop
