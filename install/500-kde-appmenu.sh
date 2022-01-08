@@ -1,10 +1,14 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing Window AppMenu Applet..."
+echo
+echo "==============================================="
+echo "Installing KDE Window AppMenu Applet..."
+echo "==============================================="
+echo
 
 # https://github.com/psifidotos/applet-window-appmenu/blob/master/INSTALLATION.md
 
-apti make \
+sudo apt install -y --autoremove \
+    make \
     cmake \
     extra-cmake-modules \
     qtdeclarative5-dev \
@@ -32,4 +36,6 @@ fi
 sudo chown -R anthony: /usr/src/appmenu-applet
 cd /usr/src/appmenu-applet/
 sh ./install.sh
-success 'Successful! Now you can add "Window AppMenu Applet" on desktop or panel'
+echo
+echo 'Success! Now you can add "Window AppMenu Applet" on desktop or panel'
+echo
