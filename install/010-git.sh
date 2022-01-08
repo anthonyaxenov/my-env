@@ -1,12 +1,14 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing git..."
+echo
+echo "==============================================="
+echo "Installing git..."
+echo "==============================================="
+echo
 
-if installed 'git'; then
+if installed git; then
     [ ! -d "/usr/src/git" ] && sudo git clone https://github.com/git/git.git --depth=1 /usr/src/git
     sudo chown -R anthony: /usr/src/git
     cd /usr/src/git/
-    # sudo git pull
     sudo make prefix=/usr/local all
     sudo make prefix=/usr/local install
 else
@@ -21,4 +23,4 @@ else
     sudo git clone https://github.com/git/git.git --depth=1 /usr/src/git
     sudo chown -R anthony: /usr/src/git
 fi
-success "$(git --version)"
+git --version
