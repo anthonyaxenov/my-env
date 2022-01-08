@@ -1,6 +1,9 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing grub-customizer..."
+echo
+echo "==============================================="
+echo "Installing grub-customizer..."
+echo "==============================================="
+echo
 
 sudo add-apt-repository ppa:danielrichter2007/grub-customizer
-apti grub-customizer
+sudo apt install -y --autoremove grub-customizer
