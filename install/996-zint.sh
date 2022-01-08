@@ -1,8 +1,16 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing zint..."
+echo
+echo "==============================================="
+echo "Installing zint..."
+echo "==============================================="
+echo
 
-apti g++ cmake qtbase5-dev qttools5-dev libpng-dev
+sudo apt install -y --autoremove \
+    g++ \
+    cmake \
+    qtbase5-dev \
+    qttools5-dev \
+    libpng-dev
 
 if installed git; then
     # 2.9.* ===============================================================================
@@ -11,7 +19,6 @@ if installed git; then
     sudo cmake .
     sudo make
     sudo make install
-    cd -
 else
     echo "You need git to be installed!"
     # 2.4.2 ===============================================================================
