@@ -1,8 +1,12 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing flatpak and its software..."
+echo
+echo "==============================================="
+echo "Installing flatpak and its software..."
+echo "==============================================="
+echo
 
-apti flatpak \
+sudo apt install -y --autoremove \
+    flatpak \
     gnome-software-plugin-flatpak
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

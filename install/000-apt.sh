@@ -1,10 +1,13 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing software from apt..."
+echo
+echo "==============================================="
+echo "Installing software from apt..."
+echo "==============================================="
+echo
 
-aptu
-aptug
-apti apt-transport-https \
+sudo apt update && sudo apt upgrade -y --autoremove
+sudo apt install -y --autoremove \
+    apt-transport-https \
     ca-certificates \
     curl \
     make \
@@ -39,6 +42,9 @@ apti apt-transport-https \
     lsp-plugins \
     lsb-release \
     net-tools \
+    nmap \
+    p7zip-full \
+    sqlitebrowser \
     # minder \
     # redshift \
     # redshift-gtk \
