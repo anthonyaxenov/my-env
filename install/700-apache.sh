@@ -1,7 +1,10 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing apache2..."
+echo
+echo "==============================================="
+echo "Installing apache2..."
+echo "==============================================="
+echo
 
-apti apache2
+sudo apt install -y --autoremove apache2
 sudo service apache2 restart
-success "$(apache2 -v)"
+apache2 -v
