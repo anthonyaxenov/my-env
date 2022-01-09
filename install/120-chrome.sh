@@ -1,6 +1,9 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing google chrome (latest)..."
+echo
+echo "==============================================="
+echo "Installing google chrome (latest)..."
+echo "==============================================="
+echo
 
 # https://t.me/axenov_blog/251
 
