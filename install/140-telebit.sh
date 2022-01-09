@@ -1,6 +1,11 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing telebit..."
+echo
+echo "==============================================="
+echo "Installing telebit..."
+echo "==============================================="
+echo
+
+# https://git.coolaj86.com/coolaj86/telebit.js#install
 
 # export NODEJS_VER=v10.2                   # v10.2 is tested working, but we can test other versions
 # export TELEBIT_VERSION=master             # git tag or branch to install from
