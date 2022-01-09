@@ -23,4 +23,7 @@ else
     sudo git clone https://github.com/git/git.git --depth=1 /usr/src/git
     sudo chown -R anthony: /usr/src/git
 fi
+git config set --global user.name 'AnthonyAxenov'
+git config set --global user.email 'anthonyaxenov@gmail.com'
 git --version
+# TODO: cp $DOTFILESDIR/.gitconfig $HOME/.gitconfig
