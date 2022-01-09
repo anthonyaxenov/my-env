@@ -33,7 +33,7 @@ else
     sudo rm -rf /usr/src/appmenu-applet/applet-window-appmenu-master
     sudo rm -f /usr/src/appmenu-applet.zip
 fi
-sudo chown -R anthony: /usr/src/appmenu-applet
+sudo chown -R $USER: /usr/src/appmenu-applet
 cd /usr/src/appmenu-applet/
 sh ./install.sh
 echo

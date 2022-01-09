@@ -7,7 +7,7 @@ echo
 
 if installed git; then
     [ ! -d "/usr/src/git" ] && sudo git clone https://github.com/git/git.git --depth=1 /usr/src/git
-    sudo chown -R anthony: /usr/src/git
+    sudo chown -R $USER: /usr/src/git
     cd /usr/src/git/
     sudo make prefix=/usr/local all
     sudo make prefix=/usr/local install
@@ -21,9 +21,9 @@ else
     cd /usr/src
     sudo rm -rf git
     sudo git clone https://github.com/git/git.git --depth=1 /usr/src/git
-    sudo chown -R anthony: /usr/src/git
+    sudo chown -R $USER: /usr/src/git
 fi
-git config set --global user.name 'AnthonyAxenov'
-git config set --global user.email 'anthonyaxenov@gmail.com'
+ENVDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+DOTFILESDIR="$ENVDIR"/dotfiles
 git --version
-# TODO: cp $DOTFILESDIR/.gitconfig $HOME/.gitconfig
+cp $DOTFILESDIR/.gitconfig $HOME/.gitconfig

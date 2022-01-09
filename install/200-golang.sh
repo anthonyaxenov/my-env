@@ -16,10 +16,10 @@ sudo rm -rf /usr/local/go
 wget "https://golang.org/dl/$FILE" -O /tmp/$FILE
 sudo tar -xzf $FILE -C /usr/local
 rm -rf /tmp/$FILE
-sudo chown anthony: -R /usr/local/go
+sudo chown $USER: -R /usr/local/go
 
-echo "export PATH=$PATH:/usr/local/go/bin" >> /home/anthony/.profile
-echo "export GOPATH=~/.go" >> /home/anthony/.profile
+echo "export PATH=$PATH:/usr/local/go/bin" >> $HOME/.profile
+echo "export GOPATH=~/.go" >> $HOME/.profile
 # source ~/.profile
 
 echo

@@ -20,7 +20,7 @@ echo "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://
 sudo apt update
 sudo apt install -y --autoremove syncthing
 
-wget "https://raw.githubusercontent.com/syncthing/syncthing/main/etc/linux-desktop/syncthing-start.desktop" -O /home/anthony/.local/share/applications/syncthing-start.desktop
-wget "https://raw.githubusercontent.com/syncthing/syncthing/main/etc/linux-desktop/syncthing-ui.desktop" -O /home/anthony/.local/share/applications/syncthing-ui.desktop
-ln -s /home/anthony/.local/share/applications/syncthing-start.desktop /home/anthony/.config/autostart/syncthing-start.desktop
+wget "https://raw.githubusercontent.com/syncthing/syncthing/main/etc/linux-desktop/syncthing-start.desktop" -O $HOME/.local/share/applications/syncthing-start.desktop
+wget "https://raw.githubusercontent.com/syncthing/syncthing/main/etc/linux-desktop/syncthing-ui.desktop" -O $HOME/.local/share/applications/syncthing-ui.desktop
+ln -s $HOME/.local/share/applications/syncthing-start.desktop $HOME/.config/autostart/syncthing-start.desktop
 # или демоном: https://habr.com/ru/post/350892/

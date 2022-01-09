@@ -21,5 +21,5 @@ Categories=Utility,Network
 Terminal=false
 Type=Application
 Encoding=UTF-8
-" > /home/anthony/.local/share/applications/Postman.desktop
+" > $HOME/.local/share/applications/Postman.desktop
 sudo update-desktop-database
