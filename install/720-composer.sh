@@ -1,10 +1,17 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing composer..."
+echo
+echo "==============================================="
+echo "Installing composer..."
+echo "==============================================="
+echo
+
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
 
 if installed "php"; then
     if installed "composer"; then
-        warning "You already have composer installed - removing to install actual version"
+        echo "WARNING: You already have composer installed - removing to install actual version"
         sudo apt remove -y --autoremove composer
         sudo rm -f /bin/composer
         sudo rm -f /usr/bin/composer
@@ -26,9 +33,9 @@ if installed "php"; then
     sudo cp /usr/src/composer/composer.phar /usr/local/bin/composer
     cd - >/dev/null
     sudo rm -rf /usr/src/composer/
-    installed "composer" && success "composer installed!"
+    installed "composer" && composer --version
 else
-    warning "*** You need to have php installed"
+    echo "WARNING: You need to have php installed"
 fi
 
 # title "Installing composer.phar in home dir..."
