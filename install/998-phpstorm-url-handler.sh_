@@ -1,6 +1,13 @@
 #!/bin/bash
-. "../src/01-common.sh" || exit 5
-title "Installing phpstorm-url-handler..."
+echo
+echo "==============================================="
+echo "Installing phpstorm-url-handler..."
+echo "==============================================="
+echo
+
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
 
 # https://github.com/rozwell/phpstorm-url-handler/
 # https://askubuntu.com/a/1023143
@@ -14,9 +21,9 @@ sudo rm -rf /usr/share/applications/phpstorm-url-handler.desktop >/dev/null
 if installed "git"; then
     sudo git clone https://github.com/rozwell/phpstorm-url-handler.git /usr/src/phpstorm-url-handler
 else
-    sudo wget https://github.com/rozwell/phpstorm-url-handler/archive/master.zip -O /usr/src/phpstorm-url-handler.zip
-    sudo unzip /usr/src/phpstorm-url-handler.zip -d /usr/src/phpstorm-url-handler
-    sudo rm -f /usr/src/phpstorm-url-handler.zip
+    sudo wget https://github.com/rozwell/phpstorm-url-handler/archive/master.zip -O /tmp/phpstorm-url-handler.zip
+    sudo unzip /tmp/phpstorm-url-handler.zip -d /usr/src/phpstorm-url-handler
+    sudo rm -f /tmp/phpstorm-url-handler.zip
 fi
 
 info "Copy .desktop"
