@@ -5,6 +5,10 @@ echo "Installing git..."
 echo "==============================================="
 echo
 
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
+
 if installed git; then
     [ ! -d "/usr/src/git" ] && sudo git clone https://github.com/git/git.git --depth=1 /usr/src/git
     sudo chown -R $USER: /usr/src/git
@@ -24,6 +28,5 @@ else
     sudo chown -R $USER: /usr/src/git
 fi
 ENVDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-DOTFILESDIR="$ENVDIR"/dotfiles
+cp "$ENVDIR"/dotfiles/.gitconfig $HOME/.gitconfig
 git --version
-cp $DOTFILESDIR/.gitconfig $HOME/.gitconfig
