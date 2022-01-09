@@ -1,7 +1,7 @@
 #!/bin/bash
 echo
 echo "==============================================="
-echo "Installing flatpak and its software..."
+echo "Installing snap and its software..."
 echo "==============================================="
 echo
 
@@ -14,7 +14,7 @@ snapi() {
     [[ $? -ne 0 ]] && snap install $1 --classic
 }
 
-if !installed snapd; then
+if ! installed snapd; then
     sudo apt update
     sudo apt install -y --autoremove snapd gnome-software-plugin-snap
 fi
