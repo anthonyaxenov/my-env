@@ -1,51 +1,89 @@
-# Common
-own() {
-    sudo chmod 0664 -R --preserve-root $@
-    sudo chown $USER. -R --preserve-root $@
-}
-#alias aliases='source ~/install/aliases && cat ~/install/aliases'
-alias aliases='source ~/install/aliases'
-alias zshrc='source ~/.zshrc'
-alias wine='LANG=ru_RU.utf8 wine'
-alias upgrade='sudo apt update && sudo apt upgrade -y'
+#!/bin/bash
+
+alias ..="cd .."
+alias chmod="chmod --preserve-root"
+alias chown="chown --preserve-root"
+alias free="free -h"
+alias l='ls -CFph --color=auto'
+alias la='ls -Aph --color=auto'
+alias ll='ls -alFph --color=auto'
+alias mkdir="mkdir -pv"
+alias ps="ps auxf"
+alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
+# alias where="whereis" # zsh builtin
 alias duh='du -ha --max-depth=1'
 alias sduh='sudo du -ha --max-depth=1'
-alias ports='netstat -tulanp'
+alias wine='LANG=ru_RU.utf8 wine'
 
-# Navigation
-alias projects='cd ~/projects'
-alias Downloads='cd ~/Downloads'
+# alias bashrc='source ~/.bashrc'
+alias zshrc='source ~/.zshrc'
+alias realias='source ~/.bash_aliases'
+alias is="type -a"
+alias upgrade='sudo apt update && sudo apt upgrade -y && sudo snap refresh'
+alias untargz="tar xczf"
+alias mkcd="mkdir -p $1 && cd $1"
+alias cl="cd $1 && ll"
+alias myip="curl http://ipecho.net/plain; echo"
+alias gpg.keys='gpg --list-keys --keyid-format SHORT'
+alias gpg.keys.sec='gpg --list-secret-keys --keyid-format SHORT'
+alias ssh.key='cat ~/.ssh/id_rsa.pub'
+alias ports='netstat -tulpan'
 
-# apache2
-alias a2ls='ls -al /etc/apache2/sites-available/'
-alias a2slen='ls -al /etc/apache2/sites-enabled/'
-alias a2err='sudo tail /var/log/apache2/error_log'
-#alias a2errclr='sudo truncate -s0 "/var/log/apache2/error_log"'
-alias a2restart='sudo systemctl restart apache2'
-alias a2reload='sudo systemctl reload apache2'
+# $1 -- file/dir path
+# $2 -- permissions (0644, 0755, etc)
+# own() { #TODO refactor
+#     [ "$1" ] && PATH="${1/#\~/$HOME}" || {
+#         echo "Error (1): path not provided"
+#     }
+#     echo $PATH
 
-# nginx
-#alias nxls='ls -al /etc/nginx/sites-available/'
-#alias nxlsen='ls -al /etc/nginx/sites-enabled/'
-#alias nxerr='sudo tail /var/log/nginx/error.log'
-#alias nxerrclr='sudo truncate -s0 "/var/log/nginx/error.log"'
-#alias nxrest='sudo systemctl restart nginx'
-#alias nxreload='sudo systemctl reload nginx'
-#alias nxensite='~/Scripts/web/nxensite.sh'
+#     [ "$2" ] && PERM="$2" || {
+#         if [ -d $PATH ]; then
+#             PERM="0755"
+#         elif [ -f $PATH ]; then
+#             PERM="0644"
+#         else
+#             echo "Error (2): path not exists"
+#         fi;
+#     }
+#     echo $PERM
 
-# mysql
-alias mysqlstart='sudo systemctl start mysql'
-alias mysqlstop='sudo systemctl stop mysql'
-alias mysqlrestart='sudo systemctl restart mysql'
-alias mysqlstatus='sudo systemctl status mysql'
+#     sudo chmod $PERM -R --preserve-root $PATH
+#     sudo chown $USER. -R --preserve-root $PATH
+# }
 
-# pgsql
-#alias psql='sudo -u postgres psql'
-
-# php
-alias phprestart='sudo systemctl restart php-fpm'
-
-# Docker
-alias dockerstart='sudo systemctl start docker'
-alias dockerrestart='sudo systemctl restart docker'
-alias dockerstop='sudo systemctl stop docker'
+# function extract {
+#  if [ -z "$1" ]; then
+#     # display usage if no parameters given
+#     echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+#     echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+#     return 1
+#  else
+#     for n in $@
+#     do
+#       if [ -f "$n" ] ; then
+#           case "${n%,}" in
+#             *.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
+#                          tar xvf "$n"       ;;
+#             *.lzma)      unlzma ./"$n"      ;;
+#             *.bz2)       bunzip2 ./"$n"     ;;
+#             *.rar)       unrar x -ad ./"$n" ;;
+#             *.gz)        gunzip ./"$n"      ;;
+#             *.zip)       unzip ./"$n"       ;;
+#             *.z)         uncompress ./"$n"  ;;
+#             *.7z|*.arj|*.cab|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.rpm|*.udf|*.wim|*.xar)
+#                          7z x ./"$n"        ;;
+#             *.xz)        unxz ./"$n"        ;;
+#             *.exe)       cabextract ./"$n"  ;;
+#             *)
+#                          echo "extract: '$n' - unknown archive method"
+#                          return 1
+#                          ;;
+#           esac
+#       else
+#           echo "'$n' - file does not exist"
+#           return 1
+#       fi
+#     done
+# fi
+# }
