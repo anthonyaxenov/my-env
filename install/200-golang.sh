@@ -5,7 +5,7 @@
 # https://www.vultr.com/docs/install-the-latest-version-of-golang-on-ubuntu
 
 
-[ $1 ] && VERSION="$1" || VERSION="1.18.1"
+[ $1 ] && VERSION="$1" || VERSION="1.18.3"
 FILE="go$VERSION.linux-amd64.tar.gz"
 
 echo
@@ -19,8 +19,8 @@ sudo rm -rf /usr/local/go && \
     sudo tar -xzf /tmp/$FILE -C /usr/local && \
     rm -rf /tmp/$FILE && \
     sudo chown $USER: -R /usr/local/go && \
-    echo "export PATH=\"\$PATH:/usr/local/go/bin\"" >> $HOME/.profile && \
-    echo "export GOPATH=\"~/.go\"" >> $HOME/.profile && \
+    echo 'export PATH="$PATH:/usr/local/go/bin\"' >> $HOME/.profile && \
+    echo 'export GOPATH="$HOME/.go"' >> $HOME/.profile && \
     # source ~/.profile && \
     go version && \
     echo "NOTE: now run 'source ~/.profile' to apply new env vars"
