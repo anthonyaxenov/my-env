@@ -1,0 +1,46 @@
+#!/bin/bash
+echo
+echo "==============================================="
+echo "Installing samp-server v03svr_R2-1..."
+echo "==============================================="
+echo
+
+# https://sampwiki.blast.hk/wiki/Linux_Server
+# https://team.sa-mp.com/wiki/Server.cfg_RU.html
+
+cd $HOME
+wget -qO - https://files.sa-mp.com/samp03svr_R2-1.tar.gz | tar -zxf -
+# sudo dpkg --add-architecture i386
+# sudo apt update
+# sudo apt install -y libc6:i386
+apt-get install ia32-libs
+
+echo "echo Executing Server Config...
+lanmode 0
+rcon 1
+language Russian
+rcon_password bootsector
+maxplayers 50
+port 7777
+hostname My Server
+gamemode0 bare 1
+filterscripts base gl_actions gl_property gl_realtime
+announce 1
+query 1
+weburl
+maxnpc 0
+onfoot_rate 40
+incar_rate 40
+weapon_rate 40
+stream_distance 800.0
+stream_rate 1000
+timestamp 1
+output 0
+" > $HOME/samp03/server.cfg
+
+ln -s $HOME/samp03/samp03svr /usr/local/bin/samp
+
+echo
+echo "Success! Now run via 'samp &'"
+echo
+
