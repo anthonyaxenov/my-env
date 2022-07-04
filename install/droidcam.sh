@@ -1,0 +1,18 @@
+#!/bin/bash
+# https://www.dev47apps.com/droidcam/linux/
+
+echo
+echo "==============================================="
+echo "Installing droidcam..."
+echo "==============================================="
+echo
+
+mkdir -p ~/install/droidcam
+wget -O /tmp/droidcam.zip https://files.dev47apps.net/linux/droidcam_1.8.2.zip
+unzip -o /tmp/droidcam.zip -d ~/install/droidcam
+rm -rf /tmp/droidcam.zip
+cd ~/install/droidcam && sudo ./install-client
+
+echo
+echo "Don't forget to install android app: https://play.google.com/store/apps/developer?id=Dev47Apps"
+echo
