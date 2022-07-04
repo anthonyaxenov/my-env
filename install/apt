@@ -7,54 +7,56 @@ echo "Installing software from apt..."
 echo "==============================================="
 echo
 
-sudo apt update && sudo apt upgrade -y --autoremove
-sudo apt install -y --autoremove \
+sudo apt update && \
+    sudo apt upgrade -y --autoremove
+
+sudo apt install -y \
+    alien \
     apt-transport-https \
-    ca-certificates \
-    curl \
-    make \
-    cmake \
-    dialog \
     build-essential \
-    software-properties-common \
-    libaio1 \
-    libssl-dev \
-    libghc-zlib-dev \
-    libcurl4-gnutls-dev \
-    libexpat1-dev \
+    ca-certificates \
+    cmake \
+    curl \
+    dconf-editor \
+    default-jdk \
+    dialog \
     gettext \
     gnupg \
-    ubuntu-restricted-extras \
-    unzip \
-    mc \
-    htop \
-    nano \
-    neofetch \
-    default-jdk \
-    terminator \
-    dconf-editor \
-    alien \
-    meld \
-    vlc \
     gparted \
     hardinfo \
+    htop \
+    libaio1 \
+    libcurl4-gnutls-dev \
+    libexpat1-dev \
+    libghc-zlib-dev \
     libreoffice \
-    pulseeffects \
-    lsp-plugins \
+    libssl-dev \
     lsb-release \
+    lsp-plugins \
+    make \
+    mc \
+    meld \
+    nano \
+    neofetch \
     net-tools \
     nmap \
     p7zip-full \
-    sqlitebrowser
-    # gnome-software \
-    # minder \
-    # redshift \
-    # redshift-gtk \
-    # nodejs \
+    pulseeffects \
+    software-properties-common \
+    sqlitebrowser \
+    terminator \
+    ubuntu-restricted-extras \
+    unzip \
+    vlc \
+    # at \
     # compiz \
     # compizconfig-settings-manager \
+    # deepin-screenshot \
     # earlyoom \
     # etckeeper \
-    # deepin-screenshot \
     # geoclue-2.0 \
-    # at
+    # gnome-software \
+    # minder \
+    # nodejs \
+    # redshift \
+    # redshift-gtk
