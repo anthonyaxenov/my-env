@@ -30,6 +30,9 @@ make help
 ./gen-makefile.sh
 ```
 
+> I do not recomend to run `make` without arguments.
+> Use `make help` to look around.
+
 ### Selective straightforward installation
 
 ```shell
@@ -72,3 +75,18 @@ mypackY: goalA goalB
 where:
 * `mypack*` is the pack name
 * `goal*` are script names in `./install`
+
+## Testing in docker
+
+```shell
+# switch to repo dir
+cd my-env
+
+# build and run container 
+docker build -t myenv . && docker run -it myenv
+
+# oneliner
+docker run -it $(docker build -q .)
+```
+
+Now you can play around with scripts.
