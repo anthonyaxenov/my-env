@@ -39,6 +39,6 @@ snapi peek
 # sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
 # snapi mysql-workbench-community
-# snapi dbeaver-ce
+snapi dbeaver-ce
 # snapi discord
 # snapi obs-studio

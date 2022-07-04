@@ -1,5 +1,5 @@
 #!/bin/bash
-##makedesc: Installwine (latest) + ppa (focal)
+##makedesc: Install wine (latest) + ppa (focal)
 
 echo
 echo "==============================================="

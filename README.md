@@ -2,11 +2,12 @@
 
 `make`-ready bunch of scripts for easily installation of different software.
 
-## Prerequisites
+## Requirements
 
 * `bash`, `zsh` or other `sh`-compatible shell
-* `make`
-* `git` or `wget`
+* `make` (optional but recommended)
+* `wget` (necessary for some scripts)
+* `git` (necessary for some scripts)
 
 ## Usage
 
