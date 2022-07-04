@@ -1,4 +1,6 @@
 #!/bin/bash
+##makedesc: Install google chrome (latest)
+
 echo
 echo "==============================================="
 echo "Installing google chrome (latest)..."

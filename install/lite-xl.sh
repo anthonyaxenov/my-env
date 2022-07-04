@@ -1,4 +1,6 @@
 #!/bin/bash
+##makedesc: Install lite-xl v2.0.5 (draft)
+
 
 # DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
 # DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
@@ -11,7 +13,7 @@
 [ $1 ] && LITEXLVER="$1" || LITEXLVER="2.0.5"
 echo
 echo "==============================================="
-echo "Installing lite-xl${LITEXLVER}..."
+echo "Installing lite-xl v${LITEXLVER}..."
 echo "==============================================="
 echo
 

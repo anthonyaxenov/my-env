@@ -1,4 +1,6 @@
 #!/bin/bash
+##makedesc: Install droidcam-obs plugin v1.5.1
+
 # https://www.dev47apps.com/droidcam/linux/
 # https://www.dev47apps.com/obs/
 # https://www.dev47apps.com/obs/usage.html

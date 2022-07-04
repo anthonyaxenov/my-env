@@ -1,5 +1,7 @@
 #!/bin/bash
-PHPVER="8.1"
+##makedesc: Install php v8.1 + ppa
+
+[ $1 ] && PHPVER="$1" || PHPVER="8.1"
 echo
 echo "==============================================="
 echo "Installing php${PHPVER}..."

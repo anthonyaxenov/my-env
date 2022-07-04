@@ -1,7 +1,9 @@
 #!/bin/bash
+##makedesc: Install composer (latest)
+
 echo
 echo "==============================================="
-echo "Installing composer..."
+echo "Installing composer (latest)..."
 echo "==============================================="
 echo
 

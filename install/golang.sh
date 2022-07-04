@@ -1,4 +1,5 @@
 #!/bin/bash
+##makedesc: Install golang v1.18.3
 
 # https://go.dev/dl/
 # https://golang.org/doc/install

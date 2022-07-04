@@ -1,9 +1,11 @@
 #!/bin/bash
+##makedesc: Install droidcam v1.8.2
+
 # https://www.dev47apps.com/droidcam/linux/
 
 echo
 echo "==============================================="
-echo "Installing droidcam..."
+echo "Installing droidcam v1.8.2..."
 echo "==============================================="
 echo
 

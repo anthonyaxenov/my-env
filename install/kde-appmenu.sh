@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/bash (latest)
+##makedesc: Install KDE Window AppMenu Applet
+
 echo
 echo "==============================================="
 echo "Installing KDE Window AppMenu Applet..."

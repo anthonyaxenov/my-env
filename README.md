@@ -1,49 +1,52 @@
-# Окружение рабочего стола
+# My Ubuntu environment
 
-Набор скриптов для развёртывания привычной рабочей среды на Ubuntu.
+`make`-ready bunch of scripts for easily installation of different software.
 
-## Полная установка
+## Prerequisites
 
-Если установлен `git`
+* `bash`, `zsh` or other `sh`-compatible shell
+* `make`
+* `git` or `wget`
+
+## Usage
+
+### Clone this repo (recommended)
 
 ```shell
-git clone git@git.anthonyaxenov.ru:anthony/my-env.git --depth=1
+# if git is installed
+git clone git@git.axenov.dev:anthony/my-env.git --depth=1
+
+# if git is not installed
+wget -qO - https://git.axenov.dev/anthony/my-env/archive/master.tar.gz | tar -zxf -
+
+# switch to repo dir
 cd my-env
-sudo ./start.sh
+
+# get full list of `make` goals
+make help
+
+# generate new ./Makefile and get full list of `make` goals
+./gen-makefile.sh
 ```
 
-Если не установлен `git`
+### Selective straightforward installation
 
 ```shell
-wget -qO - http://git.anthonyaxenov.ru/anthony/my-env/archive/master.tar.gz | tar -zxf -
-cd my-env
-sudo ./start.sh
+# from remote file
+wget -qO - https://git.axenov.dev/anthony/my-env/raw/branch/master/install/apt.sh | bash
+
+# from locally cloned repo
+./install/apt.sh
 ```
 
-Скрипт `start.sh` обработает все `*.sh`-скрипты из [`/install`](/install) по порядку.
+## How to add a new software script here
 
-## Частичная установка
+1. Create new `./install/*.sh` script.  
+   At the beggining of a file you must write these two lines:
+   ```shell
+   #!/bin/bash
+   ##makedesc: Your description for Makefile
+   ```
+2. Test your script
+3. Run `./gen-makefile.sh` to generate new `./Makefile`
 
-Без полного развёртывания репозитория
-
-```shell
-wget -qO - http://git.anthonyaxenov.ru/anthony/my-env/raw/branch/master/install/000-apt.sh | bash
-```
-
-После полного развёртывания репозитория (см. полную установку):
-
-```shell
-cd my-env
-sudo ./install/000-apt.sh
-```
-
-## Тема оформления (только MATE)
-
-Также можно установить визуальное оформление:
-* тема: [Budgie Desktop Dark Theme](https://www.pling.com/p/1276879)
-* икoнки: [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/)
-* курсоры: [Bridge](https://www.mate-look.org/s/Mate/p/999983/), [Capitaine Cursors](https://www.gnome-look.org/p/1148692/)
-
-```shell
-sudo ./theme/install.sh
-```

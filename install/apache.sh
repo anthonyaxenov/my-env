@@ -1,4 +1,6 @@
 #!/bin/bash
+##makedesc: Install apache2 (latest)
+
 echo
 echo "==============================================="
 echo "Installing apache2..."

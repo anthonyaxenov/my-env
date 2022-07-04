@@ -1,7 +1,9 @@
 #!/bin/bash
+##makedesc: Install telebit (latest)
+
 echo
 echo "==============================================="
-echo "Installing telebit..."
+echo "Installing telebit (latest)..."
 echo "==============================================="
 echo
 

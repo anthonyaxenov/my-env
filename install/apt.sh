@@ -1,4 +1,6 @@
 #!/bin/bash
+##makedesc: Install bunch of software from apt
+
 echo
 echo "==============================================="
 echo "Installing software from apt..."

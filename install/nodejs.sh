@@ -1,4 +1,6 @@
 #!/bin/bash
+##makedesc: Install nodejs + npm via nvm
+
 echo
 echo "==============================================="
 echo "Installing nodejs..."

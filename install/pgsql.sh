@@ -1,7 +1,9 @@
 #!/bin/bash
+##makedesc: Install postgresql (latest) and php-pgsql (if php is installed)
+
 echo
 echo "==============================================="
-echo "Installing postgresql..."
+echo "Installing postgresql (latest)..."
 echo "==============================================="
 echo
 
@@ -11,4 +13,4 @@ installed() {
 
 sudo apt install -y --autoremove postgresql postgresql-contrib
 sudo service postgresql restart
-installed php && sudo apt install -y --autoremove php-pgsql
+installed 'php' && sudo apt install -y --autoremove php-pgsql

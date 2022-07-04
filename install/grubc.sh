@@ -1,7 +1,9 @@
 #!/bin/bash
+##makedesc: Install grub-customizer (latest) + ppa
+
 echo
 echo "==============================================="
-echo "Installing grub-customizer..."
+echo "Installing grub-customizer (latest)..."
 echo "==============================================="
 echo
 

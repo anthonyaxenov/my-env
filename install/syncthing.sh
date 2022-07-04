@@ -1,7 +1,9 @@
 #!/bin/bash
+##makedesc: Install syncthing (latest) + ppa
+
 echo
 echo "==============================================="
-echo "Installing syncthing..."
+echo "Installing syncthing (latest) + ppa..."
 echo "==============================================="
 echo
 

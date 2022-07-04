@@ -1,7 +1,9 @@
 #!/bin/bash
+##makedesc: Install ulauncher (latest) + ppa
+
 echo
 echo "==============================================="
-echo "Installing ulauncher..."
+echo "Installing ulauncher (latest) + ppa..."
 echo "==============================================="
 echo
 

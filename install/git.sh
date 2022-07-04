@@ -1,4 +1,6 @@
 #!/bin/bash
+##makedesc: Install git (latest)
+
 echo
 echo "==============================================="
 echo "Installing git (latest)..."
@@ -11,7 +13,6 @@ installed() {
 ENVDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 ! installed make && sudo apt install -y make
-! installed curl && sudo apt install -y curl
 
 if installed git; then
     sudo rm -rf /usr/src/git
@@ -21,6 +22,7 @@ if installed git; then
     sudo make prefix=/usr/local all
     sudo make prefix=/usr/local install
 else
+    ! installed wget && sudo apt install -y wget
     wget https://github.com/git/git/archive/master.zip -O /tmp/git.zip
     sudo unzip -q /tmp/git.zip -d /usr/src/git
     rm /tmp/git.zip
@@ -32,6 +34,5 @@ else
     sudo git clone https://github.com/git/git.git --depth=1 /usr/src/git
     sudo chown -R $USER: /usr/src/git
 fi
-cd -
-cp "$ENVDIR"/dotfiles/.gitconfig $HOME/.gitconfig
+
 git --version

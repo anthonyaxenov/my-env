@@ -1,7 +1,9 @@
 #!/bin/bash
+##makedesc: Install docker (latest) + docker-compose (latest) + ppa
+
 echo
 echo "==============================================="
-echo "Installing docker..."
+echo "Installing docker (latest)..."
 echo "==============================================="
 echo
 

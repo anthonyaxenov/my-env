@@ -1,4 +1,6 @@
 #!/bin/bash
+##makedesc: Install postman (latest)
+
 echo
 echo "==============================================="
 echo "Installing postman (latest)..."

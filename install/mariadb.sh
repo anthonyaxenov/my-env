@@ -1,7 +1,9 @@
 #!/bin/bash
+##makedesc: Install mariadb (latest) and php-mysql + phpMyAdmin (if php is installed)
+
 echo
 echo "==============================================="
-echo "Installing mariadb..."
+echo "Installing mariadb (latest)..."
 echo "==============================================="
 echo
 

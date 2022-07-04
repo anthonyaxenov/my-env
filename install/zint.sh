@@ -1,7 +1,9 @@
 #!/bin/bash
+##makedesc: Install zint (latest)
+
 echo
 echo "==============================================="
-echo "Installing zint..."
+echo "Installing zint (latest)..."
 echo "==============================================="
 echo
 
@@ -14,7 +16,7 @@ sudo apt install -y --autoremove \
 
 if installed git; then
     # 2.9.* ===============================================================================
-    sudo git clone git://git.code.sf.net/p/zint/code /usr/src/zint
+    sudo git clone git@github.com:zint/zint.git /usr/src/zint
     cd /usr/src/zint
     sudo cmake .
     sudo make

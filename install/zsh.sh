@@ -1,7 +1,9 @@
 #!/bin/bash
+##makedesc: Install zsh + omz (latest)
+
 echo
 echo "==============================================="
-echo "Installing zsh + oh-my-zsh"
+echo "Installing zsh + omz (latest)..."
 echo "==============================================="
 echo
 
