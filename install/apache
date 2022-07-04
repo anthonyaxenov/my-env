@@ -8,5 +8,5 @@ echo "==============================================="
 echo
 
 sudo apt install -y --autoremove apache2 && \
-    service apache2 restart && \
+    sudo systemctl restart apache2 && \
     apache2 -v
