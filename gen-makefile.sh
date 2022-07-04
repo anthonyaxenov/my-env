@@ -21,7 +21,7 @@ help: Makefile
 	@echo "Usage:"
 	@echo "\tmake <goal>\n"
 	@echo "Available goals:"
-	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e "s/^/\t/"
+	@sed -n 's/^##//p' \$< | column -t -s ':' |  sed -e "s/^/\t/"
 
 ##<goal>_: Same as 'cat ./install/<goal>'
 %_:

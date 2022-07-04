@@ -76,7 +76,13 @@ where:
 * `mypack*` is the pack name
 * `goal*` are script names in `./install`
 
-## Testing in docker
+## Testing in docker (not recommended)
+
+> Note that this is almost useless way to test since you'll meet errors in many cases because dockerized OS is not fully-functional and will never be.
+> 
+> You can use docker to test something **really simple**, e.g. to check general script steps or install cli tools.
+>
+> In other cases you need virtualized Ubuntu instead of dockerized one, so I strongly recommend you to use [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or your host machine.
 
 ```shell
 # switch to repo dir
@@ -85,8 +91,12 @@ cd my-env
 # build and run container 
 docker build -t myenv . && docker run -it myenv
 
-# oneliner
+# or oneliner
 docker run -it $(docker build -q .)
 ```
 
 Now you can play around with scripts.
+
+## License
+
+[WTFPLv2](LICENSE)
