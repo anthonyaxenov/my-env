@@ -1,7 +1,7 @@
 #!/bin/bash
-##makedesc: Install rustdesk v1.1.8 (deb)
+##makedesc: Install rustdesk client v1.1.9 (deb)
 
-[ $1 ] && RDVER="$1" || RDVER="1.1.8"
+[ $1 ] && RDVER="$1" || RDVER="1.1.9"
 echo
 echo "==============================================="
 echo "Installing rustdesk v${RDVER}..."
@@ -10,7 +10,6 @@ echo
 
 # https://github.com/rustdesk/rustdesk
 
-sudo apt install libxdo3
-wget "http://github.com/rustdesk/rustdesk/releases/download/${RDVER}/rustdesk-${RDVER}.deb" -qO /tmp/rustdesk.deb
-sudo dpkg -i /tmp/rustdesk.deb
-rm /tmp/rustdesk.deb
+sudo apt install libxdo3 && \
+    wget "http://github.com/rustdesk/rustdesk/releases/download/${RDVER}/rustdesk-${RDVER}.deb" -O ${HOME}/install/rustdesk_${RDVER}.deb && \
+    sudo dpkg -i ${HOME}/install/rustdesk_${RDVER}.deb
