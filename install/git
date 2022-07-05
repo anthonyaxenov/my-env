@@ -10,29 +10,31 @@ echo
 installed() {
     command -v "$1" >/dev/null 2>&1
 }
-ENVDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 ! installed make && sudo apt install -y make
 
 if installed git; then
-    sudo rm -rf /usr/src/git
-    sudo git clone https://github.com/git/git.git --depth=1 /usr/src/git
-    sudo chown -R $USER: /usr/src/git
-    cd /usr/src/git/
-    sudo make prefix=/usr/local all
-    sudo make prefix=/usr/local install
+    if [ -d "${HOME}/install/git" ]; then
+        cd /usr/src/git/ && \
+            git pull
+    else
+        git clone https://github.com/git/git.git --depth=1 "${HOME}/install/git" && \
+            cd /usr/src/git/
+    fi
+    sudo make prefix=/usr/local all && \
+        sudo make prefix=/usr/local install
 else
     ! installed wget && sudo apt install -y wget
-    wget https://github.com/git/git/archive/master.zip -O /tmp/git.zip
-    sudo unzip -q /tmp/git.zip -d /usr/src/git
-    rm /tmp/git.zip
-    cd /usr/src/git/git-master
-    sudo make prefix=/usr/local all
-    sudo make prefix=/usr/local install
-    cd /usr/src
-    sudo rm -rf git
-    sudo git clone https://github.com/git/git.git --depth=1 /usr/src/git
-    sudo chown -R $USER: /usr/src/git
+    [ -d "${HOME}/install/git" ] || mkdir -p "${HOME}/install/git"
+    wget https://github.com/git/git/archive/master.zip -O /tmp/git.zip && \
+        unzip -q /tmp/git.zip -d "${HOME}/install/git" && \
+        rm /tmp/git.zip && \
+        cd "${HOME}/install/git/git-master" && \
+        sudo make prefix=/usr/local all && \
+        sudo make prefix=/usr/local install && \
+        cd - && \
+        rm -rf git && \
+        git clone https://github.com/git/git.git --depth=1 "${HOME}/install/git"
 fi
 
 git --version
