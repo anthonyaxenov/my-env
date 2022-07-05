@@ -1,0 +1,32 @@
+#!/bin/bash
+##makedesc: Install papirus-icon-theme (latest)
+
+echo
+echo "==============================================="
+echo "Installing papirus-icon-theme (latest)..."
+echo "==============================================="
+echo
+
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+if installed git; then
+    mkdir ${HOME}/install/
+    git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme.git --depth=1 ${HOME}/install/papirus-icon-theme
+else
+    ! installed wget && sudo apt install -y wget
+    mkdir ${HOME}/install/papirus-icon-theme
+    wget https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/archive/refs/heads/master.zip -O ${HOME}/install/papirus-icon-theme.zip
+    unzip ${HOME}/install/papirus-icon-theme.zip -d ${HOME}/install/papirus-icon-theme
+fi
+
+ln -s ${HOME}/install/papirus-icon-theme/Papirus ${HOME}/.local/share/icons/Papirus
+ln -s ${HOME}/install/papirus-icon-theme/Papirus-Dark ${HOME}/.local/share/icons/Papirus-Dark
+ln -s ${HOME}/install/papirus-icon-theme/Papirus-Light ${HOME}/.local/share/icons/Papirus-Light
+
+echo
+echo "Finish! Don't forget to change current icon theme."
+echo "You can find them here:"
+echo -e "\t${HOME}/.local/share/icons/"
+echo
