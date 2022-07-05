@@ -29,7 +29,6 @@ sudo apt install -y \
     libcurl4-gnutls-dev \
     libexpat1-dev \
     libghc-zlib-dev \
-    libreoffice \
     libssl-dev \
     lsb-release \
     lsp-plugins \
@@ -47,16 +46,11 @@ sudo apt install -y \
     terminator \
     ubuntu-restricted-extras \
     unzip \
-    vlc \
-    # at \
-    # compiz \
-    # compizconfig-settings-manager \
-    # deepin-screenshot \
+    vlc
     # earlyoom \
     # etckeeper \
     # geoclue-2.0 \
     # gnome-software \
     # minder \
-    # nodejs \
     # redshift \
     # redshift-gtk
