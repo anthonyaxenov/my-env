@@ -1,0 +1,11 @@
+#!/bin/bash
+##makedesc: Install libreoffice
+
+echo
+echo "==============================================="
+echo "Installing libreoffice..."
+echo "==============================================="
+echo
+
+sudo apt update && \
+    sudo apt install -y --autoremove libreoffice
