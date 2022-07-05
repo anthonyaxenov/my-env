@@ -4,10 +4,13 @@
 
 ## Requirements
 
+* Ubuntu >= 20.04 (not tested with version < 20)
 * `bash`, `zsh` or other `sh`-compatible shell
 * `make` (optional but recommended)
 * `wget` (necessary for some scripts)
 * `git` (necessary for some scripts)
+
+If some dependecies are missed for some of these scripts it is enougth to run `./install/apt` in most cases.
 
 ## Usage
 
@@ -23,36 +26,37 @@ wget -qO - https://git.axenov.dev/anthony/my-env/archive/master.tar.gz | tar -zx
 # switch to repo dir
 cd my-env
 
+# generate fresh ./Makefile and get full list of `make` goals
+./gen-makefile
+
 # get full list of `make` goals
 make help
-
-# generate new ./Makefile and get full list of `make` goals
-./gen-makefile.sh
 ```
 
-> I do not recomend to run `make` without arguments.
+> I do not recommend to run `make` without arguments since then ALL goals will be started in their order.
+> 
 > Use `make help` to look around.
 
 ### Selective straightforward installation
 
 ```shell
 # from remote file
-wget -qO - https://git.axenov.dev/anthony/my-env/raw/branch/master/install/apt.sh | bash
+wget -qO - https://git.axenov.dev/anthony/my-env/raw/branch/master/install/apt | bash
 
 # from locally cloned repo
-./install/apt.sh
+./install/apt
 ```
 
 ## How to add a new software script?
 
-1. Create new `./install/*.sh` script.  
+1. Create new `./install/*` script.  
    At the beggining of a file you must write these two lines:
    ```shell
    #!/bin/bash
    ##makedesc: Your description for Makefile
    ```
 2. Test your script
-3. Run `./gen-makefile.sh` to generate new `./Makefile`
+3. Run `./gen-makefile` to generate new `./Makefile`
 
 ## How to create packs?
 
@@ -96,6 +100,14 @@ docker run -it $(docker build -q .)
 ```
 
 Now you can play around with scripts.
+
+## TODO
+
+* build: [flameshot](https://github.com/flameshot-org/flameshot#compilation)
+* build: [rustdesk](https://github.com/rustdesk/rustdesk#build)
+* [JB mono](https://www.jetbrains.com/ru-ru/lp/mono/#how-to-install) ([2](https://fonts.google.com/specimen/JetBrains+Mono))
+* update scripts (when possible)
+* uninstall scripts (when possible)
 
 ## License
 
