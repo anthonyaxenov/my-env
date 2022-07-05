@@ -1,0 +1,25 @@
+#!/bin/bash
+##makedesc: Install qt5
+
+echo
+echo "==============================================="
+echo "Installing qt5..."
+echo "==============================================="
+echo
+
+sudo apt install -y --autoremove \
+    build-essential \
+    ca-certificates \
+    cmake \
+    g++ \
+    libqt5core5a \
+    libqt5dbus5 \
+    libqt5gui5 \
+    libqt5network5 \
+    libqt5svg5 \
+    libqt5svg5-dev \
+    libqt5widgets5 \
+    openssl \
+    qtbase5-dev \
+    qttools5-dev \
+    qttools5-dev-tools
