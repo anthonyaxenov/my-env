@@ -7,21 +7,21 @@ echo "Installing postman (latest)..."
 echo "==============================================="
 echo
 
-wget "https://dl.pstmn.io/download/latest/linux64" -O /tmp/postman.tar.gz
-# sudo tar -xvzf /tmp/postman.tar.gz -C /usr/local/bin
-sudo tar -xzf /tmp/postman.tar.gz -C /usr/local
-rm /tmp/postman.tar.gz
-sudo ln -s /usr/local/Postman/Postman /usr/local/bin/postman
-
-echo "#!/usr/bin/env xdg-open
+mkdir -p ${HOME}/install/postman
+# mkdir -p ${HOME}/.local/bin
+# wget "https://dl.pstmn.io/download/latest/linux64" -O ${HOME}/install/postman.tar.gz && \
+    tar -xzf ${HOME}/install/postman.tar.gz -C ${HOME}/install/postman && \
+    ln -s ${HOME}/install/postman/Postman/Postman ${HOME}/.local/bin/postman && \
+    cat << EOF > ${HOME}/.local/share/applications/Postman.desktop
+#!/usr/bin/env xdg-open
 
 [Desktop Entry]
 Name=Postman
-Exec=/usr/local/bin/postman
-Icon=/usr/local/Postman/app/icons/icon_128x128.png
+Exec=${HOME}/.local/bin/postman
+Icon=${HOME}/install/postman/Postman/app/icons/icon_128x128.png
 Categories=Utility,Network
 Terminal=false
 Type=Application
 Encoding=UTF-8
-" > $HOME/.local/share/applications/Postman.desktop
+EOF
 sudo update-desktop-database
