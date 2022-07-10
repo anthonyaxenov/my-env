@@ -1,7 +1,4 @@
 #!/bin/bash
-
-# https://gist.github.com/anthonyaxenov/c16e1181d4b8a8644c57ec8a1f6cf21c
-
 #########################################################################
 #                                                                       #
 # Set display resolution                                                #
@@ -17,6 +14,8 @@
 # (chmod +x needed).                                                    #
 #                                                                       #
 #########################################################################
+
+# https://gist.github.com/anthonyaxenov/c16e1181d4b8a8644c57ec8a1f6cf21c
 
 # Set display name to work with. You can get it via 'xrandr --listactivemonitors'
 display="HDMI-2"
