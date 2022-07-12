@@ -1,11 +1,12 @@
 #!/bin/bash
 ##makedesc: Install composer (latest)
-
 echo
 echo "==============================================="
 echo "Installing composer (latest)..."
 echo "==============================================="
 echo
+
+# https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
 
 installed() {
     command -v "$1" >/dev/null 2>&1
@@ -16,18 +17,19 @@ installed() {
 if installed "composer"; then
     echo "WARNING: Removing current composer to install its actual version"
     sudo apt remove -y --autoremove composer
-    sudo rm -f /bin/composer
-    sudo rm -f /usr/bin/composer
-    sudo rm -f /usr/local/bin/composer
-    sudo rm -rf /usr/src/composer
+    sudo rm /bin/composer
+    sudo rm /usr/bin/composer
+    sudo rm /usr/local/bin/composer
+    sudo rm /usr/src/composer
+    rm $HOME/.local/bin/composer
 fi
 
-sudo mkdir -m 0777 -p /usr/src/composer
-cd /usr/src/composer
+mkdir -p $HOME/install && cd $HOME/install
+# mkdir -p $HOME/.local/bin
 
-# https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
 EXPECTED_CHECKSUM="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')"
-sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+# php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+wget https://getcomposer.org/installer -O composer-setup.php
 ACTUAL_CHECKSUM="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
 if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]; then
     >&2 echo 'ERROR: Invalid installer checksum'
@@ -35,7 +37,6 @@ if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]; then
     exit 1
 fi
 php composer-setup.php --quiet
-sudo cp /usr/src/composer/composer.phar /usr/local/bin/composer
+cp $HOME/install/composer.phar $HOME/.local/bin/composer
 cd - >/dev/null
-sudo rm -rf /usr/src/composer/
 installed "composer" && composer --version
