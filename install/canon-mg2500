@@ -1,0 +1,11 @@
+#!/bin/bash
+##makedesc: Install Canon Pixma MG2500 + ppa
+
+echo
+echo "==============================================="
+echo "Installing Canon Pixma MG2500 + ppa..."
+echo "==============================================="
+echo
+
+sudo add-apt-repository ppa:thierry-f/fork-michael-gruz
+sudo apt install cnijfilter-mg2500series scangearmp-mg2500series
