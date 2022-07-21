@@ -1,0 +1,25 @@
+#!/bin/bash
+##makedesc: Install ntfy (latest) + ppa
+
+echo
+echo "==============================================="
+echo "Installing ntfy (latest) + ppa..."
+echo "==============================================="
+echo
+
+# https://ntfy.sh/docs/install/#general-steps
+
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+! installed curl && sudo apt install -y curl
+
+curl -sSL https://archive.heckel.io/apt/pubkey.txt | sudo apt-key add - && \
+    sudo apt install apt-transport-https && \
+    sudo sh -c "echo 'deb [arch=amd64] https://archive.heckel.io/apt debian main' \
+        > /etc/apt/sources.list.d/archive.heckel.io.list" && \
+    sudo apt update && \
+    sudo apt install ntfy -y && \
+    sudo systemctl enable ntfy && \
+    sudo systemctl start ntfy
