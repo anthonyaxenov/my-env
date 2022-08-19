@@ -1,0 +1,84 @@
+#!/bin/bash
+##makedesc: Install file templates (KDE)
+
+echo
+echo "==============================================="
+echo "Installing file templates (KDE)..."
+echo "==============================================="
+echo
+
+TPL_DIR="$HOME/.local/share/templates"
+TPL_SRC="$TPL_DIR/.source"
+[ ! -d "$TPL_SRC" ] && mkdir -p "$TPL_SRC"
+
+echo "- Markdown" ####################################################
+cat <<EOF > "$TPL_SRC/template.md"
+# Title
+
+
+EOF
+
+cat << EOF > "$TPL_DIR/md.desktop"
+[Desktop Entry]
+Name=Документ Markdown
+Icon=text-markdown
+Type=Link
+URL=.source/template.md
+EOF
+
+echo "- PHP" ####################################################
+cat <<EOF > "$TPL_SRC/template.php"
+<?php
+declare(strict_types=1);
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+ini_set('log_errors', 1);
+
+
+EOF
+
+cat << EOF > "$TPL_DIR/php.desktop"
+[Desktop Entry]
+Name=PHP-скрипт
+Icon=application-x-php
+Type=Link
+URL=.source/template.php
+EOF
+
+echo "- Shell" ####################################################
+cat <<EOF > "$TPL_SRC/template.sh"
+#!/bin/bash
+EOF
+
+cat << EOF > "$TPL_DIR/sh.desktop"
+[Desktop Entry]
+Name=Bash-скрипт
+Icon=terminal
+Type=Link
+URL=.source/template.sh
+EOF
+
+echo "- Go" ####################################################
+cat <<EOF > "$TPL_SRC/template.go"
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("hello world")
+}
+EOF
+
+cat << EOF > "$TPL_DIR/go.desktop"
+[Desktop Entry]
+Name=Golang файл
+Type=Link
+URL=.source/template.go
+EOF
+
+echo
+echo "Finish! You can find them here:"
+echo -e "\t$TPL_DIR"
+echo
+
