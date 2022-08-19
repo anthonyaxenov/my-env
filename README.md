@@ -30,12 +30,8 @@ cd my-env
 ./gen-makefile
 
 # get full list of `make` goals
-make help
+make
 ```
-
-> I do not recommend to run `make` without arguments since then ALL goals will be started in their order.
-> 
-> Use `make help` to look around.
 
 ### Selective straightforward installation
 
@@ -70,7 +66,7 @@ mypack1: goal1 goal2 goalX ...
    ...
 
 ##mypackX: Pack description
-mypackY: goalA goalB
+mypackX: goalA goalB
    @cp file1 file2
    ...
 ...
