@@ -1,0 +1,10 @@
+#!/bin/bash
+##makedesc: Upgrading omz
+
+echo
+echo "==============================================="
+echo "Upgrading omz..."
+echo "==============================================="
+echo
+
+bash $ZSH/tools/upgrade.sh

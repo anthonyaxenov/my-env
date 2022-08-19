@@ -1,0 +1,11 @@
+#!/bin/bash
+##makedesc: Uninstalling omz
+
+echo
+echo "==============================================="
+echo "Uninstalling omz..."
+echo "==============================================="
+echo
+
+bash $ZSH/tools/uninstall.sh
+exec bash

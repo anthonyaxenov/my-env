@@ -1,9 +1,9 @@
 #!/bin/bash
-##makedesc: Install omz (latest) + powerline10k + MesloLGS fonts
+##makedesc: Install omz (latest)
 
 echo
 echo "==============================================="
-echo "Installing omz (latest) + powerline10k + MesloLGS fonts..."
+echo "Installing omz (latest)..."
 echo "==============================================="
 echo
 
@@ -16,34 +16,4 @@ if ! installed zsh || ! installed git || ! installed curl; then
     exit 1
 fi
 
-echo
-echo "1. Installing oh-my-zsh..."
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-echo
-echo "2. Installing MesloLGS fonts..."
-mkdir -p ~/.local/share/fonts/
-wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -O "~/.local/share/fonts/MesloLGS NF Regular.ttf"
-wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -O "~/.local/share/fonts/MesloLGS NF Bold.ttf"
-wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -O "~/.local/share/fonts/MesloLGS NF Italic.ttf"
-wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -O "~/.local/share/fonts/MesloLGS NF Bold Italic.ttf"
-fc-cache -vf ~/.local/share/fonts/
-
-echo
-echo "3. Installing powerlevel10k theme..."
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-sed -i 's#^ZSH_THEME=.*$#ZSH_THEME="powerlevel10k/powerlevel10k"#g' ~/.zshrc
-
-echo
-echo "4. Installing plugins..."
-git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-sed -i 's/^plugins=/#plugins=/g' ~/.zshrc
-echo "plugins=(git laravel docker docker-compose composer zsh-autosuggestions zsh-syntax-highlighting)" >> ~/.zshrc
-p10k configure
-
-echo
-echo "Finish! You need to:"
-echo "- review your plugins in ~/.zshrc"
-echo "- log out of your session and login again"
-echo

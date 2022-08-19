@@ -1,0 +1,51 @@
+#!/bin/bash
+##makedesc: Install omz fancy (powerline10k + MesloLGS font)
+
+echo
+echo "==============================================="
+echo "Installing omz fancy: powerline10k + MesloLGS font..."
+echo "==============================================="
+echo
+
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+if ! installed zsh || ! installed git || ! installed wget; then
+    echo "ERROR: you need git, zsh and wget to be installed!"
+    exit 1
+fi
+
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+    echo "ERROR: you need omz to be installed!"
+    exit 1
+fi
+
+echo
+echo "1/3 Installing MesloLGS fonts..."
+mkdir -p "$HOME/.local/share/fonts/"
+FONTS_URL="https://github.com/romkatv/powerlevel10k-media/raw/master"
+wget "$FONTS_URL/MesloLGS%20NF%20Regular.ttf" -O "$HOME/.local/share/fonts/MesloLGS NF Regular.ttf"
+wget "$FONTS_URL/MesloLGS%20NF%20Bold.ttf" -O "$HOME/.local/share/fonts/MesloLGS NF Bold.ttf"
+wget "$FONTS_URL/MesloLGS%20NF%20Italic.ttf" -O "$HOME/.local/share/fonts/MesloLGS NF Italic.ttf"
+wget "$FONTS_URL/MesloLGS%20NF%20Bold%20Italic.ttf" -O "$HOME/.local/share/fonts/MesloLGS NF Bold Italic.ttf"
+fc-cache -vf "$HOME/.local/share/fonts/"
+
+echo
+echo "2/3 Installing powerlevel10k theme..."
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+sed -i 's#^ZSH_THEME=.*$#ZSH_THEME="powerlevel10k/powerlevel10k"#g' "$HOME/.zshrc"
+
+echo
+echo "3/3 Installing plugins..."
+git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+sed -i 's/^plugins=/plugins=(git laravel docker docker-compose composer zsh-autosuggestions zsh-syntax-highlighting)/g' $HOME/.zshrc
+p10k configure
+
+echo
+echo "Finish! You need to:"
+echo "- review your plugins in $HOME/.zshrc"
+echo "- restart terminal windows to reload fonts and set 'MesloLGS NF Regular' as default font"
+echo "- log out of your session and login again"
+echo

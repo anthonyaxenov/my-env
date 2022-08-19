@@ -12,23 +12,28 @@ for file in ./install/*; do
     name=${name%.sh}
     desc=$(grep -m 1 -oP "(?<=^##makedesc:\s).*$" ${file})
     [ -z "$desc" ] && desc='<no description>'
-    echo -e "##${name}: ${desc}\n${name}:\n\t${file}\n" >> Makefile
+    echo -e "##${name}: ${desc}\n${name}:\n\t@${file}\n" >> Makefile
 done;
 
-cat << EOF >> Makefile
+cat << "EOF" >> Makefile
 ##help: Show this help message
 help: Makefile
 	@echo "Usage:"
-	@echo "\tmake <goal>\n"
+	@echo "\tmake <goal>\t - Install software"
+	@echo "\tmake +<goal>\t - Install software"
+	@echo "\tmake ^<goal>\t - Upgrade software"
+	@echo "\tmake @<goal>\t - Uninstall software"
 	@echo "Available goals:"
-	@sed -n 's/^##//p' \$< | column -t -s ':' |  sed -e "s/^/\t/"
-
-##<goal>_: Same as 'cat ./install/<goal>'
-%_:
-	@cat ./install/\$*
+	@sed -n 's/^##//p' $< | column -ts ':' | sed -e "s/^/\t/"
++%:
+	@$(MAKE) $*
+^%:
+	@./upgrade/$*
+@%:
+	@./uninstall/$*
 EOF
 
 echo "New ./Makefile has been generated!"
 echo "Old one has been saved as ./Makefile.bak"
 echo
-make help
+make -s help
