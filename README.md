@@ -5,7 +5,7 @@
 ## Requirements
 
 * Ubuntu >= 20.04 (not tested with version < 20)
-* `bash`, `zsh` or other `sh`-compatible shell
+* `bash`, `zsh` or other POSIX-compatible shell
 * `make` (optional but recommended)
 * `wget` (necessary for some scripts)
 * `git` (necessary for some scripts)
@@ -61,11 +61,11 @@ You can create new file inside `./packs` dir.
 Syntax is same as classic makefile with one important and necessary addition -- a comment started with `##`:
 
 ```makefile
-##mypack1: Pack description
+# Pack description
 mypack1: goal1 goal2 goalX ...
    ...
 
-##mypackX: Pack description
+# Pack description
 mypackX: goalA goalB
    @cp file1 file2
    ...

@@ -28,26 +28,28 @@ for file in ./install/*; do
     name=${name%.sh}
     desc=$(grep -m 1 -oP "(?<=^##makedesc:\s).*$" ${file})
     [ -z "$desc" ] && desc='<no description>'
-    echo -e "##${name}: ${desc}\n${name}:\n\t@${file}\n" >> Makefile
+    echo -e "# ${desc}\n${name}:\n\t@${file}\n" >> Makefile
 done;
 
 cat << "EOF" >> Makefile
 
 self:
 	@./gen-makefile
+
 help: Makefile
 	@echo "Ubuntu software installator"
 	@echo
 	@echo "Usage:"
-	@echo "\tmake  help\t - Show this help"
-	@echo "\tmake  GOAL\t - Install software"
+	@echo "\tmake help\t - Show this help"
+	@echo "\tmake self\t - Regenerate Makefile (alias of ./gen-makefile)"
+	@echo "\tmake GOAL\t - Install software"
 	@echo "\tmake ^GOAL\t - Upgrade software"
 	@echo "\tmake @GOAL\t - Uninstall software"
 	@echo
 	@echo "You can combine GOALs, e.g. 'make @docker docker' will reinstall docker."
 	@echo
 	@echo "Available GOALs:"
-	@sed -n 's/^##//p' $< | column -ts ':' | sed -e "s/^/\t/"
+	@sed -n '/^#/{N;s/# *\(.*\)\n\([^# .].*:\)/\t\2\1/p}' $< | column -ts ':'
 +%:
 	@$(MAKE) $*
 ^%:
@@ -59,4 +61,4 @@ EOF
 echo "New ./Makefile has been generated!"
 echo "Old one has been saved as ./Makefile.bak"
 echo
-make -s help
+make
