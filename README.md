@@ -43,16 +43,20 @@ wget -qO - https://git.axenov.dev/anthony/my-env/raw/branch/master/install/apt |
 ./install/apt
 ```
 
-## How to add a new software script?
+## How to add my script?
 
-1. Create new `./install/*` script.  
+1. Create a new shell script in `./install`, `./upgrade` or `./uninstall` directory.  
    At the beggining of a file you must write these two lines:
    ```shell
    #!/bin/bash
    ##makedesc: Your description for Makefile
    ```
-2. Test your script
-3. Run `./gen-makefile` to generate new `./Makefile`
+2. Make this script executable, e.g.:
+   ```shell
+   sudo chmod a+x ./install/myscript
+   ```
+3. Test your script
+4. Run `make self` to generate new `./Makefile`
 
 ## How to create packs?
 

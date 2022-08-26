@@ -1,5 +1,5 @@
 #!/bin/bash
-##makedesc: Upgrading omz
+##makedesc: Upgrade omz
 
 echo
 echo "==============================================="
