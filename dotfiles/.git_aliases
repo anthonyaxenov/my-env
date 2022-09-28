@@ -1,0 +1,275 @@
+[alias]
+
+#-----------------------------------------------------------------
+a = add
+aa = add --all
+
+#-----------------------------------------------------------------
+b = branch
+bm = branch --merged
+bnm = branch --no-merged
+bv = branch -v
+bvv = branch -vv
+
+#-----------------------------------------------------------------
+c = commit
+ci = commit --interactive
+ca = commit --all
+cm = commit --message
+cam = commit --all --message
+amend = commit --amend --all --no-edit
+amendm = commit --amend --all --message
+# https://words.filippo.io/git-fixup-amending-an-older-commit/
+cf = "!f() { TARGET=$(git rev-parse \"$1\"); git commit --fixup=$TARGET && GIT_EDITOR=true git rebase --interactive --autosquash $TARGET~; }; f"
+
+#-----------------------------------------------------------------
+co = checkout
+cog = checkout --guess
+cob = checkout -b
+
+
+
+
+
+#-----------------------------------------------------------------
+cp = cherry-pick
+cpa = cherry-pick --abort
+cpc = cherry-pick --continue
+cpn = cherry-pick --no-commit
+# cpnx = cherry-pick --no-commit -x
+
+#-----------------------------------------------------------------
+d = diff
+dw = diff --word-diff
+dc = diff --cached
+ds = diff --staged
+dwc = diff --word-diff --cached
+dws = diff --word-diff --staged
+
+#-----------------------------------------------------------------
+f = fetch
+fa = fetch --all
+
+#-----------------------------------------------------------------
+# g = grep
+
+
+#-----------------------------------------------------------------
+l = log
+lo = log --oneline
+
+#-----------------------------------------------------------------
+m = merge
+ma = merge --abort
+mc = merge --continue
+mn = merge --no-commit
+
+#-----------------------------------------------------------------
+o = checkout
+
+#-----------------------------------------------------------------
+p = pull --recurse-submodules
+clone = clone --recursive
+
+
+#-----------------------------------------------------------------
+r = remote
+rv = remote -v
+ra = remote add
+ru = remote update
+rs = remote show
+rso = remote show origin
+rp = remote prune
+rpo = remote prune origin
+rpd = remote prune --dry-run
+rpod = remote prune origin --dry-run
+
+#-----------------------------------------------------------------
+rv = revert
+rvn = revert --no-commit
+
+#-----------------------------------------------------------------
+rb = rebase
+rba = rebase --abort
+rbc = rebase --continue
+rbs = rebase --skip
+rbi = rebase --interactive
+
+#-----------------------------------------------------------------
+s = status
+
+#-----------------------------------------------------------------
+sb = show-branch
+
+#-----------------------------------------------------------------
+sub = submodule
+# si = submodule init
+# sdi = submodule deinit -f
+# sa = submodule add
+# sup = submodule update
+# sst = submodule status
+# ss = submodule summary
+
+
+#-----------------------------------------------------------------
+master = "!git checkout master && git pull"
+main = "!git checkout main && git pull"
+dev = "!git checkout dev && git pull"
+develop = "!git checkout develop && git pull"
+
+#-----------------------------------------------------------------
+user = config --local --get-regexp '^user' # локальные настройки пользователя git
+guser = config --global --get-regexp '^user' # глобальные настройки пользователя git
+# whoami = user
+# gwhoami = guser
+
+#-----------------------------------------------------------------
+contributors = shortlog --summary --numbered --no-merges
+archive = !"f() { top=$(rev-parse --show-toplevel); cd $top; tar cvf $top.tar $top ; }; f"
+default-branch = config init.defaultBranch
+panic = "!git checkout $(git default-branch) && git fetch origin --prune && git reset --hard origin/$(git default-branch) && git clean -ffd"
+uncommit = reset --soft HEAD~1
+unadd = reset HEAD
+discard = checkout --
+cleaner = clean -dff
+cleanest = clean -dffx
+cleanout = !git clean -df && git checkout -- .
+publish = "!git push --set-upstream origin $(git current-branch)"
+inbound = "!git remote update --prune; git log ..@{upstream}"
+outbound = log @{upstream}..
+aliases = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
+branches = branch -a
+tags = tag -n1 --list
+stashes = stash list
+current-branch = git branch --show-current #rev-parse --abbrev-ref HEAD
+upstream-branch = !git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)
+exec = "!exec"
+pruner = "!git prune --expire=now; git reflog expire --expire-unreachable=now --rewrite --all"
+repacker = repack -a -d -f --depth=300 --window=300 --window-memory=1g
+optimizer = "!git pruner; git repacker; git prune-packed"
+last-tag = describe --tags --abbrev=0
+last-tagged = "!git describe --tags $(git rev-list --tags --max-count=1)"
+orphans = fsck --full
+log-my = "!git log --author $(git config user.email)"
+log-compact1 = log --graph --topo-order --date=short --abbrev-commit --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
+chart = "!f() { \
+    git log \
+    --format=oneline \
+    --format=\"%aE %at\" \
+    --since=6-weeks-ago \
+    $* | \
+    awk ' \
+    function time_to_slot(t) { return strftime(\"%Y-%m-%d\", t, true) } \
+    function count_to_char(i) { return (i > 0) ? ((i < 10) ? i : \"X\") : \".\" } \
+    BEGIN { \
+        time_min = systime(); time_max = 0; \
+        SECONDS_PER_DAY=86400; \
+    } \
+    { \
+        item = $1; \
+        time = 0 + $2; \
+        if (time > time_max){ time_max = time } else if (time < time_min){ time_min = time }; \
+        slot = time_to_slot(time); \
+        items[item]++; \
+        slots[slot]++; \
+        views[item, slot]++; \
+    } \
+    END{ \
+        printf(\"Chart time range %s to %s.\\n\", time_to_slot(time_min), time_to_slot(time_max)); \
+        time_max_add = time_max += SECONDS_PER_DAY; \
+        for(item in items){ \
+            row = \"\"; \
+            for(time = time_min; time < time_max_add; time += SECONDS_PER_DAY) { \
+                slot = time_to_slot(time); \
+                count = views[item, slot]; \
+                row = row count_to_char(count); \
+            } \
+            print row, item; \
+        } \
+    }'; \
+}; f"
+
+
+
+
+
+
+
+# # общее -----------------------------------------------------------------
+# init = init -q # no blm!
+# aliases = config --get-regexp '^alias' # показать список доступных алиасов
+# user = config --local --get-regexp '^user' # локальные настройки пользователя git
+# guser = config --global --get-regexp '^user' # глобальные настройки пользователя git
+# user-me = "git config user.name 'Anthony Axenov'; git config user.email 'anthonyaxenov@gmail.com'; git config user.signingkey 'F7CCD4EC'"
+# user-bars = "git config user.name 'Антон Аксенов'; git config user.email 'a.aksenov@bars.group'; git config user.signingkey '45C3E670'"
+
+# # ветки -------------------------------------------------------------------
+# bheads = branch -vv # ветки и их последние коммиты
+# branches = branch --list -vv # показать текущую ветку в общем списке локальных веток
+# # br = status -sb # показать название текущей ветки
+# brd = branch -D # удалить ветку локально
+# brod = "!git branch -D "$1"; git push origin :"$1";" # удалить ветку локально и на origin
+# merged = branch --merged # показать список веток, слитых в текущую
+# #ghpr = "!git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1" # github: встать на PR с указанным id
+# # удалить локальные ветки, слитые в текущую:
+# trim = "!DEFAULT=master; git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; git remote prune origin;"
+
+# # переключение ------------------------------------------------------------
+# co = checkout # переключиться на ветку/тег/коммит
+# cob = checkout -b # создание новое ветки
+# master = "!git checkout master && git pull" # переключиться на ветку master и обновить
+# dev = "!git checkout dev && git pull" # переключиться на ветку dev и обновить
+# develop = "!git checkout develop && git pull" # переключиться на ветку develop и обновить
+
+# # фиксация изменений ------------------------------------------------------
+# c = commit # коммит
+# ca = commit -a # коммит всех файлов
+# cm = commit -m # коммит с заданным сообщением
+# cam = commit -am # коммит всех файлов с заданным сообщением
+# amend = commit --amend --no-edit -a # прикрепляет все индексированные файлы к последнему коммиту, используя уже существующее сообщение
+# #amenda = commit --amend --no-edit
+# amendm = commit --amend -m # прикрепляет все индексированные файлы к последнему коммиту, спрашивает новое сообщение к коммиту
+# cp = cherry-pick # применить коммит поверх текущего HEAD
+# diffc = diff --cached # показать дельту staged-файла
+
+# # управление изменениями, сброс состояний, откат --------------------------
+# # st = status -sb # короткий status
+# st = status # сокращение
+# rh = reset --hard # откат коммита с удалением всех изменений на указанный коммит
+# rhh = reset --hard HEAD # откат коммита с удалением всех изменений на последний коммит
+# rmh = reset --mixed HEAD # откат коммита с сохранением всех изменений
+# unstage = reset HEAD # переводит файл staged => unstaged без потери изменений
+# clear = checkout -- # удаляет изменения в файле
+
+# # алиасы для временной фиксации
+# # на самом деле, для таких дел надо использовать git stash
+# # save = !git add -A && git commit -m 'SAVEPOINT'
+# wip = commit -am "WIP"
+# wipa = commit --amend -am "WIP"
+# undo = reset --mixed HEAD~
+
+# # работа с remote-репами --------------------------------------------------
+# pushf = push --force # отправить ветку принудительно
+# pusht = push --tags # отправить теги
+# pushft = push --tags --force # отправить теги принудительно
+# pullf = pull --force # получить ветку принудительно
+# pullt = pull --tags  # получить теги
+# pullft = pull --tags --force # получить теги
+# ploh = pull origin HEAD # получить текущую ветку из origin
+# remotes = remote -v # показать список удалённых репозиториев
+# #sy = remote update origin --prune #
+# rso = remote show origin # показать состояние локальных веток относительно удалённых на origin bare
+# rpo = remote prune origin # удалить все мёртвые ссылки на bare-ветки origin
+# repush = 'git push origin :$1 && git push origin $1' # замена push --force
+
+# # просмотр логов ----------------------------------------------------------
+# head = log -1 HEAD # показать последний коммит в текущей ветке
+# heads = log --graph --decorate --simplify-by-decoration --oneline # коммиты, которыми оканчиваются ветки
+# # название текущей ветки или тега при detached head:
+# dehead = "!BR=$(git branch --show-current); if [ -n \"$BR\" ]; then echo $BR; else git describe --contains --all HEAD; fi;"
+# tree = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+# hist = log --pretty=format:\"%h | %an (%ad) %s%d\" --graph --date=relative
+# logfull = log --graph --decorate --all
+# grog = log --graph --decorate --all --pretty=format:'%C(bold red)%h%C(reset) %C(bold blue)%an%C(reset) %C(green)%cr%C(reset) [%aD]%d%n%B'
+
+# # сабмодули ---------------------------------------------------------------

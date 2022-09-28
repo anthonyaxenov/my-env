@@ -1,0 +1,28 @@
+[core]
+    editor = nano
+    autocrlf = input
+[user]
+    # ...
+    # signingkey = <key>
+    # git config user.signingkey ... -- установить ключ
+    # https://help.github.com/articles/signing-commits-using-gpg/
+[commit]
+    gpgSign = true
+[tag]
+    gpgSign = true
+[init]
+	defaultBranch = master
+[push]
+    default = current
+    followTags = true
+[pull]
+    default = current
+    rebase = false
+[diff "bin"]
+	textconv = hexdump -v -C
+[help]
+	autocorrect = 1
+[remote "origin"]
+    prune = true
+[include]
+    path = ~/.git_aliases
