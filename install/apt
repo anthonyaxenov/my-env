@@ -46,7 +46,8 @@ sudo apt install -y \
     terminator \
     ubuntu-restricted-extras \
     unzip \
-    vlc
+    vlc \
+    inotify-tools
     # earlyoom \
     # etckeeper \
     # geoclue-2.0 \
