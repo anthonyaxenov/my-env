@@ -77,6 +77,40 @@ Type=Link
 URL=.source/template.go
 EOF
 
+echo "- Dockerfile" ####################################################
+cat <<EOF > "$TPL_SRC/Dockerfile"
+# https://habr.com/ru/company/ruvds/blog/439980/
+# https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+FROM ubuntu:latest
+
+
+EOF
+
+cat << EOF > "$TPL_DIR/dockerfile.desktop"
+[Desktop Entry]
+Name=Dockerfile
+Type=Link
+URL=.source/Dockerfile.go
+EOF
+
+echo "- docker-compose" ####################################################
+cat <<EOF > "$TPL_SRC/docker-compose.yml"
+# https://docs.docker.com/compose/gettingstarted/
+# https://docs.docker.com/compose/compose-file/compose-file-v3/
+version: "3.9"
+services:
+
+
+
+EOF
+
+cat << EOF > "$TPL_DIR/docker-compose.desktop"
+[Desktop Entry]
+Name=docker-compose
+Type=Link
+URL=.source/docker-compose.yml
+EOF
+
 echo
 echo "Finish! You can find them here:"
 echo -e "\t$TPL_DIR"
