@@ -15,11 +15,11 @@ installed() {
 
 if installed git; then
     if [ -d "${HOME}/install/git" ]; then
-        cd /usr/src/git/ && \
+        cd "${HOME}/install/git" && \
             git pull
     else
         git clone https://github.com/git/git.git --depth=1 "${HOME}/install/git" && \
-            cd /usr/src/git/
+            cd "${HOME}/install/git"
     fi
     sudo make prefix=/usr/local all && \
         sudo make prefix=/usr/local install
