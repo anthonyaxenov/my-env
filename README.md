@@ -36,10 +36,10 @@ make
 ### Selective straightforward installation
 
 ```shell
-# from remote file
+# from remote file (you can meet interaction bugs this way!)
 wget -qO - https://git.axenov.dev/anthony/my-env/raw/branch/master/install/apt | bash
 
-# from locally cloned repo
+# from locally cloned repo (except scripts from ./packs)
 ./install/apt
 ```
 
@@ -58,11 +58,12 @@ wget -qO - https://git.axenov.dev/anthony/my-env/raw/branch/master/install/apt |
 3. Test your script
 4. Run `make self` to generate new `./Makefile`
 
-## How to create packs?
+## How to create a pack?
 
 You can create new file inside `./packs` dir.
 
-Syntax is same as classic makefile with one important and necessary addition -- a comment started with `##`:
+Syntax is same as classic makefile.
+It is important to add a comment with short description:
 
 ```makefile
 # Pack description
@@ -79,27 +80,6 @@ mypackX: goalA goalB
 where:
 * `mypack*` is the pack name
 * `goal*` are script names in `./install`
-
-## Testing in docker (not recommended)
-
-> Note that this is almost useless way to test since you'll meet errors in many cases because dockerized OS is not fully-functional and will never be.
-> 
-> You can use docker to test something **really simple**, e.g. to check general script steps or install cli tools.
->
-> In other cases you need virtualized Ubuntu instead of dockerized one, so I strongly recommend you to use [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or your host machine.
-
-```shell
-# switch to repo dir
-cd my-env
-
-# build and run container 
-docker build -t myenv . && docker run -it myenv
-
-# or oneliner
-docker run -it $(docker build -q .)
-```
-
-Now you can play around with scripts.
 
 ## TODO
 
