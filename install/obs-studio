@@ -1,0 +1,10 @@
+#!/bin/bash
+##makedesc: Install obs-studio (latest snap)
+
+echo
+echo "==============================================="
+echo "Installing obs-studio (latest snap)..."
+echo "==============================================="
+echo
+
+sudo snap install obs-studio

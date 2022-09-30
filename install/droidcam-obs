@@ -12,18 +12,20 @@ echo "Installing droidcam-obs..."
 echo "==============================================="
 echo
 
-command -v "obs" >/dev/null 2>&1 || echo 'You need to install obs first!'
+# command -v "obs" >/dev/null 2>&1 || echo 'You need to install obs first!'
+command -v "obs-studio" >/dev/null 2>&1 || echo 'You need to install obs-studio first!'
 
 mkdir -p ~/install/droidcam-obs
 wget -O /tmp/droidcam-obs.zip https://files.dev47apps.net/obs/droidcam_obs_1.5.1_linux.zip
 unzip -o /tmp/droidcam-obs.zip -d ~/install/droidcam-obs
 rm -rf /tmp/droidcam-obs.zip
 cd ~/install/droidcam-obs && ./install.sh
+sudo modprobe v4l2loopback video_nr=2 card_label="OBS Virtual Camera"
 
 echo
 echo "Don't forget to:"
 echo "1) restart OBS if it is running right now OR install (if not) and start it"
 echo "2) install android app: https://play.google.com/store/apps/developer?id=Dev47Apps"
-echo "3) If virtual camera not starting then execute:"
-echo "\tsudo modprobe v4l2loopback video_nr=2 card_label="OBS Virtual Camera""
+echo "3) if virtual camera not starting then execute:"
+echo -e "\tsudo modprobe v4l2loopback video_nr=2 card_label=\"OBS Virtual Camera\""
 echo
