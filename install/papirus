@@ -22,9 +22,9 @@ else
 fi
 
 mkdir -p "${HOME}/.local/share/icons/"
-ln -s "${HOME}/install/papirus-icon-theme/Papirus" "${HOME}/.local/share/icons/Papirus"
-ln -s "${HOME}/install/papirus-icon-theme/Papirus-Dark" "${HOME}/.local/share/icons/Papirus-Dark"
-ln -s "${HOME}/install/papirus-icon-theme/Papirus-Light" "${HOME}/.local/share/icons/Papirus-Light"
+ln -sf "${HOME}/install/papirus-icon-theme/Papirus" "${HOME}/.local/share/icons/Papirus"
+ln -sf "${HOME}/install/papirus-icon-theme/Papirus-Dark" "${HOME}/.local/share/icons/Papirus-Dark"
+ln -sf "${HOME}/install/papirus-icon-theme/Papirus-Light" "${HOME}/.local/share/icons/Papirus-Light"
 
 echo
 echo "Finish! Don't forget to change current icon theme."
