@@ -12,8 +12,30 @@ dir_src="$HOME/Syncthing/Mobile/Camera"
 dir_dest="$HOME/some/safe/place"
 dir_logs="$HOME/inotifywait-cp-logs"
 regexp="[0-9]{8}_[0-9]{6}.*\.(jpg|mp4|gif)"
+mkdir -p "$dir_dest" "$dir_logs"
 
-# Arguments description:
+print() {
+    echo -e "[`date '+%H:%M:%S'`] $*" \
+    | tee -a "$dir_logs/`date '+%Y%m%d'`.log"
+}
+
+copy () {
+    if [ -f "$dir_dest/$1" ]; then
+        print "SKIPPED:\t$dir_dest/$1"
+    else
+        cp "$dir_src/$1" "$dir_dest/$1"
+        print "COPIED:\t$dir_src/$1 => $dir_dest/$1"
+    fi
+}
+
+print "START\t========================="
+
+# First, try to backup files synced since last exec of this script
+ls -1 "$dir_src" \
+| grep -E "^${regexp}$" \
+| while read filename; do copy "$filename"; done
+
+# Next, run inotifywait against source directory with args:
 # --quiet     -- print less (only print events)
 # --monitor   -- don't stop after first event (like infinite loop)
 # --event     -- first syncthing creates hidden file to write data into
@@ -21,9 +43,8 @@ regexp="[0-9]{8}_[0-9]{6}.*\.(jpg|mp4|gif)"
 #                we listen to MOVED_TO event to catch final filename
 # --format %f -- print only filename
 # --include   -- filename regexp to catch event from, ensure your $regexp
-#                is correct or remove line 32 to catch synced ALL files
+#                is correct or remove line 53 to catch synced ALL files
 
-mkdir -p "$dir_dest" "$dir_logs"
 inotifywait \
     --quiet \
     --monitor \
@@ -31,8 +52,6 @@ inotifywait \
     --format %f \
     --include "$regexp" \
     "$dir_src" \
-    | while read filename; do
-        cp "$dir_src/$filename" "$dir_dest/$filename"
-        echo "[`date '+%H:%M:%S'`] COPIED: $dir_src/$filename => $dir_dest/$filename" \
-        | tee -a "$dir_logs/`date '+%Y%m%d'`.log"
-    done
+    | while read filename; do copy "$filename"; done
+
+print "FINISH\t========================="
