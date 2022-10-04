@@ -1,0 +1,19 @@
+#!/bin/bash
+##makedesc: Install KDE portal
+
+echo
+echo "==============================================="
+echo "Installing KDE portal..."
+echo "==============================================="
+echo
+
+sudo apt install -y \
+    xdg-desktop-portal \
+    xdg-desktop-portal-kde \
+    xdg-desktop-portal-gtk && \
+    echo "GTK_USE_PORTAL=1" | sudo tee -a /etc/environment && \
+    echo "XDG_CURRENT_DESKTOP=KDE" | sudo tee -a /etc/environment
+
+echo
+echo "Finish! Now you need to relogin"
+echo
