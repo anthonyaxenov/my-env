@@ -1,0 +1,13 @@
+#!/bin/bash
+##makedesc: Install youtube-dl
+
+# https://github.com/ytdl-org/youtube-dl#installation
+
+echo
+echo "==============================================="
+echo "Installing youtube-dl..."
+echo "==============================================="
+echo
+
+sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o "${HOME}/.local/bin/youtube-dl"
+sudo chmod +rx "${HOME}/.local/bin/youtube-dl"
