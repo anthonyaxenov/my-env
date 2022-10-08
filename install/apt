@@ -47,6 +47,7 @@ sudo apt install -y \
     ubuntu-restricted-extras \
     unzip \
     vlc \
+    ffmpeg \
     inotify-tools
     # earlyoom \
     # etckeeper \
