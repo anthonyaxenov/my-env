@@ -6,6 +6,7 @@ alias realias='source ~/.bash_aliases'
 alias reload='exec ${SHELL} -l'
 alias sudo='sudo ' # enable aliases to be sudo’ed
 alias g='git'
+alias hosts="sudo nano /etc/hosts"
 
 alias ..='cd ..' # zsh builtin
 alias ~='cd ~' # zsh builtin
@@ -43,6 +44,19 @@ alias gpg.list='gpg --list-keys --keyid-format SHORT'
 
 alias wine='LANG=ru_RU.utf8 wine'
 alias docker.prune='docker image prune -f; docker network prune -f; docker container prune -f'
+
+# https://obsproject.com/forum/threads/how-to-start-virtual-camera-without-sudo-privileges.139783/
+alias obscam="sudo modprobe v4l2loopback video_nr=2 card_label='OBS Virtual Camera'"
+
+# https://github.com/ytdl-org/youtube-dl
+ytm() {
+    youtube-dl $1 \
+        --extract-audio \
+        --audio-format flac \
+        --audio-quality 0 \
+        --format bestaudio \
+        --output "${HOME}/Музыка/ytm/%(title)s.%(ext)s"
+}
 
 docker.ip() {
     if [ "$1" ]; then
