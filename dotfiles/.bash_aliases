@@ -55,7 +55,7 @@ ytm() {
         --audio-format flac \
         --audio-quality 0 \
         --format bestaudio \
-        --output "${HOME}/Музыка/ytm/%(title)s.%(ext)s"
+        --output "${HOME}/youtube-music/%(title)s.%(ext)s"
 }
 
 docker.ip() {
