@@ -48,14 +48,18 @@ alias docker.prune='docker image prune -f; docker network prune -f; docker conta
 # https://obsproject.com/forum/threads/how-to-start-virtual-camera-without-sudo-privileges.139783/
 alias obscam="sudo modprobe v4l2loopback video_nr=2 card_label='OBS Virtual Camera'"
 
-# https://github.com/ytdl-org/youtube-dl
+# Download music from Youtube or Youtube Music
+# and save as top quality flac file without video
+# Playlist and video/track URLs are supported
+# Usage:     $ ytm https://www.youtube.com/watch\?v=dQw4w9WgXcQ
+# More info: https://github.com/ytdl-org/youtube-dl
 ytm() {
     youtube-dl $1 \
         --extract-audio \
         --audio-format flac \
         --audio-quality 0 \
         --format bestaudio \
-        --output "${HOME}/youtube-music/%(title)s.%(ext)s"
+        --output "${HOME}/youtube-music/%(playlist_title)s/%(channel)s - %(title)s.%(ext)s"
 }
 
 docker.ip() {
