@@ -1,0 +1,15 @@
+#!/bin/bash
+##makedesc: Install ytdlcue
+
+# https://gist.github.com/anthonyaxenov/8e11f18493c8419ee7abc94a8ea0cfaf
+
+echo
+echo "==============================================="
+echo "Installing ytdlcue..."
+echo "==============================================="
+echo
+
+install_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+tools_dir="`dirname $install_dir`/tools"
+cp "${tools_dir}/ytdlcue.sh" "${HOME}/.local/bin/ytdlcue"
+sudo chmod +rx "${HOME}/.local/bin/ytdlcue"
