@@ -66,9 +66,9 @@ cue_path="$path.cue" # path to cue sheet to be generated
     exit 3
 }
 
-echo "PERFORMER `cat "$json_path" | jq -Mc '.channel'`"> $cue_path
-echo "TITLE `cat "$json_path" | jq -Mc '.title'`" >> $cue_path
-echo "FILE \"$audio_file\" ${audio_ext^^}" >> $cue_path
+echo "PERFORMER `cat "$json_path" | jq -Mc '.channel'`" > "$cue_path"
+echo "TITLE `cat "$json_path" | jq -Mc '.title'`" >> "$cue_path"
+echo "FILE \"$audio_file\" ${audio_ext^^}" >> "$cue_path"
 
 counter=1 # track counter (works only inside loop!)
 cat "$json_path" | jq -Mc '.chapters[]' \
@@ -82,10 +82,10 @@ cat "$json_path" | jq -Mc '.chapters[]' \
     #TODO: what if dash is not delimiter between performer and title?
     #TODO: take $title2 if $performer and (or?) $title2 are empty
 
-    printf "%-2sTRACK $number AUDIO\n" >> $cue_path
-    printf "%-4sPERFORMER \"$performer\"\n" >> $cue_path
-    printf "%-4sTITLE \"$title2\"\n" >> $cue_path
-    printf "%-4sINDEX 01 $time\n" >> $cue_path
+    printf "%-2sTRACK $number AUDIO\n" >> "$cue_path"
+    printf "%-4sPERFORMER \"$performer\"\n" >> "$cue_path"
+    printf "%-4sTITLE \"$title2\"\n" >> "$cue_path"
+    printf "%-4sINDEX 01 $time\n" >> "$cue_path"
 
     counter=`expr $counter + 1` # increase counter
 done
