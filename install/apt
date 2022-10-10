@@ -48,6 +48,7 @@ sudo apt install -y \
     unzip \
     vlc \
     ffmpeg \
+    xclip \
     inotify-tools
     # earlyoom \
     # etckeeper \

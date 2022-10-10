@@ -7,6 +7,7 @@ alias reload='exec ${SHELL} -l'
 alias sudo='sudo ' # enable aliases to be sudo’ed
 alias g='git'
 alias hosts="sudo nano /etc/hosts"
+alias shrug="echo '¯\_(ツ)_/¯' | xclip -selection c"
 
 alias ..='cd ..' # zsh builtin
 alias ~='cd ~' # zsh builtin
