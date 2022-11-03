@@ -1,34 +1,100 @@
 #!/bin/bash
-##makedesc: Install lite-xl v2.0.5 (draft)
+##makedesc: Install lite-xl
 
+# https://github.com/lite-xl/lite-xl/releases
+# https://lite-xl.com/en/documentation/build
 
-# DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
-# DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
-# DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
-# DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
-# DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
-
-# https://github.com/lite-xl/lite-xl
-
-[ $1 ] && LITEXLVER="$1" || LITEXLVER="2.0.5"
 echo
 echo "==============================================="
-echo "Installing lite-xl v${LITEXLVER}..."
+echo "Installing lite-xl v2.1.0..."
 echo "==============================================="
 echo
 
-wget "https://github.com/lite-xl/lite-xl/releases/download/v${LITEXLVER}/lite-xl-linux-x86_64.tar.gz" -O /tmp/lite-xl.tar.gz
-sudo tar -xzf /tmp/lite-xl.tar.gz -C /tmp
-mkdir -p $HOME/.local/bin && cp /tmp/lite-xl/bin/lite-xl $HOME/.local/bin
-cp -r /tmp/lite-xl/share $HOME/.local
-rm -rf /tmp/lite-xl*
-echo -e 'export PATH="$PATH:$HOME/.local/bin"' >> $HOME/.bashrc
-[ -f $HOME/.zshrc ] && echo -e 'export PATH="$PATH:$HOME/.local/bin"' >> $HOME/.zshrc
-xdg-desktop-menu forceupdate
+tar_url="https://github.com/lite-xl/lite-xl/releases/download/v2.1.0/lite-xl-v2.1.0-addons-linux-x86_64-portable.tar.gz"
+tar_filepath="/tmp/lite-xl.tar.gz"
+untar_dir="$HOME/install"
+untar_subdir="$untar_dir/lite-xl"
+dest_bin_dir="$HOME/.local/bin"
+dest_config_dir="$HOME/.config/lite-xl"
+dest_share_dir="$HOME/.local/share"
+dest_share_subdir="$dest_share_dir/lite-xl"
 
-### uninstall
-# rm -f $HOME/.local/bin/lite-xl
-# rm -rf $HOME/.local/share/icons/hicolor/scalable/apps/lite-xl.svg \
-#     $HOME/.local/share/applications/org.lite_xl.lite_xl.desktop \
-#     $HOME/.local/share/metainfo/org.lite_xl.lite_xl.appdata.xml \
-#     $HOME/.local/share/lite-xl
+wget "$tar_url" -O "$tar_filepath"
+mkdir -vp \
+    "$untar_dir" \
+    #"$dest_config" \
+    "$dest_bin_dir" \
+    "$dest_share_dir"
+
+tar -xzf "$tar_filepath" -C "$untar_dir"
+mv -fv "$untar_subdir/lite-xl" "$dest_bin_dir/lite-xl"
+mv -fvT "$untar_subdir/data" "$dest_share_subdir"
+rm -fr "$tar_file" "$untar_subdir"
+
+# echo -e "\nexport LITE_SCALE=1 # https://github.com/lite-xl/lite-xl/issues/1173\n" >> $HOME/.profile
+cat << EOF > "$dest_share_dir/applications/org.lite_xl.lite_xl.desktop"
+[Desktop Entry]
+Type=Application
+Name=Lite XL
+Comment=A lightweight text editor written in Lua
+Exec=env LITE_SCALE=1 lite-xl %F
+Icon=lite-xl
+Terminal=false
+StartupWMClass=lite-xl
+Categories=Development;IDE;
+MimeType=text/plain;
+EOF
+
+sudo update-desktop-database && \
+    xdg-desktop-menu forceupdate
+
+echo
+echo "==============================================="
+echo "Installing lite-xl plugins..."
+echo "https://github.com/lite-xl/lite-xl-plugins"
+echo "==============================================="
+echo
+
+download_plugin() {
+    echo "- $1"
+    curl -s "https://raw.githubusercontent.com/lite-xl/lite-xl-plugins/master/plugins/$1.lua" \
+        > "$dest_share_subdir/plugins/$1.lua"
+}
+
+download_plugin "align_carets"
+download_plugin "autosaveonfocuslost"
+download_plugin "bracketmatch"
+download_plugin "copyfilelocation"
+download_plugin "dragdropselected"
+download_plugin "fontconfig"
+download_plugin "force_syntax"
+download_plugin "lfautoinsert"
+download_plugin "markers"
+download_plugin "memoryusage"
+download_plugin "minimap"
+download_plugin "navigate"
+download_plugin "openselected"
+download_plugin "restoretabs"
+download_plugin "smoothcaret"
+
+# echo "- eofnewline-xl"
+# curl -s "https://raw.githubusercontent.com/bokunodev/lite_modules/master/plugins/eofnewline-xl.lua" \
+#     > "$dest_share_subdir/plugins/eofnewline-xl.lua"
+
+echo "- language_env"
+curl -s "https://raw.githubusercontent.com/anthonyaxenov/lite-xl-env-syntax/master/language_env.lua" \
+    > "$dest_share_subdir/plugins/language_env.lua"
+
+echo "- language_ignore"
+curl -s "https://raw.githubusercontent.com/anthonyaxenov/lite-xl-ignore-syntax/master/language_ignore.lua" \
+    > "$dest_share_subdir/plugins/language_ignore.lua"
+
+# echo "- language-containerfile"
+# git clone -q "https://github.com/FilBot3/lite-xl-language-containerfile.git" \
+#     "$dest_share_subdir/plugins/language_containerfile"
+
+echo
+echo "Finish!"
+echo "- $dest_bin_dir/lite-xl"
+echo "- $dest_share_subdir"
+echo
