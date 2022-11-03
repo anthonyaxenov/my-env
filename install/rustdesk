@@ -10,6 +10,11 @@ echo
 
 # https://github.com/rustdesk/rustdesk
 
-sudo apt install libxdo3 && \
-    wget "http://github.com/rustdesk/rustdesk/releases/download/${RDVER}/rustdesk-${RDVER}.deb" -O ${HOME}/install/rustdesk_${RDVER}.deb && \
-    sudo dpkg -i ${HOME}/install/rustdesk_${RDVER}.deb
+deb_path="${HOME}/install"
+deb_name="rustdesk_${RDVER}.deb"
+mkdir -p $deb_path
+deb="$deb_path/$deb_name"
+
+sudo apt install libxdo3 python3-pip && \
+    wget "http://github.com/rustdesk/rustdesk/releases/download/${RDVER}/$deb_name" -O $deb && \
+    sudo dpkg -i $deb
