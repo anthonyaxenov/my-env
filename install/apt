@@ -49,7 +49,9 @@ sudo apt install -y \
     vlc \
     ffmpeg \
     xclip \
-    inotify-tools
+    inotify-tools \
+    notify-osd \
+    libnotify-bin
     # earlyoom \
     # etckeeper \
     # geoclue-2.0 \
