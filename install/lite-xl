@@ -37,7 +37,7 @@ cat << EOF > "$dest_share_dir/applications/org.lite_xl.lite_xl.desktop"
 Type=Application
 Name=Lite XL
 Comment=A lightweight text editor written in Lua
-Exec=env LITE_SCALE=1 lite-xl %F
+Exec=env LITE_SCALE=1 ${dest_bin_dir}/lite-xl %F
 Icon=lite-xl
 Terminal=false
 StartupWMClass=lite-xl
