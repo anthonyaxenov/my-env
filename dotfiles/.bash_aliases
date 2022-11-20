@@ -43,8 +43,13 @@ alias gpg.new="gpg --full-generate-key"
 alias gpg.pub="gpg --armor --export $@"
 alias gpg.list='gpg --list-keys --keyid-format SHORT'
 
+alias lite-xl="LITE_SCALE=1 lite-xl"
 alias wine='LANG=ru_RU.utf8 wine'
 alias docker.prune='docker image prune -f; docker network prune -f; docker container prune -f'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # https://obsproject.com/forum/threads/how-to-start-virtual-camera-without-sudo-privileges.139783/
 alias obscam="sudo modprobe v4l2loopback video_nr=2 card_label='OBS Virtual Camera'"
