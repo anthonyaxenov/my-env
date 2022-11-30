@@ -1,5 +1,5 @@
 [alias]
-# shortcuts -----------------------------------------------------------------
+; shortcuts -----------------------------------------------------------------
 a = "add"
 aa = "add --all" # add all unstaged into index
 b = "branch" #
@@ -21,7 +21,7 @@ cp = "cherry-pick"
 cpa = "cherry-pick --abort" # abort cherry-picking
 cpc = "cherry-pick --continue" # continue cherry-picking
 cpn = "cherry-pick --no-commit" # cherry-pick without commit
-# cpnx = "cherry-pick --no-commit -x"
+; cpnx = "cherry-pick --no-commit -x"
 d = "diff"
 dc = "diff --cached" # show diff of staged files
 dw = "diff --word-diff" # show word diff in unstaged files
@@ -35,40 +35,43 @@ ma = "merge --abort" # abort merging
 mc = "merge --continue" # continue merging
 mn = "merge --no-commit" # merge without commit
 p = "pull"
-# pr = "!git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1" # github: встать на PR с указанным id
+; pr = "!git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1" # github: встать на PR с указанным id
 prs = "pull --recurse-submodules" # pull with submodules
-r = "remote"
-ra = "remote add"
+
+re = "remote"
+rea = "remote add"
+res = "remote show"
+reso = "remote show origin"
+reu = "remote update"
+rev = "remote -v"
+rep = "remote prune"
+repd = "remote prune --dry-run"
+repo = "remote prune origin"
+repod = "remote prune origin --dry-run"
+
 rb = "rebase"
 rba = "rebase --abort"
 rbc = "rebase --continue"
 rbi = "rebase --interactive"
 rbs = "rebase --skip"
-rp = "remote prune"
-rpd = "remote prune --dry-run"
-rpo = "remote prune origin"
-rpod = "remote prune origin --dry-run"
-rs = "remote show"
-rso = "remote show origin"
-ru = "remote update"
-rv = "remote -v"
 rv = "revert"
 rvn = "revert --no-commit"
+
 s = "status"
 sb = "show-branch"
 sub = "submodule"
-# sa = "submodule add"
-# sdi = "submodule deinit -f"
-# si = "submodule init"
-# ss = "submodule summary"
-# sst = "submodule status"
-# sup = "submodule update"
+; sa = "submodule add"
+; sdi = "submodule deinit -f"
+; si = "submodule init"
+; ss = "submodule summary"
+; sst = "submodule status"
+; sup = "submodule update"
 
-# subcommands -----------------------------------------------------------------
-# gwhoami = "guser"
-# whoami = "user"
-# ploh = "pull origin HEAD" # получить текущую ветку из origin
-# sy = "remote update origin --prune"
+; subcommands -----------------------------------------------------------------
+; gwhoami = "guser"
+; whoami = "user"
+; ploh = "pull origin HEAD" # получить текущую ветку из origin
+; sy = "remote update origin --prune"
 aliases = "config --get-regexp '^alias'" # show all aliases
 amend = "commit --amend --all --no-edit" # add new changes into last commit
 amendm = "commit --amend --all --message" # amend + edit commit message
@@ -78,14 +81,13 @@ branches = "bvv"
 cleaner = "clean -dff"
 cleanest = "clean -dffx"
 cleanout = "!git clean -df && git checkout -- ."
-clear = "checkout --" # удаляет изменения в файле
 contributors = "shortlog --summary --numbered --no-merges" # users participating in development
 current-branch = "branch --show-current" #rev-parse --abbrev-ref HEAD
 default-branch = "config init.defaultBranch" # get default branch name
 dehead = "!BR=$(git branch --show-current); if [ -n "$BR" ]; then echo $BR; else git describe --contains --all HEAD; fi;"
 dev = "!git checkout dev && git pull" # quick switch on dev branch and update it
 develop = "!git checkout develop && git pull" # quick switch on develop branch and update it
-discard = "checkout --"
+discard = "checkout --" # удаляет изменения в файле
 exec = "!exec"
 fuck = "!git checkout $(git default-branch) && git fetch origin --prune && git reset --hard origin/$(git default-branch) && git clean -ffd"
 guser = "config --global --get-regexp '^user'" # show global user settings
@@ -97,31 +99,33 @@ merged = "bm"
 optimizer = "!git pruner; git repacker; git prune-packed"
 orphans = "fsck --full"
 pruner = "!git prune --expire=now; git reflog expire --expire-unreachable=now --rewrite --all"
-publish = "!git push --set-upstream origin $(git current-branch)"
 pullf = "pull --force" # получить ветку принудительно
 pullft = "pull --tags --force" # получить теги
 pullt = "pull --tags" # получить теги
-pushf = "push --force" # отправить ветку принудительно
-pushft = "push --tags --force" # отправить теги принудительно
-pusht = "push --tags" # отправить теги
+; pushf = "!git push --force --set-upstream origin $(git current-branch)" # отправить ветку принудительно
+; pushft = "!git push --tags --force --set-upstream origin $(git current-branch)" # отправить теги принудительно
+; pusht = "!git push --tags --set-upstream origin $(git current-branch)" # отправить теги
+pushf = "!git push --force" # отправить ветку принудительно
+pushft = "!git push --tags --force" # отправить теги принудительно
+pusht = "!git push --tags" # отправить теги
 remotes = "remote -v" # показать список удалённых репозиториев
 repacker = "repack -a -d -f --depth=300 --window=300 --window-memory=1g"
 repush = "git push origin :$1 && git push origin $1'" # замена push --force
 rh = "reset --hard" # откат коммита с удалением всех изменений на указанный коммит
-rhh = "reset --hard HEAD" # откат коммита с удалением всех изменений на последний коммит
-rmh = "reset --mixed HEAD" # откат коммита с сохранением всех изменений
+rhh = "reset --hard HEAD~1" # откат коммита с удалением всех изменений на последний коммит
+rsh = "reset --soft HEAD~1" # откат коммита с сохранением всех изменений
+uncommit = rsh
 rpo = "remote prune origin" # удалить все мёртвые ссылки на bare-ветки origin
 rso = "remote show origin" # показать состояние локальных веток относительно удалённых на origin bare
 stashes = "stash list" # show stashed changes
 tags = "tag -n1 --list" # shot tag names and commit message
-# remove branches merged into specified or default one and clear dead links to remote branches
+; remove branches merged into specified or default one and clear dead links to remote branches
 trim = "!DEFAULT=$(git default-branch); git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; git remote prune origin;"
-uncommit = "reset --soft HEAD~1"
 unstage = "reset HEAD" # staged file => unstaged
-#unwip = "reset --mixed HEAD~"
+;unwip = "reset --mixed HEAD~"
 upstream-branch = "!git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)"
 user = "config --local --get-regexp '^user'" # show local user settings (in current repo)
-wip = "commit -am 'WIP'"
+wip = "!git add . && git commit -am 'WIP'"
 wipa = "commit --amend -am 'WIP'"
 head = "log -1 HEAD" # показать последний коммит в текущей ветке
 heads = "log --graph --decorate --simplify-by-decoration --oneline" # show last commit of each branch as tree graph
@@ -131,7 +135,7 @@ log-my = "!git log --author $(git config user.email)"
 inbound = "!git remote update --prune; git log ..@{upstream}" # get
 outbound = "log @{upstream}.."
 
-
+; remove?
 chart = "!f() { \
     git log \
     --format=oneline \
