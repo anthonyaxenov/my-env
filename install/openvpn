@@ -1,0 +1,33 @@
+#!/bin/bash
+##makedesc: Install openvpn v2.5.8 (src)
+
+# https://openvpn.net/community-downloads/
+# https://openvpn.net/community-resources/installing-openvpn/
+
+[ $1 ] && OVPNVER="$1" || OVPNVER='2.5.8'
+
+echo
+echo "==============================================="
+echo "Installing openvpn v${OVPNVER} (src)..."
+echo "==============================================="
+echo
+
+set -ex
+
+sudo apt install -y \
+    libssl-dev \
+    liblzo2-dev \
+    libpam0g-dev
+
+mkdir -p "${HOME}/install/"
+wget "https://swupdate.openvpn.org/community/releases/openvpn-${OVPNVER}.tar.gz" \
+    -O "/tmp/openvpn-${OVPNVER}.tar.gz"
+tar -xzf "/tmp/openvpn-${OVPNVER}.tar.gz" -C "${HOME}/install/"
+cd "${HOME}/install/openvpn-${OVPNVER}"
+sudo ./configure && \
+    sudo make && \
+    sudo make install &&
+    sudo apt install -y \
+        network-manager-openvpn \
+        network-manager-openvpn-gnome && \
+    openvpn --version
