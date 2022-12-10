@@ -12,7 +12,7 @@ installed() {
     command -v "$1" >/dev/null 2>&1
 }
 
-!installed "php" && echo "WARNING: You need to have php installed"
+! installed "php" && echo "WARNING: You need php to be installed"
 
 if installed "composer"; then
     echo "WARNING: Removing current composer to install its actual version"

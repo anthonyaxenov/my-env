@@ -1,0 +1,2 @@
+# [PACK] php + composer + phpunit + psalm + phpcs + php-cs-fixer
+phptools: php composer-clean php-tools-only
