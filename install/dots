@@ -23,4 +23,3 @@ install .bashrc
 install .gitconfig
 install .gitignore
 install .git_aliases
-ln -s "$HOME/.profile" "$HOME/.zprofile"
