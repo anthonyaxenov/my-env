@@ -51,6 +51,7 @@ sudo apt install -y \
     xclip \
     inotify-tools \
     notify-osd \
+    fonts-open-sans \
     libnotify-bin
     # earlyoom \
     # etckeeper \
