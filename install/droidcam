@@ -11,7 +11,7 @@ echo
 
 mkdir -p ~/install/droidcam
 wget -O /tmp/droidcam.zip https://files.dev47apps.net/linux/droidcam_1.8.2.zip
-unzip -o /tmp/droidcam.zip -d ~/install/droidcam
+unzip -oq /tmp/droidcam.zip -d ~/install/droidcam
 rm -rf /tmp/droidcam.zip
 cd ~/install/droidcam && sudo ./install-client
 

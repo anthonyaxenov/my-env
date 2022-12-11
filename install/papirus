@@ -18,7 +18,7 @@ else
     ! installed wget && sudo apt install -y wget
     mkdir -p "${HOME}/install/papirus-icon-theme"
     wget https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/archive/refs/heads/master.zip -O "${HOME}/install/papirus-icon-theme.zip"
-    unzip "${HOME}/install/papirus-icon-theme.zip" -d "${HOME}/install/papirus-icon-theme"
+    unzip -oq "${HOME}/install/papirus-icon-theme.zip" -d "${HOME}/install/papirus-icon-theme"
     rm -f "${HOME}/install/papirus-icon-theme.zip"
 fi
 

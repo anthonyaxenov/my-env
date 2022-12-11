@@ -29,7 +29,7 @@ if installed 'git'; then
     sudo git clone https://github.com/psifidotos/applet-window-appmenu.git --depth=1 /usr/src/appmenu-applet
 else
     sudo wget https://github.com/psifidotos/applet-window-appmenu/archive/master.zip -O /tmp/appmenu-applet.zip
-    sudo unzip /tmp/appmenu-applet.zip -d /usr/src/appmenu-applet
+    sudo unzip -oq /tmp/appmenu-applet.zip -d /usr/src/appmenu-applet
     sudo mv /usr/src/appmenu-applet/applet-window-appmenu-master/* /usr/src/appmenu-applet/
     sudo mv /usr/src/appmenu-applet/applet-window-appmenu-master/.* /usr/src/appmenu-applet/
     sudo rm -rf /usr/src/appmenu-applet/applet-window-appmenu-master

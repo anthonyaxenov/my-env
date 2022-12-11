@@ -27,7 +27,7 @@ else
     ! installed wget && sudo apt install -y wget
     [ -d "${HOME}/install/git" ] || mkdir -p "${HOME}/install/git"
     wget https://github.com/git/git/archive/master.zip -O /tmp/git.zip && \
-        unzip -q /tmp/git.zip -d "${HOME}/install/git" && \
+        unzip -oq /tmp/git.zip -d "${HOME}/install/git" && \
         rm /tmp/git.zip && \
         cd "${HOME}/install/git/git-master" && \
         sudo make prefix=/usr/local all && \
