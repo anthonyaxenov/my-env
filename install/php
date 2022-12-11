@@ -11,24 +11,27 @@ echo
 sudo LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 sudo apt install -y --autoremove \
     php${PHPVER} \
+    php${PHPVER}-apcu \
+    php${PHPVER}-bcmath \
     php${PHPVER}-cli \
     php${PHPVER}-common \
-    php${PHPVER}-xdebug \
-    php${PHPVER}-dom \
     php${PHPVER}-curl \
-    php${PHPVER}-bcmath \
+    # php${PHPVER}-dba \
+    php${PHPVER}-dev \
+    php${PHPVER}-dom \
     php${PHPVER}-gd \
     php${PHPVER}-intl \
+    # php${PHPVER}-ldap \
     php${PHPVER}-mbstring \
-    # php${PHPVER}-mysql \
-    # php${PHPVER}-opcache \
-    # php${PHPVER}-pgsql \
+    php${PHPVER}-mysql \
+    php${PHPVER}-opcache \
+    php${PHPVER}-pgsql \
     php${PHPVER}-soap \
-    # php${PHPVER}-xml \
-    # php${PHPVER}-xmlrpc \
+    php${PHPVER}-sqlite3 \
+    php${PHPVER}-xdebug \
+    php${PHPVER}-xml \
+    php${PHPVER}-xmlrpc \
     # php${PHPVER}-xsl \
-    # php${PHPVER}-sqlite3 \
-    # php${PHPVER}-zip \
-    # php${PHPVER}-dba \
-    # php${PHPVER}-ldap
+    php${PHPVER}-zip
+
 php -v

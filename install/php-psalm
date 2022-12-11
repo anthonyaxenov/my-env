@@ -1,0 +1,31 @@
+#!/bin/bash
+##makedesc: Install psalm
+
+echo
+echo "==============================================="
+echo "Installing psalm..."
+echo "==============================================="
+echo
+
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+! installed 'php' && echo 'ERROR: You need php to be installed' && exit 1
+! installed "composer" && echo "ERROR: You need composer to be installed" && exit 2
+
+COMPOSER_GLOBAL_HOME="$(composer config -g home)"
+NEWPATH="export PATH=\"$COMPOSER_GLOBAL_HOME/vendor/bin:\${PATH}\""
+cat "${HOME}/.profile" | grep -qoh "$NEWPATH" || {
+    $NEWPATH
+    echo "$NEWPATH" >> "${HOME}/.profile"
+}
+
+composer global require vimeo/psalm --dev
+
+echo
+echo "Finish!"
+echo
+
+phpcs --version # phpcbf --version
+php-cs-fixer --version

@@ -39,4 +39,16 @@ fi
 php composer-setup.php --quiet
 cp $HOME/install/composer.phar $HOME/.local/bin/composer
 cd - >/dev/null
-installed "composer" && composer --version
+
+COMPOSER_GLOBAL_HOME="$(composer config -g home)"
+NEWPATH="export PATH=\"$COMPOSER_GLOBAL_HOME/vendor/bin:\${PATH}\""
+cat "${HOME}/.profile" | grep -qoh "$NEWPATH" || {
+    $NEWPATH
+    echo "$NEWPATH" >> "${HOME}/.profile"
+}
+
+echo
+echo "Finish!"
+echo
+
+composer --version

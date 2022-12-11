@@ -1,0 +1,46 @@
+#!/bin/bash
+##makedesc: Install php-spx
+
+echo
+echo "==============================================="
+echo "Installing php-spx..."
+echo "==============================================="
+echo
+
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+! installed 'php' && echo 'ERROR: You need php to be installed' && exit 1
+! installed 'phpize' && echo 'ERROR: You need php-dev to be installed' && exit 2
+! installed 'make' && sudo apt install -y make
+! installed 'wget' && sudo apt install -y wget
+
+[ -d "${HOME}/install/php-spx" ] || mkdir -p "${HOME}/install/php-spx"
+wget https://github.com/NoiseByNorthwest/php-spx/archive/refs/heads/release/latest.zip -O /tmp/php-spx.zip \
+    && unzip -oq /tmp/php-spx.zip -d "${HOME}/install/php-spx" \
+    && rm /tmp/php-spx.zip \
+    && cd "${HOME}/install/php-spx/php-spx-release-latest" \
+    && phpize \
+    && ./configure \
+    && make \
+    && sudo make install
+
+PHPVER=`php -r 'echo ($v=explode(".",PHP_VERSION))[0].".".$v[1];'`
+cat << EOF | sudo tee -a "/etc/php/${PHPVER}/mods-available/spx.ini"
+; https://github.com/NoiseByNorthwest/php-spx/tree/release/latest#configuration
+; https://habr.com/ru/post/505192/
+
+; extension=spx.so
+; spx.data_dir = '/tmp/spx'
+spx.http_enabled = 0
+spx.http_key = 'spx'
+; spx.http_ip_whitelist = "127.0.0.1"
+
+EOF
+
+sudo ln -sf "/etc/php/${PHPVER}/mods-available/spx.ini" "/etc/php/${PHPVER}/cli/conf.d/99-spx.ini"
+
+echo
+echo "Finish!"
+echo

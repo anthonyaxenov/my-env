@@ -1,0 +1,30 @@
+#!/bin/bash
+##makedesc: Install phpmd
+
+echo
+echo "==============================================="
+echo "Installing phpmd..."
+echo "==============================================="
+echo
+
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+! installed 'php' && echo 'ERROR: You need php to be installed' && exit 1
+! installed "composer" && echo "ERROR: You need composer to be installed" && exit 2
+
+COMPOSER_GLOBAL_HOME="$(composer config -g home)"
+NEWPATH="export PATH=\"$COMPOSER_GLOBAL_HOME/vendor/bin:\${PATH}\""
+cat "${HOME}/.profile" | grep -qoh "$NEWPATH" || {
+    $NEWPATH
+    echo "$NEWPATH" >> "${HOME}/.profile"
+}
+
+composer global require phpmd/phpmd --dev
+
+echo
+echo "Finish!"
+echo
+
+phpmd --version
