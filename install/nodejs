@@ -11,19 +11,15 @@ installed() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# sudo apt install -y --autoremove nodejs npm
+installed "nvm" && sudo apt install -y --autoremove nodejs npm nvm
 
-if !installed "nvm"; then
-    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-fi
+! installed "nvm" && wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 
-if [ $(nvm current) == 'system' ]; then
-    echo "WARNING: You already have node installed - removing to install actual version"
-    sudo apt remove -y --autoremove nodejs npm
-else
-    nvm install-latest-npm
-fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+nvm install-latest-npm
 nvm install node
 nvm use node
 installed "node" && nvm current
