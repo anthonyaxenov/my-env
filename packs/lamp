@@ -1,5 +1,2 @@
-# [PACK] Install apache + php + mariadb
-lamp:
-	apache
-	php-stack
-	mariadb
+##lamp: [PACK] Apache + php + mariadb
+lamp: apache phpstack mariadb

@@ -18,7 +18,7 @@ for file in ./install/*; do
     name=${name%.sh}
     desc=$(grep -m 1 -oP "(?<=^##makedesc:\s).*$" ${file})
     [ -z "$desc" ] && desc='<no description>'
-    echo -e "# ${desc}\n${name}:\n\t@${file}\n" >> Makefile
+    echo -e "##${name}: ${desc}\n${name}:\n\t@${file}\n" >> Makefile
 done;
 
 cat << EOF >> Makefile
@@ -72,21 +72,26 @@ cat << EOF >> Makefile
 
 self:
 	@./gen-makefile
-
 help: Makefile
 	@echo "Ubuntu software installator"
 	@echo
-	@echo "Usage:\n \
-	make help|- show this help\n \
-	make self|- regenerate Makefile (alias of ./gen-makefile)\n \
-	make GOAL|- install software\n \
-	make ${CHR_UPGRADE}GOAL|- upgrade software\n \
-	make ${CHR_UNINSTALL}GOAL|- uninstall software" | column -ts '|'
+	@echo "Usage:"
+	@echo "\tmake  help\t - show this help"
+	@echo "\tmake  self\t - regenerate Makefile (alias of ./gen-makefile)"
+	@echo "\tmake  GOAL\t - install software"
+	@echo "\tmake ${CHR_UPGRADE}GOAL\t - upgrade software"
+	@echo "\tmake ${CHR_UNINSTALL}GOAL\t - uninstall software"
 	@echo "\nYou can combine GOALs, here are some examples:"
-	@echo "\tmake @docker docker"
-	@echo "\tmake php @docker ^omz"
+	@echo "\tmake ${CHR_UNINSTALL}docker docker"
+	@echo "\tmake php ${CHR_UNINSTALL}docker ${CHR_UPGRADE}omz"
 	@echo "\nAvailable GOALs:"
-	@sed -n '/^#/{N;s/# *\(.*\)\n\([^# .].*:\)/\t\2\1/p}' $< | column -ts ':'
+	@sed -n 's/^##//p' $< | column -ts ':' | sed -e "s/^/\t/"
++%:
+	@$(MAKE) $*
+^%:
+	@./upgrade/$*
+@%:
+	@./uninstall/$*
 EOF
 
 echo "New ./Makefile has been generated!"

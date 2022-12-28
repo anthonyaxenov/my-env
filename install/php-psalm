@@ -27,5 +27,4 @@ echo
 echo "Finish!"
 echo
 
-phpcs --version # phpcbf --version
-php-cs-fixer --version
+psalm --version

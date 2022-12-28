@@ -1,4 +1,2 @@
-# [PACK] Install OBS Studio + droidcam-obs
-obs:
-	obs-studio
-	droidcam-obs
+##obs: [PACK] Install OBS Studio + droidcam-obs
+obs: obs-studio droidcam-obs
