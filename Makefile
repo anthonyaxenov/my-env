@@ -265,6 +265,10 @@ php-stack:
 /omz:
 	@./uninstall/omz
 
+# Uninstall vivaldi + ppa
+/vivaldi:
+	@./uninstall/vivaldi
+
 #===============================================
 #	Service goals
 #===============================================

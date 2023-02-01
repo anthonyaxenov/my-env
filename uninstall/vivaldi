@@ -1,0 +1,16 @@
+#!/bin/bash
+##makedesc: Uninstall vivaldi + ppa
+
+echo
+echo "==============================================="
+echo "Uninstalling vivaldi + ppa..."
+echo "==============================================="
+echo
+
+sudo apt remove -y vivaldi-stable
+
+sudo rm -rf \
+    /usr/share/keyrings/vivaldi-browser.gpg \
+    /etc/apt/sources.list.d/vivaldi-archive.list
+
+sudo apt update
