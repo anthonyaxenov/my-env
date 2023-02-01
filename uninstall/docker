@@ -1,21 +1,16 @@
 #!/bin/bash
-##makedesc: Uninstall docker
+##makedesc: Uninstall docker + ppa
 
 echo
 echo "==============================================="
-echo "Uninstalling docker..."
+echo "Uninstalling docker + ppa..."
 echo "==============================================="
 echo
 
-# sudo apt remove -y docker docker-engine docker.io containerd runc
-sudo apt remove -y \
-  containerd \
-  containerd.io \
-  docker \
-  docker-ce \
-  docker-ce-cli \
-  docker-compose \
-  docker-compose-plugin \
-  docker-engine \
-  docker.io \
-  runc
+sudo apt remove -y docker*
+
+rm -rf \
+    /etc/apt/sources.list.d/docker.list \
+    /etc/apt/keyrings/docker.gpg
+
+sudo apt update
