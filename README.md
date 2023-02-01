@@ -5,7 +5,7 @@
 ## Requirements
 
 * Ubuntu >= 20.04 (not tested with version < 20)
-* `bash`, `zsh` or other POSIX-compatible shell
+* `bash`, `zsh` or other `sh`-compatible shell
 * `make` (optional but recommended)
 * `wget` (necessary for some scripts)
 * `git` (necessary for some scripts)
@@ -66,11 +66,11 @@ Syntax is same as classic makefile.
 It is important to add a comment with short description:
 
 ```makefile
-# Pack description
+##mypack1: Pack description
 mypack1: goal1 goal2 goalX ...
    ...
 
-# Pack description
+##mypackX: Pack description
 mypackX: goalA goalB
    @cp file1 file2
    ...

@@ -1,9 +1,0 @@
-# [PACK] Install only php tooling (composer, phpunit, psalm, phpcs, php-cs-fixer, php-spx, phpmd)
-php-stack:
-	composer
-	php-psalm
-	php-spx
-	phpcs
-	phpmd
-	phpstan
-	phpunit

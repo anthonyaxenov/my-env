@@ -17,10 +17,11 @@ installed() {
 if installed "composer"; then
     echo "WARNING: Removing current composer to install its actual version"
     sudo apt remove -y --autoremove composer
-    sudo rm /bin/composer
-    sudo rm /usr/bin/composer
-    sudo rm /usr/local/bin/composer
-    sudo rm /usr/src/composer
+    sudo rm -f $HOME/.local/bin/composer
+    sudo rm -f /bin/composer
+    sudo rm -f /usr/bin/composer
+    sudo rm -f /usr/local/bin/composer
+    sudo rm -f /usr/src/composer
     rm $HOME/.local/bin/composer
 fi
 
@@ -37,7 +38,7 @@ if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]; then
     exit 1
 fi
 php composer-setup.php --quiet
-cp $HOME/install/composer.phar $HOME/.local/bin/composer
+mv -f $HOME/install/composer.phar $HOME/.local/bin/composer
 cd - >/dev/null
 
 COMPOSER_GLOBAL_HOME="$(composer config -g home)"

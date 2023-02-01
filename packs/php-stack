@@ -1,4 +1,0 @@
-# [PACK] Install full php stack with tooling
-phptools:
-	php
-	php-tools

@@ -1,7 +1,4 @@
-# [PACK] Install zsh + omz + powerline10k + MesloLGS font
-omz:
-	zsh
-	omz-clean
-	omz-fancy
+##omz: [PACK] zsh + omz + powerline10k + MesloLGS font
+omz: zsh omz-clean omz-fancy
 	chsh -s /usr/bin/zsh
 	@exec zsh
