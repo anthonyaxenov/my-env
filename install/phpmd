@@ -20,6 +20,7 @@ cat "${HOME}/.profile" | grep -qoh "$NEWPATH" || {
     $NEWPATH
     echo "$NEWPATH" >> "${HOME}/.profile"
 }
+source "${HOME}/.profile"
 
 composer global require phpmd/phpmd --dev
 

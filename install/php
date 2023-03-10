@@ -16,12 +16,10 @@ sudo apt install -y --autoremove \
     php${PHPVER}-cli \
     php${PHPVER}-common \
     php${PHPVER}-curl \
-    # php${PHPVER}-dba \
     php${PHPVER}-dev \
     php${PHPVER}-dom \
     php${PHPVER}-gd \
     php${PHPVER}-intl \
-    # php${PHPVER}-ldap \
     php${PHPVER}-mbstring \
     php${PHPVER}-mysql \
     php${PHPVER}-opcache \
@@ -31,7 +29,10 @@ sudo apt install -y --autoremove \
     php${PHPVER}-xdebug \
     php${PHPVER}-xml \
     php${PHPVER}-xmlrpc \
-    # php${PHPVER}-xsl \
     php${PHPVER}-zip
+
+    # php${PHPVER}-ldap \
+    # php${PHPVER}-dba \
+    # php${PHPVER}-xsl \
 
 php -v

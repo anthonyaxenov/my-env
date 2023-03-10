@@ -20,6 +20,7 @@ cat "${HOME}/.profile" | grep -qoh "$NEWPATH" || {
     $NEWPATH
     echo "$NEWPATH" >> "${HOME}/.profile"
 }
+source "${HOME}/.profile"
 
 composer global require squizlabs/php_codesniffer --dev
 composer global require friendsofphp/php-cs-fixer --dev

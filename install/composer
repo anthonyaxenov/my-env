@@ -25,8 +25,8 @@ if installed "composer"; then
     rm $HOME/.local/bin/composer
 fi
 
-mkdir -p $HOME/install && cd $HOME/install
-# mkdir -p $HOME/.local/bin
+mkdir -p $HOME/install $HOME/.local/bin
+cd $HOME/install
 
 EXPECTED_CHECKSUM="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')"
 # php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -41,12 +41,13 @@ php composer-setup.php --quiet
 mv -f $HOME/install/composer.phar $HOME/.local/bin/composer
 cd - >/dev/null
 
-COMPOSER_GLOBAL_HOME="$(composer config -g home)"
+COMPOSER_GLOBAL_HOME="$($HOME/.local/bin/composer config -g home)"
 NEWPATH="export PATH=\"$COMPOSER_GLOBAL_HOME/vendor/bin:\${PATH}\""
 cat "${HOME}/.profile" | grep -qoh "$NEWPATH" || {
     $NEWPATH
     echo "$NEWPATH" >> "${HOME}/.profile"
 }
+source "${HOME}/.profile"
 
 echo
 echo "Finish!"
