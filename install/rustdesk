@@ -4,17 +4,17 @@
 [ $1 ] && RDVER="$1" || RDVER="1.1.9"
 echo
 echo "==============================================="
-echo "Installing rustdesk v${RDVER}..."
+echo "Installing rustdesk v$RDVER..."
 echo "==============================================="
 echo
 
 # https://github.com/rustdesk/rustdesk
 
-deb_path="${HOME}/install"
-deb_name="rustdesk_${RDVER}.deb"
+deb_path="$HOME/install"
+deb_name="rustdesk-$RDVER.deb"
 mkdir -p $deb_path
 deb="$deb_path/$deb_name"
 
-sudo apt install libxdo3 python3-pip && \
-    wget "http://github.com/rustdesk/rustdesk/releases/download/${RDVER}/$deb_name" -O $deb && \
+sudo apt install -y libxdo3 python3-pip && \
+    wget "https://github.com/rustdesk/rustdesk/releases/download/$RDVER/$deb_name" -O $deb && \
     sudo dpkg -i $deb
