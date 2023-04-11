@@ -16,5 +16,6 @@ rm -rf /tmp/droidcam.zip
 cd ~/install/droidcam && sudo ./install-client
 
 echo
+echo "Finish!"
 echo "Don't forget to install android app: https://play.google.com/store/apps/developer?id=Dev47Apps"
 echo

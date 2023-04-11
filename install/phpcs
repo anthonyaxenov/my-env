@@ -27,7 +27,6 @@ composer global require friendsofphp/php-cs-fixer --dev
 
 echo
 echo "Finish!"
-echo
-
 phpcs --version # phpcbf --version
 php-cs-fixer --version
+echo

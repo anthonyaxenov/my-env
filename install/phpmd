@@ -26,6 +26,5 @@ composer global require phpmd/phpmd --dev
 
 echo
 echo "Finish!"
-echo
-
 phpmd --version
+echo

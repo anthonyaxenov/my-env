@@ -21,7 +21,10 @@ sudo rm -rf /usr/local/go && \
     rm -rf /tmp/$FILE && \
     sudo chown $USER: -R /usr/local/go && \
     echo 'export PATH="$PATH:/usr/local/go/bin\"' >> $HOME/.profile && \
-    echo 'export GOPATH="$HOME/.go"' >> $HOME/.profile && \
-    # source ~/.profile && \
-    go version && \
-    echo "NOTE: now run 'source ~/.profile' to apply new env vars"
+    echo 'export GOPATH="$HOME/.go"' >> $HOME/.profile
+
+echo
+echo "Finish!"
+go version
+echo "NOTE: now run 'source ~/.profile' to apply new env vars"
+echo

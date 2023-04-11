@@ -35,6 +35,7 @@ sudo usermod -aG docker $(whoami)
 
 echo
 echo "Finish!"
+docker --version
 echo "Probably, you need to relogin to apply 'docker' group."
 echo "Your ones currently are: $(groups)"
 echo

@@ -29,5 +29,9 @@ sudo ./configure && \
     sudo make install &&
     sudo apt install -y \
         network-manager-openvpn \
-        network-manager-openvpn-gnome && \
-    openvpn --version
+        network-manager-openvpn-gnome
+
+echo
+echo "Finish!"
+openvpn --version
+echo

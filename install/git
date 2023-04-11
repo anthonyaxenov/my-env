@@ -37,4 +37,7 @@ else
         git clone https://github.com/git/git.git --depth=1 "${HOME}/install/git"
 fi
 
+echo
+echo "Finish!"
 git --version
+echo

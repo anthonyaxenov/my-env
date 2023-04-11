@@ -26,6 +26,5 @@ composer global require vimeo/psalm --dev
 
 echo
 echo "Finish!"
-echo
-
 psalm --version
+echo

@@ -23,6 +23,7 @@ cd ~/install/droidcam-obs && ./install.sh
 sudo modprobe v4l2loopback video_nr=2 card_label="OBS Virtual Camera"
 
 echo
+echo "Finish!"
 echo "Don't forget to:"
 echo "1) restart OBS if it is running right now OR install (if not) and start it"
 echo "2) install android app: https://play.google.com/store/apps/developer?id=Dev47Apps"

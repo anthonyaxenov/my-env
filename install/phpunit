@@ -12,7 +12,7 @@ installed() {
 }
 
 ! installed 'php' && echo 'ERROR: You need php to be installed' && exit 1
-! installed "composer" && echo "ERROR: You rneed composer to be installed" && exit 2
+! installed "composer" && echo "ERROR: You need composer to be installed" && exit 2
 
 COMPOSER_GLOBAL_HOME="$(composer config -g home)"
 NEWPATH="export PATH=\"$COMPOSER_GLOBAL_HOME/vendor/bin:\${PATH}\""
@@ -26,6 +26,6 @@ composer global require phpunit/phpunit --dev
 
 echo
 echo "Finish!"
+phpunit --version
 echo
 
-phpunit --version

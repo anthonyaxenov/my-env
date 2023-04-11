@@ -26,6 +26,6 @@ composer global require phpstan/phpstan --dev
 
 echo
 echo "Finish!"
+phpstan --version
 echo
 
-phpstan --version

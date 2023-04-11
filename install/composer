@@ -51,6 +51,6 @@ source "${HOME}/.profile"
 
 echo
 echo "Finish!"
+composer --version
 echo
 
-composer --version

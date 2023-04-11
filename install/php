@@ -35,4 +35,7 @@ sudo apt install -y --autoremove \
     # php${PHPVER}-dba \
     # php${PHPVER}-xsl \
 
+echo
+echo "Finish!"
 php -v
+echo
