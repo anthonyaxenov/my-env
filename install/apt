@@ -42,7 +42,6 @@ sudo apt install -y \
     p7zip-full \
     pulseeffects \
     software-properties-common \
-    sqlitebrowser \
     terminator \
     ubuntu-restricted-extras \
     unzip \
@@ -53,6 +52,7 @@ sudo apt install -y \
     notify-osd \
     fonts-open-sans \
     libnotify-bin
+    # sqlitebrowser
     # earlyoom \
     # etckeeper \
     # geoclue-2.0 \
