@@ -9,5 +9,5 @@ echo "Installing youtube-dl..."
 echo "==============================================="
 echo
 
-sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o "${HOME}/.local/bin/youtube-dl"
-sudo chmod +rx "${HOME}/.local/bin/youtube-dl"
+curl -L https://yt-dl.org/downloads/latest/youtube-dl -o "${HOME}/.local/bin/youtube-dl" && \
+    sudo chmod +rx "${HOME}/.local/bin/youtube-dl"
