@@ -1,13 +1,40 @@
 #!/bin/bash
-##makedesc: Install youtube-dl
+##makedesc: Install youtube-dl (src)
 
 # https://github.com/ytdl-org/youtube-dl#installation
 
 echo
 echo "==============================================="
-echo "Installing youtube-dl..."
+echo "Installing youtube-dl (src)..."
 echo "==============================================="
 echo
 
-curl -L https://yt-dl.org/downloads/latest/youtube-dl -o "${HOME}/.local/bin/youtube-dl" && \
-    sudo chmod +rx "${HOME}/.local/bin/youtube-dl"
+# 11.04.23: release 2021.12.17 in snap/apt/github is broken (Unable to extract uploader id)
+# and still no fix officially released, so we just build it from actual sources
+
+# curl -L https://yt-dl.org/downloads/latest/youtube-dl -o "${HOME}/.local/bin/youtube-dl" && \
+#     sudo chmod +rx "${HOME}/.local/bin/youtube-dl"
+
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+! installed make && sudo apt install -y make
+mkdir -p "$HOME/install/youtube-dl" "$HOME/.local/bin"
+
+if installed git; then
+    git clone https://github.com/ytdl-org/youtube-dl.git "$HOME/install/youtube-dl" --depth=1 --single-branch
+else
+    ! installed wget && sudo apt install -y wget
+    wget https://github.com/ytdl-org/youtube-dl/archive/refs/heads/master.zip -O "$HOME/install/youtube-dl.zip" && \
+        unzip -oq "$HOME/install/youtube-dl.zip" -d "$HOME/install/youtube-dl"
+fi
+
+cd "$HOME/install/youtube-dl" && \
+    make youtube-dl && \
+    mv youtube-dl "$HOME/.local/bin"
+
+echo
+echo "Finish!"
+youtube-dl --version
+echo
