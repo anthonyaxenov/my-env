@@ -13,7 +13,7 @@ installed() {
 
 if installed git; then
     mkdir -p "${HOME}/install/"
-    git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme.git --depth=1 "${HOME}/install/papirus-icon-theme"
+    git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme.git "${HOME}/install/papirus-icon-theme" --depth=1 --single-branch
 else
     ! installed wget && sudo apt install -y wget
     mkdir -p "${HOME}/install/papirus-icon-theme"
