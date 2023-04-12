@@ -47,7 +47,7 @@ for file in ./upgrade/*; do
     name=${name%.sh}
     desc=$(grep -m 1 -oP "(?<=^##makedesc:\s).*$" ${file})
     [ -z "$desc" ] && desc='<no description>'
-    echo -e "# ${desc}\n${CHR_UPGRADE}${name}:\n\t@${file}\n" >> Makefile
+    echo -e "##${CHR_UPGRADE}${name}: ${desc}\n${CHR_UPGRADE}${name}:\n\t@${file}\n" >> Makefile
 done;
 
 cat << EOF >> Makefile
@@ -62,7 +62,7 @@ for file in ./uninstall/*; do
     name=${name%.sh}
     desc=$(grep -m 1 -oP "(?<=^##makedesc:\s).*$" ${file})
     [ -z "$desc" ] && desc='<no description>'
-    echo -e "# ${desc}\n${CHR_UNINSTALL}${name}:\n\t@${file}\n" >> Makefile
+    echo -e "##${CHR_UNINSTALL}${name}: ${desc}\n${CHR_UNINSTALL}${name}:\n\t@${file}\n" >> Makefile
 done;
 
 cat << EOF >> Makefile
@@ -87,11 +87,7 @@ help: Makefile
 	@echo "\nAvailable GOALs:"
 	@sed -n 's/^##//p' $< | column -ts ':' | sed -e "s/^/\t/"
 +%:
-	@$(MAKE) $*
-^%:
-	@./upgrade/$*
-@%:
-	@./uninstall/$*
+	@make $*
 EOF
 
 echo "New ./Makefile has been generated!"

@@ -1,0 +1,196 @@
+#!/bin/bash
+
+installed() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+title() {
+    [ "$1" ] && title="$1" || title="$(grep -m 1 -oP "(?<=^##makedesc:\s).*$" ${BASH_SOURCE[1]})"
+    info
+    info "==============================================="
+    info "$title"
+    info "==============================================="
+    info
+}
+
+require() {
+    if ! installed "$1"; then
+        if [ "$2" ]; then
+            die "'$1' must to be installed in your system" 200
+        else
+            info "Installing '$1' because it is required to continue"
+            sudo apt install "$1"
+            [ $? -gt 0 ] && die "installation cancelled" 201
+        fi
+    fi
+}
+
+download() {
+    require wget 1
+    wget "$1" -O "$2"
+}
+
+abspath() {
+    echo $(realpath -q "${1/#\~/$HOME}")
+}
+
+is_writable() {
+    [ -w "$(abspath $1)" ]
+}
+
+is_dir() {
+    [ -d "$(abspath $1)" ]
+}
+
+is_file() {
+    [ -f "$(abspath $1)" ]
+}
+
+is_function() {
+    declare -F "$1" > /dev/null
+}
+
+regex_match() {
+    printf "%s" "$1" | grep -qP "$2"
+}
+
+in_array() {
+	local find=$1
+    shift
+    for e in "$@"; do
+        [[ "$e" == "$find" ]] && return 0
+    done
+    return 1
+}
+
+implode() {
+    local d=${1-}
+    local f=${2-}
+    if shift 2; then
+        printf %s "$f" "${@/#/$d}"
+    fi
+}
+
+IINFO="( i )"
+INOTE="( * )"
+IWARN="( # )"
+IERROR="( ! )"
+IFATAL="( @ )"
+ISUCCESS="( ! )"
+IASK="( ? )"
+IDEBUG="(DBG)"
+IVRB="( + )"
+
+BOLD="\e[1m"
+DIM="\e[2m"
+NOTBOLD="\e[22m" # sometimes \e[21m
+NOTDIM="\e[22m"
+NORMAL="\e[20m"
+RESET="\e[0m"
+
+FRESET="\e[39m"
+FBLACK="\e[30m"
+FWHITE="\e[97m"
+FRED="\e[31m"
+FGREEN="\e[32m"
+FYELLOW="\e[33m"
+FBLUE="\e[34m"
+FLRED="\e[91m"
+FLGREEN="\e[92m"
+FLYELLOW="\e[93m"
+FLBLUE="\e[94m"
+
+BRESET="\e[49m"
+BBLACK="\e[40m"
+BWHITE="\e[107m"
+BRED="\e[41m"
+BGREEN="\e[42m"
+BYELLOW="\e[43m"
+BBLUE="\e[44m"
+BLRED="\e[101m"
+BLGREEN="\e[102m"
+BLYELLOW="\e[103m"
+BLBLUE="\e[104m"
+
+dt() {
+    echo "[$(date +'%H:%M:%S')] "
+}
+
+ask() {
+    IFS= read -rp "$(print ${BOLD}${BBLUE}${FWHITE}${IASK}${BRESET}\ ${BOLD}$1 ): " $2
+}
+
+print() {
+    echo -e "$*${RESET}"
+}
+
+debug() {
+    if [ "$2" ]; then
+        print "${DIM}${BOLD}${RESET}${DIM} ${FUNCNAME[1]:-?}():${BASH_LINENO:-?}\t$1 "
+    else
+        print "${DIM}${BOLD}${RESET}${DIM}$1 "
+    fi
+}
+
+
+verbose() {
+    print "${BOLD}${IVRB}${RESET}${FYELLOW} $1 "
+}
+
+info() {
+    print "${BOLD}${FWHITE}${BLBLUE}${IINFO}${RESET}${FWHITE} $1 "
+}
+
+note() {
+    print "${BOLD}${DIM}${FWHITE}${INOTE}${RESET} $1 "
+}
+
+success() {
+    print "${BOLD}${BGREEN}${FWHITE}${ISUCCESS}${BRESET}$FGREEN $1 "
+}
+
+warn() {
+    print "${BOLD}${BYELLOW}${FBLACK}${IWARN}${BRESET}${FYELLOW} Warning:${RESET} $1 "
+}
+
+error() {
+    print "${BOLD}${BLRED}${FWHITE}${IERROR} Error: ${BRESET}${FLRED} $1 " >&2
+    # print_stacktrace
+}
+
+fatal() {
+    print "${BOLD}${BRED}${FWHITE}${IFATAL} FATAL: $1 " >&2
+    print_stacktrace
+}
+
+die() {
+    error "$1"
+    [ "$2" ] && exit $2 || exit 100
+}
+
+die_fatal() {
+    fatal "$1"
+    [ "$2" ] && exit $2 || exit 100
+}
+
+die_help() {
+    error "$1"
+    [ "$2" ] && is_function "$2".help && $2.help
+    [ "$3" ] && exit $3 || exit 100
+}
+
+print_stacktrace() {
+    STACK=""
+    local i
+    local stack_size=${#FUNCNAME[@]}
+    debug "Callstack:"
+    # for (( i=$stack_size-1; i>=1; i-- )); do
+    for (( i=1; i<$stack_size; i++ )); do
+        local func="${FUNCNAME[$i]}"
+        [ x$func = x ] && func=MAIN
+        local linen="${BASH_LINENO[$(( i - 1 ))]}"
+        local src="${BASH_SOURCE[$i]}"
+        [ x"$src" = x ] && src=non_file_source
+        debug "   at $func $src:$linen"
+    done
+}
