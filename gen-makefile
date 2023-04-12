@@ -87,7 +87,7 @@ help: Makefile
 	@echo "\nAvailable GOALs:"
 	@sed -n 's/^##//p' $< | column -ts ':' | sed -e "s/^/\t/"
 +%:
-	@$(MAKE) $*
+	@make $*
 ^%:
 	@./upgrade/$*
 @%:
