@@ -12,3 +12,9 @@ mkdir -p "$HOME/install/jbmono" "$HOME/.local/share/fonts/"
 download "https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip" "$HOME/install/jbmono.zip" && \
     unzip -oj "$HOME/install/jbmono.zip" "fonts/ttf/*.ttf" -d "$HOME/.local/share/fonts/" && \
     fc-cache -vf "$HOME/.local/share/fonts/"
+
+[ $? = 0 ] && {
+    echo
+    success "JetBrains Mono fonts installed!"
+    echo
+}

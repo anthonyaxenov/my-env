@@ -1,16 +1,15 @@
 #!/bin/bash
 ##makedesc: Install apache2 (latest)
+[ -f `dirname $0`/../helpers ] && source `dirname $0`/../helpers || exit 255
 
-echo
-echo "==============================================="
-echo "Installing apache2..."
-echo "==============================================="
-echo
+title
 
 sudo apt install -y --autoremove apache2 && \
     sudo systemctl restart apache2
 
-echo
-echo "Finish!"
-apache2 -v
-echo
+[ $? = 0 ] && {
+    echo
+    success "apache2 installed!"
+    apache2 -v
+    echo
+}
