@@ -1,64 +1,134 @@
 [alias]
-; shortcuts -----------------------------------------------------------------
 a = "add"
 aa = "add --all" # add all unstaged into index
+aliases = "config --get-regexp '^alias'" # show all aliases
+amend = "commit --amend --all --no-edit" # add new changes into last commit
+amendm = "commit --amend --all --message" # amend + edit commit message
+
 b = "branch" #
 bm = "branch --merged" # branches whose tips are reachable from commit or HEAD
 bnm = "branch --no-merged" # branches whose tips are NOT reachable from commit or HEAD
+branches = "branch -a"
+; branches = "bvv"
 brd = "branch -D" # force delete unmerged branch
 brod = "!git branch -D "$1"; git push origin :"$1";" # brd + remove it from origin
 bv = "branch -v" # show branch list with those last commits
 bvv = "branch -vv" # bv + remote branches tracked by them
+
 c = "commit"
 ca = "commit --all" # stage all changes and make a commit (interative)
 cam = "commit --all --message" # ca + cm (non-interactive)
 cf = "!f() { TARGET=$(git rev-parse \"$1\"); git commit --fixup=$TARGET && GIT_EDITOR=true git rebase --interactive --autosquash $TARGET~; }; f" # https://words.filippo.io/git-fixup-amending-an-older-commit/
+cleaner = "clean -dff"
+cleanest = "clean -dffx"
+cleanout = "!git clean -df && git checkout -- ."
 cloner = "clone --recursive" # clone with submodules
 cm = "commit --message" # make a commit with message given (non-interactive)
 co = "checkout"
 cob = "checkout -b" # create new branch with name given
+contributors = "shortlog --summary --numbered --no-merges" # users participating in development
 cp = "cherry-pick"
 cpa = "cherry-pick --abort" # abort cherry-picking
 cpc = "cherry-pick --continue" # continue cherry-picking
 cpn = "cherry-pick --no-commit" # cherry-pick without commit
 ; cpnx = "cherry-pick --no-commit -x"
+current-branch = "branch --show-current" #rev-parse --abbrev-ref HEAD
+
 d = "diff"
 dc = "diff --cached" # show diff of staged files
+default-branch = "config init.defaultBranch" # get default branch name
+dehead = "!BR=$(git branch --show-current); if [ -n "$BR" ]; then echo $BR; else git describe --contains --all HEAD; fi;"
+dev = "!git checkout dev && git pull" # quick switch on dev branch and update it
+develop = "!git checkout develop && git pull" # quick switch on develop branch and update it
+discard = "checkout --" # удаляет изменения в файле
 dw = "diff --word-diff" # show word diff in unstaged files
 dwc = "diff --word-diff --cached" # dc + dw
+
+exec = "!exec"
+
 f = "fetch"
 fa = "fetch --all" # fetch branches from all remotes
+fuck = "!git checkout $(git default-branch) && git fetch origin --prune && git reset --hard origin/$(git default-branch) && git clean -ffd"
+
+guser = "config --global --get-regexp '^user'" # show global user settings
+gzip = !"f() { top=$(rev-parse --show-toplevel); cd $top; tar cvzf $top.tar.gz $top ; }; f" # make repo .tar.gz
+
+head = "log -1 HEAD" # показать последний коммит в текущей ветке
+heads = "log --graph --decorate --simplify-by-decoration --oneline" # show last commit of each branch as tree graph
+
+inbound = "!git remote update --prune; git log ..@{upstream}" # get
+init = "init -q"
+
 l = "log"
+; last-tag = "describe --tags --abbrev=0"
+; last-tagged = "!git describe --tags $(git rev-list --tags --max-count=1)"
 lo = "log --oneline"
+log-all = "log --graph --decorate --all"
+log-my = "!git log --author $(git config user.email)"
+log-small = "log --graph --decorate --all --pretty=format:'%C(bold red)%h%C(reset) %C(bold blue)%an%C(reset) %C(green)%cr%C(reset) [%aD]%d%n%B'"
+
 m = "merge"
 ma = "merge --abort" # abort merging
+main = "!git checkout main && git pull" # quick switch on main branch and update it
+master = "!git checkout master && git pull" # quick switch on master branch and update it
 mc = "merge --continue" # continue merging
+merged = "bm"
 mn = "merge --no-commit" # merge without commit
+
+optimizer = "!git pruner; git repacker; git prune-packed"
+orphans = "fsck --full"
+outbound = "log @{upstream}.."
+
 p = "pull"
+pf = "pull --force" # получить ветку принудительно
+pft = "pull --force --tags" # получить теги
+; ploh = "pull origin HEAD" # получить текущую ветку из origin
 ; pr = "!git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1" # github: встать на PR с указанным id
 prs = "pull --recurse-submodules" # pull with submodules
+pruner = "!git prune --expire=now; git reflog expire --expire-unreachable=now --rewrite --all"
+pullf = "pull --force"
+pullft = "pull --force --tags"
+pullt = "pull --tags" # получить теги
+pushf = "!git push --force" # отправить ветку принудительно
+; pushf = "!git push --force --set-upstream origin $(git current-branch)" # отправить ветку принудительно
+pushft = "!git push --tags --force" # отправить теги принудительно
+; pushft = "!git push --tags --force --set-upstream origin $(git current-branch)" # отправить теги принудительно
+pusht = "!git push --tags" # отправить теги
+; pusht = "!git push --tags --set-upstream origin $(git current-branch)" # отправить теги
 
-re = "remote"
-rea = "remote add"
-res = "remote show"
-reso = "remote show origin"
-reu = "remote update"
-rev = "remote -v"
-rep = "remote prune"
-repd = "remote prune --dry-run"
-repo = "remote prune origin"
-repod = "remote prune origin --dry-run"
-
+r = "reset"
 rb = "rebase"
 rba = "rebase --abort"
 rbc = "rebase --continue"
 rbi = "rebase --interactive"
 rbs = "rebase --skip"
+re = "remote"
+rea = "remote add"
+remotes = "remote -v" # показать список удалённых репозиториев
+rep = "remote prune"
+repacker = "repack -adf --depth=300 --window=300 --window-memory=1g"
+repd = "remote prune --dry-run"
+repo = "rpo"
+repod = "rpod"
+repush = "!git push origin :$1 && git push origin $1'" # замена push --force
+res = "remote show"
+reso = "remote show origin"
+reu = "remote update"
+rev = "remote -v"
+rh = "reset --hard" # откат коммита с удалением всех изменений на указанный коммит
+rhh = "reset --hard HEAD" # откат коммита с удалением всех изменений на последний коммит
+rpo = "remote prune origin" # удалить все мёртвые ссылки на bare-ветки origin
+rpod = "rpo --dry-run" # удалить все мёртвые ссылки на bare-ветки origin
+rs = "reset --soft" # откат коммита с сохранением всех изменений на указанный коммит
+rsh = "reset --soft HEAD" # откат коммита с сохранением всех изменений
+rso = "remote show origin" # показать состояние локальных веток относительно удалённых на origin bare
 rv = "revert"
 rvn = "revert --no-commit"
 
 s = "status"
 sb = "show-branch"
+start = "!git init -q && git commit --allow-empty -m 'Initial commit'"
+stashes = "stash list" # show stashed changes
 sub = "submodule"
 ; sa = "submodule add"
 ; sdi = "submodule deinit -f"
@@ -66,109 +136,16 @@ sub = "submodule"
 ; ss = "submodule summary"
 ; sst = "submodule status"
 ; sup = "submodule update"
-
-; subcommands -----------------------------------------------------------------
-; gwhoami = "guser"
-; whoami = "user"
-; ploh = "pull origin HEAD" # получить текущую ветку из origin
 ; sy = "remote update origin --prune"
-aliases = "config --get-regexp '^alias'" # show all aliases
-amend = "commit --amend --all --no-edit" # add new changes into last commit
-amendm = "commit --amend --all --message" # amend + edit commit message
-archive = !"f() { top=$(rev-parse --show-toplevel); cd $top; tar cvzf $top.tar.gz $top ; }; f" # make repo .tar.gz
-branches = "branch -a"
-branches = "bvv"
-cleaner = "clean -dff"
-cleanest = "clean -dffx"
-cleanout = "!git clean -df && git checkout -- ."
-contributors = "shortlog --summary --numbered --no-merges" # users participating in development
-current-branch = "branch --show-current" #rev-parse --abbrev-ref HEAD
-default-branch = "config init.defaultBranch" # get default branch name
-dehead = "!BR=$(git branch --show-current); if [ -n "$BR" ]; then echo $BR; else git describe --contains --all HEAD; fi;"
-dev = "!git checkout dev && git pull" # quick switch on dev branch and update it
-develop = "!git checkout develop && git pull" # quick switch on develop branch and update it
-discard = "checkout --" # удаляет изменения в файле
-exec = "!exec"
-fuck = "!git checkout $(git default-branch) && git fetch origin --prune && git reset --hard origin/$(git default-branch) && git clean -ffd"
-guser = "config --global --get-regexp '^user'" # show global user settings
-; last-tag = "describe --tags --abbrev=0"
-; last-tagged = "!git describe --tags $(git rev-list --tags --max-count=1)"
-main = "!git checkout main && git pull" # quick switch on main branch and update it
-master = "!git checkout master && git pull" # quick switch on master branch and update it
-merged = "bm"
-optimizer = "!git pruner; git repacker; git prune-packed"
-orphans = "fsck --full"
-pruner = "!git prune --expire=now; git reflog expire --expire-unreachable=now --rewrite --all"
-pullf = "pull --force" # получить ветку принудительно
-pullft = "pull --tags --force" # получить теги
-pullt = "pull --tags" # получить теги
-; pushf = "!git push --force --set-upstream origin $(git current-branch)" # отправить ветку принудительно
-; pushft = "!git push --tags --force --set-upstream origin $(git current-branch)" # отправить теги принудительно
-; pusht = "!git push --tags --set-upstream origin $(git current-branch)" # отправить теги
-pushf = "!git push --force" # отправить ветку принудительно
-pushft = "!git push --tags --force" # отправить теги принудительно
-pusht = "!git push --tags" # отправить теги
-remotes = "remote -v" # показать список удалённых репозиториев
-repacker = "repack -a -d -f --depth=300 --window=300 --window-memory=1g"
-repush = "git push origin :$1 && git push origin $1'" # замена push --force
-rh = "reset --hard" # откат коммита с удалением всех изменений на указанный коммит
-rhh = "reset --hard HEAD~1" # откат коммита с удалением всех изменений на последний коммит
-rsh = "reset --soft HEAD~1" # откат коммита с сохранением всех изменений
-uncommit = rsh
-rpo = "remote prune origin" # удалить все мёртвые ссылки на bare-ветки origin
-rso = "remote show origin" # показать состояние локальных веток относительно удалённых на origin bare
-stashes = "stash list" # show stashed changes
+
 tags = "tag -n1 --list" # shot tag names and commit message
-; remove branches merged into specified or default one and clear dead links to remote branches
 trim = "!DEFAULT=$(git default-branch); git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; git remote prune origin;"
+
+uncommit = "rs HEAD~1"
 unstage = "reset HEAD" # staged file => unstaged
 ;unwip = "reset --mixed HEAD~"
 upstream-branch = "!git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)"
 user = "config --local --get-regexp '^user'" # show local user settings (in current repo)
-wip = "!git add . && git commit -am 'WIP'"
-wipa = "commit --amend -am 'WIP'"
-head = "log -1 HEAD" # показать последний коммит в текущей ветке
-heads = "log --graph --decorate --simplify-by-decoration --oneline" # show last commit of each branch as tree graph
-log-all = "log --graph --decorate --all"
-log-small = "log --graph --decorate --all --pretty=format:'%C(bold red)%h%C(reset) %C(bold blue)%an%C(reset) %C(green)%cr%C(reset) [%aD]%d%n%B'"
-log-my = "!git log --author $(git config user.email)"
-inbound = "!git remote update --prune; git log ..@{upstream}" # get
-outbound = "log @{upstream}.."
 
-; remove?
-chart = "!f() { \
-    git log \
-    --format=oneline \
-    --format=\"%aE %at\" \
-    --since=6-weeks-ago \
-    $* | \
-    awk ' \
-    function time_to_slot(t) { return strftime(\"%Y-%m-%d\", t, true) } \
-    function count_to_char(i) { return (i > 0) ? ((i < 10) ? i : \"X\") : \".\" } \
-    BEGIN { \
-        time_min = systime(); time_max = 0; \
-        SECONDS_PER_DAY=86400; \
-    } \
-    { \
-        item = $1; \
-        time = 0 + $2; \
-        if (time > time_max){ time_max = time } else if (time < time_min){ time_min = time }; \
-        slot = time_to_slot(time); \
-        items[item]++; \
-        slots[slot]++; \
-        views[item, slot]++; \
-    } \
-    END{ \
-        printf(\"Chart time range %s to %s.\\n\", time_to_slot(time_min), time_to_slot(time_max)); \
-        time_max_add = time_max += SECONDS_PER_DAY; \
-        for(item in items){ \
-            row = \"\"; \
-            for(time = time_min; time < time_max_add; time += SECONDS_PER_DAY) { \
-                slot = time_to_slot(time); \
-                count = views[item, slot]; \
-                row = row count_to_char(count); \
-            } \
-            print row, item; \
-        } \
-    }'; \
-}; f"
+wip = "!git add . && git commit -am 'WIP'"
+wipa = "!git add . && git commit --amend -am 'WIP'"
