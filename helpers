@@ -30,6 +30,11 @@ download() {
     wget "$1" -O "$2"
 }
 
+clone() {
+    require git
+    git clone $*
+}
+
 abspath() {
     echo $(realpath -q "${1/#\~/$HOME}")
 }
@@ -131,7 +136,6 @@ debug() {
         print "${DIM}${BOLD}${RESET}${DIM}$1 "
     fi
 }
-
 
 verbose() {
     print "${BOLD}${IVRB}${RESET}${FYELLOW} $1 "

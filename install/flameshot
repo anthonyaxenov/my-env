@@ -1,0 +1,15 @@
+#!/bin/bash
+##makedesc: Install flameshot (latest)
+source `dirname $0`/../helpers || exit 255
+
+title
+
+sudo apt install -y --autoremove flameshot && \
+    sudo systemctl restart flameshot
+
+[ $? = 0 ] && {
+    echo
+    success "flameshot installed!"
+    flameshot -v
+    echo
+}

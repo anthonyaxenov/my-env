@@ -7,19 +7,19 @@ echo "Installing postman (latest)..."
 echo "==============================================="
 echo
 
-mkdir -p ${HOME}/install/postman
-mkdir -p ${HOME}/.local/bin
-wget "https://dl.pstmn.io/download/latest/linux64" -O ${HOME}/install/postman.tar.gz && \
-    tar -xzf ${HOME}/install/postman.tar.gz -C ${HOME}/install/postman && \
-    ln -sf ${HOME}/install/postman/Postman/Postman ${HOME}/.local/bin/postman && \
-    mkdir -p "${HOME}/.local/share/applications" && \
-    cat << EOF > "${HOME}/.local/share/applications/Postman.desktop"
+mkdir -p $HOME/install/postman
+mkdir -p $HOME/.local/bin
+wget "https://dl.pstmn.io/download/latest/linux64" -O $HOME/install/postman.tar.gz && \
+    tar -xzf $HOME/install/postman.tar.gz -C $HOME/install/postman && \
+    ln -sf $HOME/install/postman/Postman/Postman $HOME/.local/bin/postman && \
+    mkdir -p "$HOME/.local/share/applications" && \
+    cat << EOF > "$HOME/.local/share/applications/Postman.desktop"
 #!/usr/bin/env xdg-open
 
 [Desktop Entry]
 Name=Postman
-Exec=${HOME}/.local/bin/postman
-Icon=${HOME}/install/postman/Postman/app/icons/icon_128x128.png
+Exec=$HOME/.local/bin/postman
+Icon=$HOME/install/postman/Postman/app/icons/icon_128x128.png
 Categories=Utility,Network
 Terminal=false
 Type=Application

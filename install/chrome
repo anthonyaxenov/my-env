@@ -1,14 +1,20 @@
 #!/bin/bash
 ##makedesc: Install google chrome (latest)
-
-echo
-echo "==============================================="
-echo "Installing google chrome (latest)..."
-echo "==============================================="
-echo
+source `dirname $0`/../helpers || exit 255
 
 # https://t.me/axenov_blog/251
 
-wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -O /tmp/google-chrome-stable_current_amd64.deb && \
-    sudo dpkg -i /tmp/google-chrome-stable_current_amd64.deb && \
-    rm /tmp/google-chrome-stable_current_amd64.deb
+title
+
+mkdir -p "$HOME/install"
+
+download "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
+    "$HOME/install/google-chrome.deb" && \
+    sudo dpkg -i "$HOME/install/google-chrome.deb"
+
+[ $? = 0 ] && {
+    echo
+    success "Google Chrome installed!"
+    google-chrome --version
+    echo
+}

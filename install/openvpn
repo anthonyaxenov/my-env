@@ -19,11 +19,11 @@ sudo apt install -y \
     liblzo2-dev \
     libpam0g-dev
 
-mkdir -p "${HOME}/install/"
+mkdir -p "$HOME/install/"
 wget "https://swupdate.openvpn.org/community/releases/openvpn-${OVPNVER}.tar.gz" \
     -O "/tmp/openvpn-${OVPNVER}.tar.gz"
-tar -xzf "/tmp/openvpn-${OVPNVER}.tar.gz" -C "${HOME}/install/"
-cd "${HOME}/install/openvpn-${OVPNVER}"
+tar -xzf "/tmp/openvpn-${OVPNVER}.tar.gz" -C "$HOME/install/"
+cd "$HOME/install/openvpn-${OVPNVER}"
 sudo ./configure && \
     sudo make && \
     sudo make install &&
