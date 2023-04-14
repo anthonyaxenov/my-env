@@ -16,11 +16,11 @@ installed() {
 
 COMPOSER_GLOBAL_HOME="$(composer config -g home)"
 NEWPATH="export PATH=\"$COMPOSER_GLOBAL_HOME/vendor/bin:\${PATH}\""
-cat "${HOME}/.profile" | grep -qoh "$NEWPATH" || {
+cat "$HOME/.profile" | grep -qoh "$NEWPATH" || {
     $NEWPATH
-    echo "$NEWPATH" >> "${HOME}/.profile"
+    echo "$NEWPATH" >> "$HOME/.profile"
 }
-source "${HOME}/.profile"
+source "$HOME/.profile"
 
 composer global require phpmd/phpmd --dev
 

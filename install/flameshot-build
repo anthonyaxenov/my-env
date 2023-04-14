@@ -1,8 +1,0 @@
-#!/bin/bash
-##makedesc: [TODO] Build flameshot from src (latest)
-
-echo
-echo "==============================================="
-echo "Installing flameshot (latest)..."
-echo "==============================================="
-echo

@@ -9,10 +9,10 @@ echo
 
 set -x
 rm -rf \
-    "${HOME}/.local/bin/lite-xl" \
-    "${HOME}/.local/share/applications/org.lite_xl.lite_xl.desktop" \
-    "${HOME}/.local/share/lite-xl" \
-    "${HOME}/.config/lite-xl"
+    "$HOME/.local/bin/lite-xl" \
+    "$HOME/.local/share/applications/org.lite_xl.lite_xl.desktop" \
+    "$HOME/.local/share/lite-xl" \
+    "$HOME/.config/lite-xl"
 
 sudo update-desktop-database && \
     xdg-desktop-menu forceupdate

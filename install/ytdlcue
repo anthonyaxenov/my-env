@@ -11,5 +11,5 @@ echo
 
 install_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 tools_dir="`dirname $install_dir`/tools"
-cp "${tools_dir}/ytdlcue.sh" "${HOME}/.local/bin/ytdlcue"
-sudo chmod +rx "${HOME}/.local/bin/ytdlcue"
+cp "${tools_dir}/ytdlcue.sh" "$HOME/.local/bin/ytdlcue"
+sudo chmod +rx "$HOME/.local/bin/ytdlcue"
