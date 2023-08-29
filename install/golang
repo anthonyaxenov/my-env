@@ -1,12 +1,12 @@
 #!/bin/bash
-##makedesc: Install golang v1.20.3
+##makedesc: Install golang v1.21.0
 source `dirname $0`/../helpers || exit 255
 
 # https://go.dev/dl/
 # https://golang.org/doc/install
 # https://www.vultr.com/docs/install-the-latest-version-of-golang-on-ubuntu
 
-[ $1 ] && VERSION="$1" || VERSION="1.20.3"
+[ $1 ] && VERSION="$1" || VERSION="1.21.0"
 title "Installing golang v$VERSION..."
 
 FILE="go$VERSION.linux-amd64.tar.gz"
@@ -15,14 +15,14 @@ sudo rm -rf /usr/local/go && \
     sudo tar -xzf "/tmp/$FILE" -C /usr/local && \
     rm -rf "/tmp/$FILE" && \
     sudo chown $USER: -R /usr/local/go && \
-    echo 'export PATH="$PATH:/usr/local/go/bin\"' >> "$HOME/.profile" && \
-    echo 'export GOPATH="~/.go"' >> "$HOME/.profile" && \
+    echo 'export PATH="/usr/local/go/bin:$PATH"' >> "$HOME/.profile" && \
+    echo "export GOPATH=\"\$HOME/.go\"" >> "$HOME/.profile" && \
     source ~/.profile
 
 [ $? = 0 ] && {
     echo
     success "golang installed!"
     info "NOTE: now run 'source ~/.profile' to apply new env vars"
-    go --version
+    go version
     echo
 }
