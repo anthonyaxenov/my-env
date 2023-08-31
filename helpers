@@ -57,7 +57,7 @@ symlink() {
 }
 
 download() {
-    require wget 1
+    require wget
     wget "$1" -O "$2"
 }
 
@@ -167,7 +167,7 @@ print() {
 
 debug() {
     if [ "$2" ]; then
-        print "${DIM}${BOLD}${RESET}${DIM} ${FUNCNAME[1]:-?}():${BASH_LINENO:-?}\t$1 "
+        print "${DIM}${BOLD}${RESET}${DIM}${FUNCNAME[1]:-?}():${BASH_LINENO:-?}\t$1 "
     else
         print "${DIM}${BOLD}${RESET}${DIM}$1 "
     fi
