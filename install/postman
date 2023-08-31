@@ -4,15 +4,17 @@ source `dirname $0`/../helpers || exit 255
 
 # https://learning.postman.com/docs/getting-started/installation-and-updates/#installing-postman-on-linux
 
+# set -ex
+
 title
 
 mkdir -p "$HOME/install" && \
     "$HOME/.local/bin" && \
     "$HOME/.local/share/applications"
 
-download "https://dl.pstmn.io/download/latest/linux64" $HOME/install/postman.tar.gz && \
+download "https://dl.pstmn.io/download/latest/linux64" "$HOME/install/postman.tar.gz" && \
     unpak_targz "$HOME/install/postman.tar.gz" "$HOME/install" && \
-    symlink $HOME/install/Postman/Postman $HOME/.local/bin/postman && \
+    symlink "$HOME/install/Postman/Postman" "$HOME/.local/bin/postman" && \
     cat << EOF > "$HOME/.local/share/applications/Postman.desktop" && sudo update-desktop-database
 [Desktop Entry]
 Name=Postman
