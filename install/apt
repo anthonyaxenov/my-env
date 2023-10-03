@@ -47,9 +47,10 @@ sudo apt update && \
         inotify-tools \
         notify-osd \
         fonts-open-sans \
-        libnotify-bin
+        libnotify-bin \
+        tree \
+        earlyoom
         # sqlitebrowser
-        # earlyoom \
         # etckeeper \
         # geoclue-2.0 \
         # gnome-software \
