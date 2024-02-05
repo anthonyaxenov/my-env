@@ -1,6 +1,7 @@
 #!/bin/bash
 ##makedesc: Install Vivaldi + ppa
 
+# https://repo.vivaldi.com
 # https://help.vivaldi.com/desktop/#install-update
 # https://help.vivaldi.com/desktop/install-update/manual-setup-vivaldi-linux-repositories/
 
