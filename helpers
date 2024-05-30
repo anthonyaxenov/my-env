@@ -21,6 +21,7 @@ require() {
     done
     if [ ${#sw[@]} -gt 0 ]; then
         info "This packages will be installed in your system:\n${sw[*]}"
+        #TODO use local install script if possible
         apt_install "${sw[*]}"
         [ $? -gt 0 ] && die "installation cancelled" 201
     fi

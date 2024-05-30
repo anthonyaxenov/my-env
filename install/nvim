@@ -1,0 +1,53 @@
+#!/bin/bash
+##makedesc: Install neovim (latest)
+source `dirname $0`/../helpers || exit 255
+
+# https://github.com/neovim/neovim/blob/master/INSTALL.md#linux
+# https://github.com/folke/lazy.nvim/blob/main/README.md#-installation
+# https://raw.githubusercontent.com/neovim/neovim/master/runtime/nvim.desktop
+
+title
+
+require git wget tar grep
+
+[ -d "$HOME/.config/nvim" ] && mv -f "$HOME/.config/nvim" $HOME/.config/nvim.bak
+mkdir -p $HOME/install $HOME/.config/nvim/lua/{core,plugins}
+
+tee <<EOF "$HOME/.config/nvim/init.lua" > /dev/null
+-- plugins
+require('core.plugins')
+EOF
+
+tee <<EOF "$HOME/.config/nvim/lua/core/plugins.lua" > /dev/null
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- install plugins
+require("lazy").setup({
+    { 'phaazon/hop.nvim' }
+})
+EOF
+
+download https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz "$HOME/install/nvim.tar.gz" && \
+    sudo rm -rf /opt/nvim && \
+    sudo tar -zxf "$HOME/install/nvim.tar.gz" -C /opt
+
+NEWPATH="export PATH=\"/opt/nvim-linux64/bin:\$PATH\""
+cat "$HOME/.profile" | grep -qoh "$NEWPATH" || {
+    $NEWPATH
+    echo "$NEWPATH" >> "$HOME/.profile"
+}
+
+echo
+success "NeoVim installed!"
+echo
