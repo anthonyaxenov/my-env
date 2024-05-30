@@ -33,6 +33,8 @@ sudo apt install -y --autoremove \
 
 sudo usermod -aG docker $(whoami)
 
+sudo cp ../dotfiles/etc/docker/daemon.json /etc/docker/daemon.json
+
 echo
 echo "Finish!"
 docker --version
