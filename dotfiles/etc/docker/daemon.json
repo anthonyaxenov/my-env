@@ -1,6 +1,7 @@
 {
     "registry-mirrors": [
         "https://dockerhub.timeweb.cloud",
+        "https://dh-mirror.gitverse.ru",
         "https://mirror.gcr.io",
         "https://daocloud.io",
         "https://c.163.com/",
