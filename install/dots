@@ -1,25 +1,22 @@
 #!/bin/bash
 ##makedesc: Install dotfiles
+source `dirname $0`/../helpers || exit 255
 
-echo
-echo "==============================================="
-echo "Installing dotfiles..."
-echo "==============================================="
-echo
+title
 
 install_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 dotfiles_src_dir="`dirname $install_dir`/dotfiles"
 postfix=".bak-`date '+%Y%m%d%H%M'`"
 
-install() {
-    echo "mv "$HOME/$1" "$HOME/$1$postfix""
-    echo "cp "$dotfiles_src_dir/$1" "$HOME/$1""
-    echo "- $1"
+install_dotfile() {
+    mv "$HOME/$1" "$HOME/$1$postfix"
+    cp "$dotfiles_src_dir/$1" "$HOME/$1"
+    success "- $1"
 }
 
-install .bash_aliases
-install .profile
-install .bashrc
-install .gitconfig
-install .gitignore
-install .git_aliases
+install_dotfile ".bash_aliases" && \
+    install_dotfile ".profile" && \
+    install_dotfile ".bashrc" && \
+    install_dotfile ".gitconfig" && \
+    install_dotfile ".gitignore" && \
+    install_dotfile ".git_aliases"
