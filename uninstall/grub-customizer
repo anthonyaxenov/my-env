@@ -1,0 +1,19 @@
+#!/bin/bash
+##makedesc: Uninstall grub-customizer with ppa
+source `dirname $0`/../helpers || exit 255
+
+title
+
+source_file="/etc/apt/sources.list.d/$(ls -1 /etc/apt/sources.list.d/ | grep danielrichter2007)"
+
+sudo apt remove -y --autoremove grub-customizer && \
+    [ -f "$source_file" ] && {
+        sudo rm "$source_file" && \
+        sudo apt update
+    }
+
+[ $? = 0 ] && {
+    echo
+    success "grub-customizer uninstalled!"
+    echo
+}
