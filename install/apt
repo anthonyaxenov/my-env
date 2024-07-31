@@ -1,62 +1,59 @@
 #!/bin/bash
-##makedesc: Install bunch of software from apt
+##makedesc: Install software from apt
+source `dirname $0`/../helpers || exit 255
 
-echo
-echo "==============================================="
-echo "Installing software from apt..."
-echo "==============================================="
-echo
+title
 
 sudo apt update && \
-    sudo apt upgrade -y --autoremove
-
-sudo apt install -y \
-    alien \
-    apt-transport-https \
-    build-essential \
-    ca-certificates \
-    cmake \
-    curl \
-    dconf-editor \
-    default-jdk \
-    dialog \
-    gettext \
-    gnupg \
-    gparted \
-    hardinfo \
-    htop \
-    libaio1 \
-    libcurl4-gnutls-dev \
-    libexpat1-dev \
-    libghc-zlib-dev \
-    libssl-dev \
-    lsb-release \
-    lsp-plugins \
-    make \
-    mc \
-    meld \
-    nano \
-    neofetch \
-    net-tools \
-    nmap \
-    p7zip-full \
-    pulseeffects \
-    software-properties-common \
-    terminator \
-    ubuntu-restricted-extras \
-    unzip \
-    vlc \
-    ffmpeg \
-    xclip \
-    inotify-tools \
-    notify-osd \
-    fonts-open-sans \
-    libnotify-bin
-    # sqlitebrowser
-    # earlyoom \
-    # etckeeper \
-    # geoclue-2.0 \
-    # gnome-software \
-    # minder \
-    # redshift \
-    # redshift-gtk
+    sudo apt upgrade -y --autoremove && \
+    sudo apt install -y \
+        alien \
+        apt-transport-https \
+        build-essential \
+        ca-certificates \
+        cmake \
+        curl \
+        dconf-editor \
+        default-jdk \
+        dialog \
+        gettext \
+        gnupg \
+        gparted \
+        hardinfo \
+        htop \
+        libaio1 \
+        libcurl4-gnutls-dev \
+        libexpat1-dev \
+        libghc-zlib-dev \
+        libssl-dev \
+        lsb-release \
+        lsp-plugins \
+        make \
+        mc \
+        meld \
+        nano \
+        neofetch \
+        net-tools \
+        nmap \
+        p7zip-full \
+        pulseeffects \
+        software-properties-common \
+        terminator \
+        ubuntu-restricted-extras \
+        unzip \
+        vlc \
+        ffmpeg \
+        xclip \
+        inotify-tools \
+        notify-osd \
+        fonts-open-sans \
+        libnotify-bin \
+        tree \
+        earlyoom
+        # sqlitebrowser
+        # etckeeper \
+        # geoclue-2.0 \
+        # gnome-software \
+        # minder \
+        # redshift \
+        # redshift-gtk
