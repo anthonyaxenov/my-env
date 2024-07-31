@@ -1,28 +1,33 @@
 #!/bin/bash
 ##makedesc: Install postman (latest)
+source `dirname $0`/../helpers || exit 255
 
-echo
-echo "==============================================="
-echo "Installing postman (latest)..."
-echo "==============================================="
-echo
+# https://learning.postman.com/docs/getting-started/installation-and-updates/#installing-postman-on-linux
 
-mkdir -p ${HOME}/install/postman
-mkdir -p ${HOME}/.local/bin
-wget "https://dl.pstmn.io/download/latest/linux64" -O ${HOME}/install/postman.tar.gz && \
-    tar -xzf ${HOME}/install/postman.tar.gz -C ${HOME}/install/postman && \
-    ln -sf ${HOME}/install/postman/Postman/Postman ${HOME}/.local/bin/postman && \
-    mkdir -p "${HOME}/.local/share/applications" && \
-    cat << EOF > "${HOME}/.local/share/applications/Postman.desktop"
-#!/usr/bin/env xdg-open
+# set -ex
 
+title
+
+mkdir -p "$HOME/install" && \
+    "$HOME/.local/bin" && \
+    "$HOME/.local/share/applications"
+
+download "https://dl.pstmn.io/download/latest/linux64" "$HOME/install/postman.tar.gz" && \
+    unpak_targz "$HOME/install/postman.tar.gz" "$HOME/install" && \
+    symlink "$HOME/install/Postman/Postman" "$HOME/.local/bin/postman" && \
+    cat << EOF > "$HOME/.local/share/applications/Postman.desktop" && sudo update-desktop-database
 [Desktop Entry]
 Name=Postman
-Exec=${HOME}/.local/bin/postman
-Icon=${HOME}/install/postman/Postman/app/icons/icon_128x128.png
-Categories=Utility,Network
+Exec=$HOME/.local/bin/postman %U
+Icon=$HOME/install/Postman/app/icons/icon_128x128.png
+Categories=Development,Network
 Terminal=false
 Type=Application
 Encoding=UTF-8
 EOF
-sudo update-desktop-database
+
+[ $? = 0 ] && {
+    echo
+    success "Postman installed!"
+    echo
+}
