@@ -16,11 +16,11 @@ installed() {
 ! installed 'make' && sudo apt install -y make
 ! installed 'wget' && sudo apt install -y wget
 
-[ -d "${HOME}/install/php-spx" ] || mkdir -p "${HOME}/install/php-spx"
+[ -d "$HOME/install/php-spx" ] || mkdir -p "$HOME/install/php-spx"
 wget https://github.com/NoiseByNorthwest/php-spx/archive/refs/heads/release/latest.zip -O /tmp/php-spx.zip \
-    && unzip -oq /tmp/php-spx.zip -d "${HOME}/install/php-spx" \
+    && unzip -oq /tmp/php-spx.zip -d "$HOME/install/php-spx" \
     && rm /tmp/php-spx.zip \
-    && cd "${HOME}/install/php-spx/php-spx-release-latest" \
+    && cd "$HOME/install/php-spx/php-spx-release-latest" \
     && phpize \
     && ./configure \
     && make \
