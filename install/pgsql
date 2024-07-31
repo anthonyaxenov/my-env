@@ -1,16 +1,14 @@
 #!/bin/bash
 ##makedesc: Install postgresql (latest) and php-pgsql (if php is installed)
+source `dirname $0`/../helpers || exit 255
 
-echo
-echo "==============================================="
-echo "Installing postgresql (latest)..."
-echo "==============================================="
-echo
+title
 
-installed() {
-    command -v "$1" >/dev/null 2>&1
-}
-
-sudo apt install -y --autoremove postgresql postgresql-contrib
-sudo service postgresql restart
-installed 'php' && sudo apt install -y --autoremove php-pgsql
+require postgresql postgresql-contrib && \
+    sudo service postgresql restart && \
+    {
+        echo
+        success "openvpn installed!"
+        postgres --version
+        echo
+    }
