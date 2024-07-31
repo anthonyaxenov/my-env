@@ -1,43 +1,38 @@
 #!/bin/bash
 ##makedesc: Install git (latest)
+source `dirname $0`/../helpers || exit 255
 
-echo
-echo "==============================================="
-echo "Installing git (latest)..."
-echo "==============================================="
-echo
+title
 
-installed() {
-    command -v "$1" >/dev/null 2>&1
-}
-
-! installed make && sudo apt install -y make
+require make
 
 if installed git; then
-    if [ -d "${HOME}/install/git" ]; then
-        cd "${HOME}/install/git" && \
+    if [ -d "$HOME/install/git" ]; then
+        cd "$HOME/install/git" && \
             git pull
     else
-        git clone https://github.com/git/git.git --depth=1 "${HOME}/install/git" && \
-            cd "${HOME}/install/git"
+        clone "https://github.com/git/git.git" "$HOME/install/git" --depth=1 --single-branch && \
+            cd "$HOME/install/git"
     fi
     sudo make prefix=/usr/local all && \
         sudo make prefix=/usr/local install
 else
-    ! installed wget && sudo apt install -y wget
-    [ -d "${HOME}/install/git" ] || mkdir -p "${HOME}/install/git"
-    wget https://github.com/git/git/archive/master.zip -O /tmp/git.zip && \
-        unzip -oq /tmp/git.zip -d "${HOME}/install/git" && \
+    require wget
+    mkdir -p "$HOME/install/git"
+    download "https://github.com/git/git/archive/master.zip" "/tmp/git.zip" && \
+        unzip -oq "/tmp/git.zip" -d "$HOME/install/git" && \
         rm /tmp/git.zip && \
-        cd "${HOME}/install/git/git-master" && \
+        cd "$HOME/install/git/git-master" && \
         sudo make prefix=/usr/local all && \
         sudo make prefix=/usr/local install && \
         cd - && \
         rm -rf git && \
-        git clone https://github.com/git/git.git --depth=1 "${HOME}/install/git"
+        clone "https://github.com/git/git.git" "$HOME/install/git" --depth=1 --single-branch
 fi
 
-echo
-echo "Finish!"
-git --version
-echo
+[ $? = 0 ] && {
+    echo
+    success "git installed!"
+    git --version
+    echo
+}
