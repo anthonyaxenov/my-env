@@ -15,11 +15,11 @@ echo
 # command -v "obs" >/dev/null 2>&1 || echo 'You need to install obs first!'
 command -v "obs-studio" >/dev/null 2>&1 || echo 'You need to install obs-studio first!'
 
-mkdir -p ~/install/droidcam-obs
+mkdir -p $HOMEinstall/droidcam-obs
 wget -O /tmp/droidcam-obs.zip https://files.dev47apps.net/obs/droidcam_obs_1.5.1_linux.zip
-unzip -oq /tmp/droidcam-obs.zip -d ~/install/droidcam-obs
+unzip -oq /tmp/droidcam-obs.zip -d $HOMEinstall/droidcam-obs
 rm -rf /tmp/droidcam-obs.zip
-cd ~/install/droidcam-obs && ./install.sh
+cd $HOMEinstall/droidcam-obs && ./install.sh
 sudo modprobe v4l2loopback video_nr=2 card_label="OBS Virtual Camera"
 
 echo

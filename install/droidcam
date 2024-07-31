@@ -1,21 +1,22 @@
 #!/bin/bash
-##makedesc: Install droidcam v1.8.2
+##makedesc: Install droidcam v1.9.0
+source `dirname $0`/../helpers || exit 255
 
 # https://www.dev47apps.com/droidcam/linux/
 
-echo
-echo "==============================================="
-echo "Installing droidcam v1.8.2..."
-echo "==============================================="
-echo
+title
 
-mkdir -p ~/install/droidcam
-wget -O /tmp/droidcam.zip https://files.dev47apps.net/linux/droidcam_1.8.2.zip
-unzip -oq /tmp/droidcam.zip -d ~/install/droidcam
-rm -rf /tmp/droidcam.zip
-cd ~/install/droidcam && sudo ./install-client
+mkdir -p "$HOME/install/droidcam"
 
-echo
-echo "Finish!"
-echo "Don't forget to install android app: https://play.google.com/store/apps/developer?id=Dev47Apps"
-echo
+download "https://files.dev47apps.net/linux/droidcam_1.9.0.zip" "$HOME/install/droidcam.zip" && \
+    unzip -oq "$HOME/install/droidcam.zip" -d "$HOME/install/droidcam" && \
+    cd "$HOME/install/droidcam" && \
+    sudo ./install-client
+
+[ $? = 0 ] && {
+    echo
+    success "droidcam installed!"
+    info "Don't forget to install the android app:"
+    info "https://play.google.com/store/apps/developer?id=Dev47Apps"
+    echo
+}
