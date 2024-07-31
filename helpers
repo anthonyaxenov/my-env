@@ -4,6 +4,40 @@ installed() {
     command -v "$1" >/dev/null 2>&1
 }
 
+installed2() {
+    dpkg --list | grep -qw "ii  $1"
+}
+
+apt_install() {
+    sudo apt install -y --autoremove "$*"
+}
+
+require() {
+    sw=()
+    for package in "$@"; do
+        if ! installed "$package" && ! installed2 "$package"; then
+            sw+=("$package")
+        fi
+    done
+    if [ ${#sw[@]} -gt 0 ]; then
+        info "This packages will be installed in your system:\n${sw[*]}"
+        apt_install "${sw[*]}"
+        [ $? -gt 0 ] && die "installation cancelled" 201
+    fi
+}
+
+require2() {
+    sw=()
+    for package in "$@"; do
+        if ! installed "$package" && ! installed2 "$package"; then
+            sw+=("$package")
+        fi
+    done
+    if [ ${#sw[@]} -gt 0 ]; then
+        die "This packages must be installed in your system:\n${sw[*]}" 200
+    fi
+}
+
 title() {
     [ "$1" ] && title="$1" || title="$(grep -m 1 -oP "(?<=^##makedesc:\s).*$" ${BASH_SOURCE[1]})"
     info
@@ -13,21 +47,28 @@ title() {
     info
 }
 
-require() {
-    if ! installed "$1"; then
-        if [ "$2" ]; then
-            die "'$1' must to be installed in your system" 200
-        else
-            info "Installing '$1' because it is required to continue"
-            sudo apt install "$1"
-            [ $? -gt 0 ] && die "installation cancelled" 201
-        fi
-    fi
+unpak_targz() {
+    require tar
+    tar -xzf "$1" -C "$2"
+}
+
+symlink() {
+    ln -sf "$1" "$2"
 }
 
 download() {
-    require wget 1
+    require wget
     wget "$1" -O "$2"
+}
+
+clone() {
+    require git
+    git clone $*
+}
+
+clone_quick() {
+    require git
+    git clone $* --depth=1 --single-branch
 }
 
 abspath() {
@@ -126,12 +167,11 @@ print() {
 
 debug() {
     if [ "$2" ]; then
-        print "${DIM}${BOLD}${RESET}${DIM} ${FUNCNAME[1]:-?}():${BASH_LINENO:-?}\t$1 "
+        print "${DIM}${BOLD}${RESET}${DIM}${FUNCNAME[1]:-?}():${BASH_LINENO:-?}\t$1 "
     else
         print "${DIM}${BOLD}${RESET}${DIM}$1 "
     fi
 }
-
 
 verbose() {
     print "${BOLD}${IVRB}${RESET}${FYELLOW} $1 "
@@ -155,7 +195,6 @@ warn() {
 
 error() {
     print "${BOLD}${BLRED}${FWHITE}${IERROR} Error: ${BRESET}${FLRED} $1 " >&2
-    # print_stacktrace
 }
 
 fatal() {
@@ -164,19 +203,8 @@ fatal() {
 }
 
 die() {
-    error "$1"
-    [ "$2" ] && exit $2 || exit 100
-}
-
-die_fatal() {
-    fatal "$1"
-    [ "$2" ] && exit $2 || exit 100
-}
-
-die_help() {
-    error "$1"
-    [ "$2" ] && is_function "$2".help && $2.help
-    [ "$3" ] && exit $3 || exit 100
+    error "${1:-halted}"
+    exit ${2:-100}
 }
 
 print_stacktrace() {
