@@ -1,0 +1,22 @@
+#!/bin/bash
+##makedesc: Install Sublime Text (build 4169)
+source `dirname $0`/../helpers || exit 255
+
+# https://www.sublimetext.com/download_thanks?target=x64-deb
+# https://gist.github.com/skoqaq/3f3e8f28e23c881143cef9cf49d821ff
+
+title
+
+mkdir -p "$HOME/install"
+
+download https://download.sublimetext.com/sublime-text_build-4169_amd64.deb \
+    "$HOME/install/sublime-text_build-4169_amd64.deb" && \
+    sudo dpkg -i "$HOME/install/sublime-text_build-4169_amd64.deb" && \
+    echo "00489f39: c640 0501 4885 c9" | sudo xxd -r - /opt/sublime_text/sublime_text
+
+[ $? = 0 ] && {
+    echo
+    success "Sublime Text installed!"
+    subl --version
+    echo
+}
