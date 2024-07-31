@@ -8,4 +8,4 @@ echo "==============================================="
 echo
 
 sudo apt install -y --autoremove zsh
-echo "source ~/.profile" >> ~/.zshrc
+echo "source ~/.profile" >> "$HOME/.zshrc"

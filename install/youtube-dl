@@ -12,8 +12,8 @@ echo
 # 11.04.23: release 2021.12.17 in snap/apt/github is broken (Unable to extract uploader id)
 # and still no fix officially released, so we just build it from actual sources
 
-# curl -L https://yt-dl.org/downloads/latest/youtube-dl -o "${HOME}/.local/bin/youtube-dl" && \
-#     sudo chmod +rx "${HOME}/.local/bin/youtube-dl"
+# curl -L https://yt-dl.org/downloads/latest/youtube-dl -o "$HOME/.local/bin/youtube-dl" && \
+#     sudo chmod +rx "$HOME/.local/bin/youtube-dl"
 
 installed() {
     command -v "$1" >/dev/null 2>&1
