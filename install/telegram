@@ -7,7 +7,7 @@ echo "Installing telegram (latest)..."
 echo "==============================================="
 echo
 
-mkdir -p "${HOME}/install" "${HOME}/.local/bin"
-wget "https://telegram.org/dl/desktop/linux" -O ${HOME}/install/telegram.tar.gz && \
-    tar -xJf ${HOME}/install/telegram.tar.gz -C ${HOME}/.local/bin
-${HOME}/.local/bin/Telegram/Telegram & disown > /dev/null
+mkdir -p "$HOME/install" "$HOME/.local/bin"
+wget "https://telegram.org/dl/desktop/linux" -O $HOME/install/telegram.tar.gz && \
+    tar -xJf $HOME/install/telegram.tar.gz -C $HOME/.local/bin
+$HOME/.local/bin/Telegram/Telegram & disown > /dev/null
