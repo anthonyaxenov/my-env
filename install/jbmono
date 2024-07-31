@@ -1,14 +1,14 @@
 #!/bin/bash
 ##makedesc: Install JetBrains Mono fonts
-[ -f `dirname $0`/../helpers ] && source `dirname $0`/../helpers || exit 255
+source `dirname $0`/../helpers || exit 255
 
 # https://www.jetbrains.com/lp/mono/#how-to-install
 
 title
+
 require unzip
 
 mkdir -p "$HOME/install/jbmono" "$HOME/.local/share/fonts/"
-
 download "https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip" "$HOME/install/jbmono.zip" && \
     unzip -oj "$HOME/install/jbmono.zip" "fonts/ttf/*.ttf" -d "$HOME/.local/share/fonts/" && \
     fc-cache -vf "$HOME/.local/share/fonts/"
