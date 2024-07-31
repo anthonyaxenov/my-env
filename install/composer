@@ -1,56 +1,41 @@
 #!/bin/bash
 ##makedesc: Install composer (latest)
-echo
-echo "==============================================="
-echo "Installing composer (latest)..."
-echo "==============================================="
-echo
+source `dirname $0`/../helpers || exit 255
 
 # https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
 
-installed() {
-    command -v "$1" >/dev/null 2>&1
-}
+title
 
-! installed "php" && echo "WARNING: You need php to be installed"
+require php
 
 if installed "composer"; then
-    echo "WARNING: Removing current composer to install its actual version"
+    warn "WARNING: Removing current composer to install its actual version"
     sudo apt remove -y --autoremove composer
-    sudo rm -f $HOME/.local/bin/composer
-    sudo rm -f /bin/composer
-    sudo rm -f /usr/bin/composer
-    sudo rm -f /usr/local/bin/composer
-    sudo rm -f /usr/src/composer
-    rm $HOME/.local/bin/composer
+    sudo rm -f \
+        "$HOME/.local/bin/composer" \
+        /bin/composer \
+        /usr/bin/composer \
+        /usr/local/bin/composer \
+        /usr/src/composer \
+        "$HOME/.local/bin/composer"
 fi
 
-mkdir -p $HOME/install $HOME/.local/bin
-cd $HOME/install
+mkdir -p "$HOME/install" "$HOME/.local/bin"
+download "https://getcomposer.org/installer" "$HOME/install/composer-setup.php" && \
+    php "$HOME/install/composer-setup.php" --install-dir="$HOME/.local/bin/composer"
 
-EXPECTED_CHECKSUM="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')"
-# php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-wget https://getcomposer.org/installer -O composer-setup.php
-ACTUAL_CHECKSUM="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
-if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]; then
-    >&2 echo 'ERROR: Invalid installer checksum'
-    rm composer-setup.php
-    exit 1
-fi
-php composer-setup.php --quiet
-mv -f $HOME/install/composer.phar $HOME/.local/bin/composer
-cd - >/dev/null
+[ $? = 0 ] && {
+    COMPOSER_GLOBAL_HOME="$($HOME/.local/bin/composer config -g home)"
+    NEWPATH="export PATH=\"$COMPOSER_GLOBAL_HOME/vendor/bin:\${PATH}\""
+    cat "$HOME/.profile" | grep -qoh "$NEWPATH" || {
+        $NEWPATH
+        echo "$NEWPATH" >> "$HOME/.profile"
+    }
 
-COMPOSER_GLOBAL_HOME="$($HOME/.local/bin/composer config -g home)"
-NEWPATH="export PATH=\"$COMPOSER_GLOBAL_HOME/vendor/bin:\${PATH}\""
-cat "${HOME}/.profile" | grep -qoh "$NEWPATH" || {
-    $NEWPATH
-    echo "$NEWPATH" >> "${HOME}/.profile"
+    echo
+    success "composer installed!"
+    composer --version
+    echo
 }
-source "${HOME}/.profile"
 
-echo
-echo "Finish!"
-composer --version
-echo
-
+source "$HOME/.profile"
