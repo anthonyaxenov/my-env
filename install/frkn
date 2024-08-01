@@ -1,0 +1,53 @@
+#!/bin/bash
+##makedesc: Install Wireguard + FRKN
+source `dirname $0`/../helpers || exit 255
+
+# https://frkn.org/ru/installation
+
+title
+
+mkdir -p "$HOME/install/frkn"
+cd "$HOME/install/frkn"
+
+apt_install wireguard jq
+
+countries=(uk ru nl nl2 ch)
+for idx in ${!countries[@]}; do
+    country=${countries[idx]}
+    info "Downloading config for $country ($(expr $idx + 1)/${#countries[@]})"
+
+    json=$(curl -s "https://api.frkn.org/peer?location=$country" | jq)
+
+    iface_address=$(echo $json | jq -r .iface.address)
+    iface_privkey=$(echo $json | jq -r .iface.key)
+    iface_dns=$(echo $json | jq -r .iface.dns)
+    peer_pubkey=$(echo $json | jq -r .peer.pubkey)
+    peer_psk=$(echo $json | jq -r .peer.psk)
+    peer_allowed_ips=$(echo $json | jq -r .peer.allowed_ips)
+    peer_endpoint=$(echo $json | jq -r .peer.endpoint)
+
+    cat << EOF > "frkn-$country.conf"
+[Interface]
+Address = $iface_address
+DNS = $iface_dns
+PrivateKey = $iface_privkey
+
+[Peer]
+PublicKey = $peer_pubkey
+PresharedKey = $peer_psk
+AllowedIPs = $peer_allowed_ips
+Endpoint = $peer_endpoint
+PersistentKeepalive = 25
+EOF
+
+done
+
+sudo cp frkn-*.conf /etc/wireguard/
+
+[ $? = 0 ] && {
+    echo
+    success "Wireguard + FRKN installed!"
+    wg --version
+    info "Use 'wg-quick (up|down) frkn-($(implode '|' ${countries[@]}))' to control connections"
+    info "Use 'sudo wg show' to see connection status"
+}
