@@ -1,0 +1,64 @@
+#!/bin/bash
+# https://www.devas.life/effective-neovim-setup-for-web-development-towards-2024/
+
+set -eo pipefail
+trap ontrap SIGINT SIGTERM SIGSTOP
+
+ontrap() {
+    echo
+    echo "[!] Interrupted"
+    exit
+}
+
+[ -z "$1" ] && version=0.10.1 || version="$1"
+
+filedir="$HOME/install/neovim-$version"
+filename="nvim-linux64.tar.gz"
+filepath="$filedir/$filename"
+configdir="$HOME/.config/nvim"
+localdir="$HOME/.local"
+
+echo "[*] Installing neovim v$version"
+
+if [ -d $configdir ]; then
+    mv $configdir "$configdir.bak-$(date +'%Y%m%d_%H%M%S')"
+fi
+
+mkdir -p $filedir $configdir $localdir/{bin,lib,share}
+
+if [ ! -f $filepath ]; then
+    echo "[*] Downloading to $filepath..."
+    wget -q https://github.com/neovim/neovim/releases/download/v$version/nvim-linux64.tar.gz \
+        -O $filepath \
+        --show-progress
+fi
+
+echo "[*] Unpacking: $filepath..."
+tar -zxf $filepath -C $filedir
+cp -rf $filedir/nvim-linux64/bin/nvim $localdir/bin/
+cp -rf $filedir/nvim-linux64/lib/nvim $localdir/lib/
+cp -rf $filedir/nvim-linux64/share $localdir/share
+rm -rf $filedir/nvim-linux64
+
+echo "[*] Reinit git repo..."
+git clone https://github.com/LazyVim/starter \
+    $configdir \
+    --depth=1 \
+    --single-branch
+cd $configdir
+rm -rf .git
+git init -q
+
+
+
+
+
+
+
+
+
+
+
+
+
+

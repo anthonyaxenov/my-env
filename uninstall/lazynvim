@@ -1,0 +1,16 @@
+#!/bin/bash
+set -eo pipefail
+trap ontrap SIGINT SIGTERM SIGSTOP
+
+ontrap() {
+    echo
+    echo "[!] Interrupted"
+    exit
+}
+
+echo "[*] Uninstalling neovim"
+
+find "$HOME/.config" -type f -path "*/nvim*" -exec rm -rfv {} +
+find "$HOME/.local" -type f -path "*/nvim*" -exec rm -rfv {} +
+
+echo "[*] Finish"
