@@ -1,0 +1,18 @@
+#!/bin/bash
+##makedesc: VSCode deb-package
+source `dirname $0`/../helpers || exit 255
+
+title
+
+mkdir -p "$HOME/install"
+
+download "https://code.visualstudio.com/docs/?dv=linux64_deb" \
+    "$HOME/install/vscode.deb" && \
+    sudo dpkg -i "$HOME/install/vscode.deb"
+
+[ $? = 0 ] && {
+    echo
+    success "VSCode installed"
+    vscode --version
+    echo
+}

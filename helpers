@@ -9,7 +9,7 @@ installed2() {
 }
 
 apt_install() {
-    sudo apt install -y --autoremove "$*"
+    sudo apt install -y --autoremove $*
 }
 
 require() {
@@ -21,7 +21,7 @@ require() {
     done
     if [ ${#sw[@]} -gt 0 ]; then
         info "This packages will be installed in your system:\n${sw[*]}"
-        apt_install "${sw[*]}"
+        apt_install ${sw[*]}
         [ $? -gt 0 ] && die "installation cancelled" 201
     fi
 }

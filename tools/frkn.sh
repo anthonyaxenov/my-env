@@ -1,13 +1,19 @@
 #!/bin/bash
 
 function disconnect() {
-    echo "Отключаю $1"
+    echo "Disconnecting: $1"
     sudo wg-quick down "$1"
+    sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+    sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+    sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
     echo
 }
 
 function connect() {
-    echo "Подключаю frkn-$1"
+    echo "Connecting: frkn-$1"
+    sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0
+    sudo sysctl -w net.ipv6.conf.default.disable_ipv6=0
+    sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=0
     sudo wg-quick up "frkn-$1"
     echo
 }
@@ -21,7 +27,44 @@ function in_array() {
     return 1
 }
 
-country="$1"
+function update_wg() {
+    sudo apt install -y wireguard jq && wg --version
+}
+
+function update_frkn() {
+    local countries=(uk ru nl nl2 ch)
+    for idx in ${!countries[@]}; do
+        country=${countries[idx]}
+        echo "Downloading config for $country ($(expr $idx + 1)/${#countries[@]})"
+
+        json=$(curl -s "https://api.frkn.org/peer?location=$country" | jq)
+
+        iface_address=$(echo $json | jq -r .iface.address)
+        iface_privkey=$(echo $json | jq -r .iface.key)
+        iface_dns=$(echo $json | jq -r .iface.dns)
+        peer_pubkey=$(echo $json | jq -r .peer.pubkey)
+        peer_psk=$(echo $json | jq -r .peer.psk)
+        peer_allowed_ips=$(echo $json | jq -r .peer.allowed_ips)
+        peer_endpoint=$(echo $json | jq -r .peer.endpoint)
+
+        cat << EOF > "./frkn-$country.conf"
+[Interface]
+Address = $iface_address
+DNS = $iface_dns
+PrivateKey = $iface_privkey
+
+[Peer]
+PublicKey = $peer_pubkey
+PresharedKey = $peer_psk
+AllowedIPs = $peer_allowed_ips
+Endpoint = $peer_endpoint
+PersistentKeepalive = 25
+EOF
+    done
+    sudo mv -f ./frkn-*.conf /etc/wireguard/
+}
+
+command="$1"
 countries=()
 current=$(sudo wg show | head -n 1 | awk '{print $2}')
 
@@ -32,10 +75,10 @@ for file in /etc/wireguard/*.conf; do
 done
 
 correct=-1
-if [ -z "$country" ] ; then
+if [ -z "$command" ] ; then
     while [ $correct -lt 0 ]; do
-        read -rp "Выбери страну (${countries[*]}): " country
-        if in_array "$country" ${countries[@]}; then
+        read -rp "Entry on of country code (${countries[*]}): " command
+        if in_array "$command" ${countries[@]}; then
             correct=1
         else
             echo "Неверный код страны!"
@@ -43,14 +86,23 @@ if [ -z "$country" ] ; then
     done
 fi
 
-case "$country" in
+case "$command" in
+    "update" )
+        if update_wg && update_frkn; then
+            echo "Wireguard and FRKN updated"
+        else
+            echo "Something went wrong"
+            exit 1
+        fi
+        ;;
+
     "down" )
         if [ -n "$current" ]; then
             disconnect "$current"
         fi
         ;;
 
-    "status"|"show" )
+    "show" )
         sudo wg show
         ;;
 
@@ -58,6 +110,6 @@ case "$country" in
         if [ -n "$current" ]; then
             disconnect "$current"
         fi
-        connect "$country"
+        connect "$command"
         ;;
 esac

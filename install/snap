@@ -26,8 +26,8 @@ fi
 # snapi gtk2-common-themes
 
 snapi peek
-snapi telegram-desktop
-snapi code
+# snapi telegram-desktop #todo
+# snapi code # deb https://github.com/microsoft/vscode/issues/221836
 snapi skype
 snapi dbeaver-ce
 # snapi mysql-workbench-community
