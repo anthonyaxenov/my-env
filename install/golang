@@ -6,7 +6,7 @@ source `dirname $0`/../helpers || exit 255
 # https://golang.org/doc/install
 # https://www.vultr.com/docs/install-the-latest-version-of-golang-on-ubuntu
 
-[ $1 ] && VERSION="$1" || VERSION="1.21.6"
+[ $1 ] && VERSION="$1" || VERSION="1.23.0"
 title "Installing golang v$VERSION..."
 
 FILE="go$VERSION.linux-amd64.tar.gz"
