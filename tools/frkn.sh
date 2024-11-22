@@ -1,13 +1,19 @@
 #!/bin/bash
 
 function disconnect() {
-    echo "Connecting to $1"
+    echo "Disconnecting: $1"
     sudo wg-quick down "$1"
+    sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+    sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+    sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
     echo
 }
 
 function connect() {
-    echo "Disconnecting frkn-$1"
+    echo "Connecting: frkn-$1"
+    sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0
+    sudo sysctl -w net.ipv6.conf.default.disable_ipv6=0
+    sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=0
     sudo wg-quick up "frkn-$1"
     echo
 }
@@ -55,7 +61,7 @@ Endpoint = $peer_endpoint
 PersistentKeepalive = 25
 EOF
     done
-    sudo mv ./frkn-*.conf /etc/wireguard/
+    sudo mv -f ./frkn-*.conf /etc/wireguard/
 }
 
 command="$1"
