@@ -6,13 +6,13 @@ title
 
 mkdir -p "$HOME/install"
 
-download "https://code.visualstudio.com/docs/?dv=linux64_deb" \
+download "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" \
     "$HOME/install/vscode.deb" && \
     sudo dpkg -i "$HOME/install/vscode.deb"
 
 [ $? = 0 ] && {
     echo
     success "VSCode installed"
-    vscode --version
+    code --version
     echo
 }
