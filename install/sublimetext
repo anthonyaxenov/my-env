@@ -1,18 +1,26 @@
 #!/bin/bash
-##makedesc: Install Sublime Text (build 4169)
+##makedesc: Install Sublime Text
 source `dirname $0`/../helpers || exit 255
 
 # https://www.sublimetext.com/download_thanks?target=x64-deb
 # https://gist.github.com/skoqaq/3f3e8f28e23c881143cef9cf49d821ff
 
+[ "$1" ] && STVER="$1" || STVER='4180'
+
 title
 
 mkdir -p "$HOME/install"
 
-download https://download.sublimetext.com/sublime-text_build-4169_amd64.deb \
-    "$HOME/install/sublime-text_build-4169_amd64.deb" && \
-    sudo dpkg -i "$HOME/install/sublime-text_build-4169_amd64.deb" && \
+download https://download.sublimetext.com/sublime-text_build-${STVER}_amd64.deb \
+    "$HOME/install/sublime-text_build-${STVER}_amd64.deb" && \
+    sudo dpkg -i "$HOME/install/sublime-text_build-${STVER}_amd64.deb"
+
+sudo cp /opt/sublime_text/sublime_text /opt/sublime_text/sublime_text.old
+if [[ $STVER = '4169' ]]; then
     echo "00489f39: c640 0501 4885 c9" | sudo xxd -r - /opt/sublime_text/sublime_text
+elif [[ $STVER = '4180' ]]; then
+    sudo sed -i 's/\x80\x79\x05\x00\x0F\x94\xC2/\xC6\x41\x05\x01\xB2\x00\x90/' /opt/sublime_text/sublime_text
+fi
 
 [ $? = 0 ] && {
     echo
