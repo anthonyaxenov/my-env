@@ -1,8 +1,5 @@
 #!/bin/bash
 ##makedesc: Install software from apt
-source `dirname $0`/../helpers || exit 255
-
-title
 
 sudo apt update && \
     sudo apt upgrade -y --autoremove && \
@@ -27,7 +24,6 @@ sudo apt update && \
         libghc-zlib-dev \
         libssl-dev \
         lsb-release \
-        lsp-plugins \
         make \
         mc \
         meld \
@@ -36,7 +32,7 @@ sudo apt update && \
         net-tools \
         nmap \
         p7zip-full \
-        pulseeffects \
+        easyeffects \
         software-properties-common \
         terminator \
         ubuntu-restricted-extras \
@@ -51,9 +47,4 @@ sudo apt update && \
         tree \
         earlyoom
         # sqlitebrowser
-        # etckeeper \
-        # geoclue-2.0 \
-        # gnome-software \
-        # minder \
-        # redshift \
-        # redshift-gtk
+        # etckeeper

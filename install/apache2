@@ -1,15 +1,11 @@
 #!/bin/bash
 ##makedesc: Install apache2 (latest)
-source `dirname $0`/../helpers || exit 255
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
 
 title
 
-sudo apt install -y --autoremove apache2 && \
-    sudo systemctl restart apache2
+apt_install apache2
+sudo systemctl restart apache2
 
-[ $? = 0 ] && {
-    echo
-    success "apache2 installed!"
-    apache2 -v
-    echo
-}
+success "apache2 installed!"
+apache2 -v

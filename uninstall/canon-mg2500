@@ -1,0 +1,15 @@
+#!/bin/bash
+##makedesc: Uninstall Canon Pixma MG2500 + ppa
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
+
+title
+
+apt_ppa_remove ppa:thierry-f/fork-michael-gruz
+
+dpkg_remove cnijfilter-mg2500series
+dpkg_remove cnijfilter-common
+dpkg_remove scangearmp-mg2500series
+dpkg_remove scangearmp-common
+
+success "Drivers for Canon Pixma MG2500 removed!"
+

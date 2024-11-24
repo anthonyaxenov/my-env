@@ -1,6 +1,6 @@
 #!/bin/bash
 ##makedesc: Install Wireguard + FRKN
-source `dirname $0`/../helpers || exit 255
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
 
 # https://frkn.org/ru/installation
 

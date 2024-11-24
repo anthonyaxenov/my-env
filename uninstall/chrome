@@ -1,0 +1,9 @@
+#!/bin/bash
+##makedesc: Uninstall google chrome
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
+
+title
+
+dpkg_remove google-chrome-stable
+
+success "Google Chrome removed!"

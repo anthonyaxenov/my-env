@@ -1,6 +1,15 @@
 #!/bin/bash
 ##makedesc: Install omz fancy (powerline10k + MesloLGS font)
 
+# https://gist.github.com/anthonyaxenov/b8460935d06b9f0da72def03d0f26515
+
+# Based on:
+# https://github.com/Powerlevel9k/powerlevel9k/wiki/Install-Instructions
+# https://github.com/ohmyzsh/ohmyzsh
+# https://powerline.readthedocs.io/en/latest/installation/linux.html#fonts-installation
+# https://gist.github.com/dogrocker/1efb8fd9427779c827058f873b94df95
+# https://linuxhint.com/install_zsh_shell_ubuntu_1804/
+
 echo
 echo "==============================================="
 echo "Installing omz fancy: powerline10k + MesloLGS font..."

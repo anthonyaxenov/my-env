@@ -1,0 +1,19 @@
+# Daemon file
+# Place or symlink it to /etc/systemd/system/inotifywait-cp.service
+# Enable and start: sudo systemctl enable --now inotifywait-cp
+# Check it:         sudo systemctl status inotifywait-cp
+
+[Unit]
+Description=Photosync from android
+
+[Service]
+Type=simple
+Restart=always
+# correct these parameters as needed:
+User=user
+WorkingDirectory=/home/user
+ExecStart=bash /home/user/.local/bin/photosync-a53.sh
+
+
+[Install]
+WantedBy=network.target

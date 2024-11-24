@@ -1,6 +1,7 @@
 #!/bin/bash
 ##makedesc: Install composer (latest)
-source `dirname $0`/../helpers || exit 255
+here=$( dirname $(readlink -e -- "${BASH_SOURCE}"))
+source "$here/../helpers.sh" || exit 255
 
 # https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
 
@@ -8,34 +9,30 @@ title
 
 require php
 
-if installed "composer"; then
-    warn "WARNING: Removing current composer to install its actual version"
-    sudo apt remove -y --autoremove composer
-    sudo rm -f \
-        "$HOME/.local/bin/composer" \
-        /bin/composer \
-        /usr/bin/composer \
-        /usr/local/bin/composer \
-        /usr/src/composer \
-        "$HOME/.local/bin/composer"
+if installed composer; then
+    warn "WARNING: Removing current composer to install latest one"
+    composer --version
+    __AAA_NO_TITLE=1 source $here/../uninstall/composer
 fi
 
-mkdir -p "$HOME/install" "$HOME/.local/bin"
-download "https://getcomposer.org/installer" "$HOME/install/composer-setup.php" && \
-    php "$HOME/install/composer-setup.php" --install-dir="$HOME/.local/bin/composer"
+mkdir -p "$HOME/install/other" "$HOME/.local/bin"
 
-[ $? = 0 ] && {
-    COMPOSER_GLOBAL_HOME="$($HOME/.local/bin/composer config -g home)"
-    NEWPATH="export PATH=\"$COMPOSER_GLOBAL_HOME/vendor/bin:\${PATH}\""
-    cat "$HOME/.profile" | grep -qoh "$NEWPATH" || {
-        $NEWPATH
-        echo "$NEWPATH" >> "$HOME/.profile"
-    }
+download "https://getcomposer.org/installer" \
+    "$HOME/install/other/composer-setup.php"
 
-    echo
-    success "composer installed!"
-    composer --version
-    echo
+php "$HOME/install/other/composer-setup.php" \
+    --install-dir="$HOME/.local/bin/" \
+    --filename="composer"
+
+COMPOSER_GLOBAL_HOME="$($HOME/.local/bin/composer config -g home)"
+NEWPATH="export PATH=\"$COMPOSER_GLOBAL_HOME/vendor/bin:\${PATH}\""
+cat "$HOME/.profile" | grep -qoh "$NEWPATH" || {
+    $NEWPATH
+    echo "$NEWPATH" >> "$HOME/.profile"
 }
 
 source "$HOME/.profile"
+
+success "composer installed!"
+composer --version
+

@@ -1,0 +1,157 @@
+#!/bin/bash
+
+# Welcome to amusement park!
+
+[[ "$1" = '--help' ]] || [[ "$1" = '-h' ]] && cat <<EOF && exit
+NetBeans docker wrapper for php
+===============================
+Anthony Axenov (c) 2023, The MIT License
+https://axenov.dev
+https://opensource.org/license/mit
+Replacement host php interpreter with dockerized one to run & debug cli php scripts.
+Usage:
+    ./$(basename $0) --container=<NAME> [--map=<PATH1>:<PATH2>] [PHP_ARGS] <SCRIPT> [SCRIPT_ARGS]
+Arguments:
+    --container : docker container where your SCRIPT is located. Required.
+    --map       : sources path mapped from the host to container. Not required.
+                  PATH1 is an absolute path to php sources directory on the host.
+                  PATH2 is an absolute path of the same directory inside of container.
+                  Delimiter ':' is required. If PATH1, PATH2 or delimiter is missed
+                  or value is empty then error will be thrown.
+    PHP_ARGS    : arguments you can pass to real php interpreter according to its --help.
+                  Not required.
+    SCRIPT      : a path to script file (.php) to be executed in container. Required.
+                  Note that this file must exist inside or be available from that container.
+    SCRIPT_ARGS : arguments to call your script with. They will be passed to script as is.
+                  Not required.
+Read this article to know how to set this helper as interpreter for NetBeans:
+ru: https://axenov.dev/netbeans-php-docker-xdebug-cli
+en: https://axenov.dev/en/netbeans-php-docker-xdebug-cli-en
+EOF
+
+pwd=$(pwd)         # current working directory
+cmdline=($@)       # copy currently called command line to array
+collect_php_args=1 # should we collect php args or script ones?
+quiet=0            # should we print some useful data before executing?
+
+# find a path where this wrapper is located
+wrapper_dir="$(dirname $0)"
+
+# find a path where project is probably located
+project_dir="$(dirname $wrapper_dir)"
+
+# here we check if this wrapper is global or local
+# but if it is set as global from nbproject dir of
+# current project then it is not detected as global
+# anyway behavior will be correct
+nbproject="$(basename $wrapper_dir)"
+[ "$nbproject" = 'nbproject' ] && is_global=0 || is_global=1
+
+# prepare new array to collect php args
+declare -a php_cmd=("docker" "exec")
+
+# and another one for script args
+declare -a script_args=()
+
+# and one more for directory mapping
+declare -a map_arr=()
+
+# iterate over arguments we received from netbeans
+for arg in "${cmdline[@]}"; do
+
+    # if this is a container name
+    if [ "${arg::11}" = '--container' ]; then
+        container="${arg:12}" # save it
+        php_cmd+=("$container" 'php') # add php itself
+        continue # jump to next iteration
+    fi
+
+    # if this is a path map
+    if [ "${arg::5}" = '--map' ]; then
+        map="${arg:6}" # save it
+        map_arr=(${map//:/ }) # split it and check if it is correct
+        if [ -z "${map_arr[0]}" ] || [ -z "${map_arr[1]}" ]; then
+            echo "ERROR: directory map is incorrect!"
+            echo "Use $0 --help to get info about how to use this wrapper."
+            echo "Exit code 3."
+            exit 3
+        fi
+        continue # jump to next iteration
+    fi
+
+    # if this is a container name
+    if [ "${arg::7}" = '--quiet' ]; then
+        quiet=1
+        continue # jump to next iteration
+    fi
+
+    # if this is an absolute path to a script file
+    if [ -f "$arg" ]; then
+        # make its path correct for container
+        if [ "$map" ]; then # when paths are mapped
+            # remove first part of map from an absolute filepath and append result to second map part
+            filepath="${map_arr[1]}${arg##${map_arr[0]}}"
+        else # when paths are NOT mapped
+            # remove project path from absolute filepath
+            filepath="${arg##$project_dir/}"
+        fi
+        php_cmd+=("$filepath") # append php args with filepath
+        collect_php_args=0 # now we need to collect script args
+        continue # jump to next iteration
+    fi
+
+    if [ "$collect_php_args" = 1 ]; then # if we collect php args
+        php_cmd+=("$arg") # add current arg to php args as is
+        continue # jump to next iteration
+    fi
+
+    script_args+=("$arg") # otherwise add current arg to script args as is
+done
+
+# docker container name is required so we must halt here if there is no one
+if [ -z "$container" ]; then
+    echo "ERROR: no docker container is specified!" >&2
+    echo "Use $0 --help to get info about how to use this wrapper." >&2
+    echo "Exit code 1." >&2
+    exit 1
+fi
+
+# path to php script is also required so we must halt here too if there is no one
+if [ -z "$filepath" ]; then
+    echo "ERROR: no script filepath is specified!" >&2
+    echo "Use $0 --help to get info about how to use this wrapper." >&2
+    echo "Exit code 2." >&2
+    exit 2
+fi
+
+cmdline="${php_cmd[*]} ${script_args[*]}" # make a command to execute
+
+# print some important data collected above
+if [ "$quiet" = 0 ]; then
+    echo "NetBeans docker wrapper for php"
+    echo "==============================="
+    echo -e "Container name:    $container"
+    echo -e "Script path:       $filepath"
+    echo -e "Directory mapping: ${map:-(none)}"
+    echo -e "Command line:\n$cmdline\n"
+fi
+
+# some debug output
+# echo "=== some debug output ========="
+# cat <<EOF | column -t
+# is_global $is_global
+# container $container
+# pwd $pwd
+# wrapper_dir $wrapper_dir
+# nbproject $nbproject
+# project_dir $project_dir
+# map $map
+# map_arr[0] ${map_arr[0]}
+# map_arr[1] ${map_arr[1]}
+# filepath $filepath
+# EOF
+# echo "==============================="
+
+$cmdline # execute
+
+# that's folks!

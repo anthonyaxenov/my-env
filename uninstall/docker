@@ -1,16 +1,21 @@
 #!/bin/bash
 ##makedesc: Uninstall docker + ppa
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
 
-echo
-echo "==============================================="
-echo "Uninstalling docker + ppa..."
-echo "==============================================="
-echo
+title
 
-sudo apt remove -y docker*
+apt_remove -y \
+    docker-ce \
+    docker-ce-cli \
+    containerd.io \
+    docker-buildx-plugin \
+    docker-compose-plugin \
+    docker-ce-rootless-extras
 
-rm -rf \
+sudo rm -rf \
+    /var/lib/docker \
+    /var/lib/containerd \
     /etc/apt/sources.list.d/docker.list \
-    /etc/apt/keyrings/docker.gpg
+    /etc/apt/keyrings/docker.asc
 
-sudo apt update
+apt_update

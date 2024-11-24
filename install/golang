@@ -1,6 +1,6 @@
 #!/bin/bash
 ##makedesc: Install golang v1.21.0
-source `dirname $0`/../helpers || exit 255
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
 
 # https://go.dev/dl/
 # https://golang.org/doc/install

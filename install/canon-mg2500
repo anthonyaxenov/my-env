@@ -1,17 +1,13 @@
 #!/bin/bash
 ##makedesc: Install Canon Pixma MG2500 + ppa
-source `dirname $0`/../helpers || exit 255
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
 
 title
 
-sudo add-apt-repository -y ppa:thierry-f/fork-michael-gruz && \
-    sudo apt install -y \
-        cnijfilter-mg2500series \
-        scangearmp-mg2500series
+apt_ppa_add ppa:thierry-f/fork-michael-gruz
 
-[ $? = 0 ] && {
-    echo
-    success "Canon Pixma MG2500 installed!"
-    info "Now you must add a new printer in your system."
-    echo
-}
+apt_install cnijfilter-mg2500series
+apt_install scangearmp-mg2500series
+
+success "Drivers for Canon Pixma MG2500 installed!"
+info "Now you must reboot PC and connect your printer."

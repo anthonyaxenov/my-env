@@ -1,6 +1,6 @@
 #!/bin/bash
 ##makedesc: Install openvpn v2.6.3 (src)
-source `dirname $0`/../helpers || exit 255
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
 
 # https://openvpn.net/community-downloads/
 # https://openvpn.net/community-resources/installing-openvpn/
@@ -15,7 +15,7 @@ require libssl-dev \
 
 mkdir -p "$HOME/install/"
 download "https://swupdate.openvpn.org/community/releases/openvpn-${OVPNVER}.tar.gz" "$HOME/install/openvpn-${OVPNVER}.tar.gz" && \
-    unpak_targz "$HOME/install/openvpn-${OVPNVER}.tar.gz" "$HOME/install/" && \
+    unpack_targz "$HOME/install/openvpn-${OVPNVER}.tar.gz" "$HOME/install/" && \
     cd "$HOME/install/openvpn-${OVPNVER}" && \
     sudo ./configure && \
     sudo make && \

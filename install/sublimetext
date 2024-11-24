@@ -1,6 +1,6 @@
 #!/bin/bash
 ##makedesc: Install Sublime Text
-source `dirname $0`/../helpers || exit 255
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
 
 # https://www.sublimetext.com/download_thanks?target=x64-deb
 # https://gist.github.com/skoqaq/3f3e8f28e23c881143cef9cf49d821ff

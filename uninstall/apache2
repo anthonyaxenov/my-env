@@ -1,13 +1,10 @@
 #!/bin/bash
 ##makedesc: Uninstall apache2
-source `dirname $0`/../helpers || exit 255
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
 
 title
 
-sudo apt remove -y --autoremove apache2
+apt_remove apache2
 
-[ $? = 0 ] && {
-    echo
-    success "apache2 uninstalled!"
-    echo
-}
+success "apache2 removed!"
+

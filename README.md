@@ -1,46 +1,28 @@
-# My Ubuntu environment
+# My shell environment
 
-`make`-ready bunch of scripts for easily installation of different software.
+`make`-ready bunch of scripts for easily (de)installation of different software and bunch of useful handy functions for custom scripting.
 
 ## Requirements
 
 * Ubuntu >= 20.04 (not tested with version < 20)
 * `bash`, `zsh` or other `sh`-compatible shell
 * `make` (optional but recommended)
-* `wget` (necessary for some scripts)
-* `git` (necessary for some scripts)
+* `wget` (required for some scripts)
+* `git` (required for some scripts)
 
-If some dependecies are missed for some of these scripts it is enougth to run `./install/apt` in most cases.
+If some dependecies are missed for some of these scripts it is enougth to run `./install/apt` in most cases, otherwise script will suggest (or even install) them.
 
 ## Usage
 
-### Clone this repo (recommended)
-
 ```shell
-# if git is installed
-git clone git@git.axenov.dev:anthony/my-env.git --depth=1
+# with git
+git clone git@git.axenov.dev:anthony/my-env.git --depth=1 --single-branch
 
-# if git is not installed
+# without git
 wget -qO - https://git.axenov.dev/anthony/my-env/archive/master.tar.gz | tar -zxf -
 
-# switch to repo dir
-cd my-env
-
-# generate fresh ./Makefile and get full list of `make` goals
-./gen-makefile
-
 # get full list of `make` goals
-make
-```
-
-### Selective straightforward installation
-
-```shell
-# from remote file (you can meet interaction bugs this way!)
-wget -qO - https://git.axenov.dev/anthony/my-env/raw/branch/master/install/apt | bash
-
-# from locally cloned repo (except scripts from ./packs)
-./install/apt
+cd my-env && make
 ```
 
 ## How to add my script?
@@ -78,17 +60,32 @@ mypackX: goalA goalB
 ```
 
 where:
-* `mypack*` is the pack name
+* `mypack*` is the pack name of your choice
 * `goal*` are script names in `./install`
 
-## TODO
+## Useful links and sources used
 
-* build: [flameshot](https://github.com/flameshot-org/flameshot#compilation)
-* build: [rustdesk](https://github.com/rustdesk/rustdesk#build)
-* [JB mono](https://www.jetbrains.com/ru-ru/lp/mono/#how-to-install) ([2](https://fonts.google.com/specimen/JetBrains+Mono))
-* update scripts (when possible)
-* uninstall scripts (when possible)
+* https://gist.github.com/anthonyaxenov/d53c4385b7d1466e0affeb56388b1005
+* https://gist.github.com/anthonyaxenov/89c99e09ddb195985707e2b24a57257d
+* ...and other my [gists](https://gist.github.com/anthonyaxenov/) with [SHELL] prefix
+* https://github.com/nvie/gitflow/blob/develop/gitflow-common (BSD License)
+* https://github.com/petervanderdoes/gitflow-avh/blob/develop/gitflow-common (FreeBSD License)
+* https://github.com/vaniacer/bash_color/blob/master/color
+* https://misc.flogisoft.com/bash/tip_colors_and_formatting
+* https://www-users.york.ac.uk/~mijp1/teaching/2nd_year_Comp_Lab/guides/grep_awk_sed.pdf
+* https://www.galago-project.org/specs/notification/
+* https://laurvas.ru/bash-trap/
+* https://stackoverflow.com/a/52674277
+* https://rtfm.co.ua/bash-funkciya-getopts-ispolzuem-opcii-v-skriptax/
+* https://gist.github.com/jacknlliu/7c51e0ee8b51881dc8fb2183c481992e
+* https://gist.github.com/anthonyaxenov/d53c4385b7d1466e0affeb56388b1005
+* https://github.com/nvie/gitflow/blob/develop/gitflow-common
+* https://github.com/petervanderdoes/gitflow-avh/blob/develop/gitflow-common
+* https://gitlab.com/kyb/autorsync/-/blob/master/
+* https://lug.fh-swf.de/vim/vim-bash/StyleGuideShell.en.pdf
+* https://www.thegeekstuff.com/2010/06/bash-array-tutorial/
+* https://www.distributednetworks.com/linux-network-admin/module4/ephemeral-reserved-portNumbers.php
 
 ## License
 
-[WTFPLv2](LICENSE)
+[WTFPLv2](LICENSE) but other licences are also possible.

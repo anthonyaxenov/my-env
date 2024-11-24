@@ -1,0 +1,17 @@
+#!/bin/bash
+##makedesc: Uninstall composer
+source "$( dirname $(readlink -e -- "${BASH_SOURCE}"))/../helpers.sh" || exit 255
+
+title
+
+apt_remove composer
+
+sudo rm -f \
+    "$HOME/.local/bin/composer" \
+    /bin/composer \
+    /usr/bin/composer \
+    /usr/local/bin/composer \
+    /usr/src/composer \
+
+success "composer removed!"
+
