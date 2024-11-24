@@ -15,7 +15,7 @@ require libssl-dev \
 
 mkdir -p "$HOME/install/"
 download "https://swupdate.openvpn.org/community/releases/openvpn-${OVPNVER}.tar.gz" "$HOME/install/openvpn-${OVPNVER}.tar.gz" && \
-    unpak_targz "$HOME/install/openvpn-${OVPNVER}.tar.gz" "$HOME/install/" && \
+    unpack_targz "$HOME/install/openvpn-${OVPNVER}.tar.gz" "$HOME/install/" && \
     cd "$HOME/install/openvpn-${OVPNVER}" && \
     sudo ./configure && \
     sudo make && \

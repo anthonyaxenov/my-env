@@ -1,15 +1,14 @@
 #!/bin/bash
+# https://gist.github.com/anthonyaxenov/b8336a2bc9e6a742b5a050fa2588d71e
 #####################################################################
 #                                                                   #
 # Stupidly simple backup script for own projects                    #
 #                                                                   #
 # Author: Anthony Axenov (Антон Аксенов)                            #
 # Version: 1.0                                                      #
-# License: WTFPLv2    More info (RU): https://axenov.dev/?p=1234    #
+# License: WTFPLv2    More info: https://axenov.dev/?p=1423         #
 #                                                                   #
 #####################################################################
-
-# https://gist.github.com/anthonyaxenov/b8336a2bc9e6a742b5a050fa2588d71e
 
 # database credentials ==============================================
 

@@ -1,0 +1,26 @@
+#!/bin/bash
+CONTAINER="my-container" # the name of the container in which to 'exec' something
+CONFIG="$(dirname $([ -L $0 ] && readlink -f $0 || echo $0))/docker-compose.yml" # path to compose yml file
+CMD="docker-compose -f $CONFIG" # docker-compose command
+APP_URL='http://localhost:8000/'
+
+open_browser() {
+    if which xdg-open > /dev/null; then
+        xdg-open "$1" </dev/null >/dev/null 2>&1 & disown
+    elif which gnome-open > /dev/null; then
+        gnome-open "$1" </dev/null >/dev/null 2>&1 & disown
+    fi
+}
+
+case "$1" in
+    '' | 'help' ) echo -e "Provide one of operations: \t start, stop, up, down, restart, rebuild, open";
+                  echo "Otherwise all args will be passed to 'docker exec -ti $CONTAINER ...'" ;;
+    'open'      ) open_browser $APP_URL ;;
+    'up'        ) $CMD up -d --build ;; # build and start containers
+    'down'      ) $CMD down --remove-orphans ;; # stop and remove containers
+    'start'     ) $CMD start ;; # start containers
+    'stop'      ) $CMD stop ;; # stop containers
+    'restart'   ) $CMD stop && $CMD start ;; # restart containers
+    'rebuild'   ) $CMD down --remove-orphans && $CMD up -d --build ;; # rebuild containers
+    *           ) docker exec -ti $CONTAINER $@ # exec anything in container
+esac

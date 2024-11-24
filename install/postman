@@ -13,7 +13,7 @@ mkdir -p "$HOME/install" && \
     "$HOME/.local/share/applications"
 
 download "https://dl.pstmn.io/download/latest/linux64" "$HOME/install/postman.tar.gz" && \
-    unpak_targz "$HOME/install/postman.tar.gz" "$HOME/install" && \
+    unpack_targz "$HOME/install/postman.tar.gz" "$HOME/install" && \
     symlink "$HOME/install/Postman/Postman" "$HOME/.local/bin/postman" && \
     cat << EOF > "$HOME/.local/share/applications/Postman.desktop" && sudo update-desktop-database
 [Desktop Entry]

@@ -6,6 +6,10 @@
         "https://daocloud.io",
         "https://c.163.com/",
         "https://registry.docker-cn.com",
-        "https://huecker.io"
+        "https://huecker.io",
+        "https://public.ecr.aws",
+        "https://quay.io",
+        "https://registry.access.redhat.com",
+        "https://registry.redhat.io"
     ]
 }
